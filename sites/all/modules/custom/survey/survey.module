@@ -1,0 +1,309 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: jonaskortum
+ * Date: 16.02.17
+ * Time: 10:21
+ */
+
+
+function survey_menu()
+{
+
+    $items['start_survey'] = array(
+        'title' => 'Umfrage starten',
+        'access callback' => true,
+        'page callback' => 'drupal_get_form',
+        'access callback' => 'user_is_logged_in',
+        'page arguments' => array('survey_start_form'),
+    );
+
+    $items['survey_question/%/%'] = array(
+        'access callback' => true,
+        'page callback' => 'drupal_get_form',
+        'access callback' => 'user_is_logged_in',
+        'page arguments' => array('survey_form'),
+    );
+
+    $items['survey_question_evaluation/%/%'] = array(
+        'access callback' => true,
+        'page callback' => 'drupal_get_form',
+        'access callback' => 'user_is_logged_in',
+        'page arguments' => array('survey_question_evaluation_form'),
+        'file' => 'survey_question_evaluation.inc'
+    );
+
+    $items['finish_survey/%'] = array(
+        'title' => 'Ende der Umfrage',
+        'access callback' => true,
+        'access callback' => 'user_is_logged_in',
+        'page callback' => 'survey_finish_survey',
+    );
+
+    return $items;
+}
+
+function survey_finish_survey()
+{
+    return "Danke für Ihre Teilnahme, die Umfrage ist nun beendet!";
+}
+
+function survey_form()
+{
+
+    $user_pw = arg(2);
+    $question = arg(1);
+
+    if (survey_check_valid_user_pw($user_pw) && survey_check_if_question_exists($question)) {
+
+
+
+
+
+
+        $text = survey_get_question_content($question);
+        $test = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "");
+
+        $id = 5;
+        $form = array();
+
+        $ar = survey_get_answers();
+
+        $headline = "<h1>Frage " . $question . "(a)</h1><h2>" . $text . "</h2><br><br>";
+
+        $form['test']['form_item'] = array(
+            '#type' => 'markup',
+            '#title' => t('My Form Item'),
+            '#prefix' => $headline,
+        );
+
+        for ($i = 1; $i <= $id; $i++) {
+
+            $form['dim' . $i] = array(
+                '#type' => 'radios',
+                '#prefix' => '<div id ="visualization' . $i . '">',
+                '#title' => t('Dimension ' . $i),
+                '#default_value' => $ar["dim" . $i],
+                '#options' => $test,
+
+            );
+        }
+
+        $form['back'] = array(
+            '#type' => 'submit',
+            '#value' => 'Zurück',
+            '#submit' => array('')
+        );
+
+        $form['submit'] = array(
+            '#type' => 'submit',
+            '#value' => 'Weiter',
+            '#submit' => array('survey_get_evaluation')
+        );
+
+    } else {
+
+        $headline = "<h1>Es ist ein Fehler aufgetreten. Bitte kehren Sie zum Start zurück</h1>";
+
+        $form['test']['form_item'] = array(
+            '#type' => 'markup',
+            '#title' => t('My Form Item'),
+            '#prefix' => $headline,
+        );
+
+        $form['back'] = array(
+            '#type' => 'submit',
+            '#value' => 'Zurück zum Start',
+            '#submit' => array('survey_get_back_to_start')
+        );
+    }
+
+    return $form;
+
+}
+
+function survey_get_back_to_start()
+{
+    drupal_goto("start_survey");
+}
+
+function survey_get_evaluation($form, &$form_state)
+{
+    $dim1 = $form_state['values']['dim1'];
+    $dim2 = $form_state['values']['dim2'];
+    $dim3 = $form_state['values']['dim3'];
+    $dim4 = $form_state['values']['dim4'];
+    $dim5 = $form_state['values']['dim5'];
+
+    if (!empty($dim1) && !empty($dim2) && !empty($dim3) && !empty($dim4) && !empty($dim5)) {
+        $question = arg(1);
+        $user_id = arg(2);
+
+        $sql = "SELECT * FROM {survey_users} WHERE user_pw = '" . $user_id . "'";
+        $result = db_query($sql);
+
+        $user = 0;
+
+        foreach ($result as $item) {
+            $user = $item->user_id;
+        }
+
+        $counter = 0;
+        $sql = "SELECT * FROM {survey_user_answers} WHERE user_id = " . $user . " AND question = " . $question;
+        $result = db_query($sql);
+        foreach ($result as $item) {
+            $counter++;
+        }
+
+        if ($counter == 0) {
+            $sql = "INSERT INTO {survey_user_answers} (user_id,question,dim1,dim2,dim3,dim4,dim5) VALUES (" . $user . "," . $question . "," . $dim1 . "," . $dim2 . "," . $dim3 . "," . $dim4 . "," . $dim5 . ")";
+            db_query($sql);
+        } else {
+            $sql = "UPDATE {survey_user_answers} SET dim1 = " . $dim1 . ", dim2 = " . $dim2 . ", dim3 = " . $dim3 . ", dim4 = " . $dim4 . ", dim5 = " . $dim5 . " WHERE user_id = " . $user . " AND question = " . $question;
+            db_query($sql);
+        }
+
+        drupal_goto("survey_question_evaluation/" . $question . "/" . $user_id);
+
+    } else {
+        drupal_set_message("Bitte alle Fragen beantworten!", "error");
+    }
+}
+
+function survey_start_form()
+{
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Start',
+        '#submit' => array('survey_start_survey')
+    );
+
+    return $form;
+}
+
+function survey_start_survey()
+{
+    $string = survey_generateRandomString(30);
+    $sql = "INSERT INTO {survey_users} (user_pw) VALUES ('" . $string . "')";
+    db_query($sql);
+
+
+    $id = survey_get_questions(0);
+    drupal_goto("survey_question/" . $id . "/" . $string);
+}
+
+function survey_generateRandomString($length)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
+function survey_get_answers()
+{
+    $question = arg(1);
+    $user_id = arg(2);
+
+    $sql = "SELECT * FROM {survey_users} WHERE user_pw = '" . $user_id . "'";
+    $result = db_query($sql);
+
+    $user = 0;
+
+    foreach ($result as $item) {
+        $user = $item->user_id;
+    }
+
+    $object = array();
+    $object["dim1"] = 0;
+    $object["dim2"] = 0;
+    $object["dim3"] = 0;
+    $object["dim4"] = 0;
+    $object["dim5"] = 0;
+
+    $sql = "SELECT * FROM {survey_user_answers} WHERE user_id = " . $user . " AND question = " . $question;
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        $object["dim1"] = $item->dim1;
+        $object["dim2"] = $item->dim2;
+        $object["dim3"] = $item->dim3;
+        $object["dim4"] = $item->dim4;
+        $object["dim5"] = $item->dim5;
+    }
+
+    return $object;
+}
+
+function survey_check_valid_user_pw($user_pw)
+{
+
+    $counter = 0;
+    $sql = "SELECT * FROM {survey_users} WHERE user_pw = '" . $user_pw . "'";
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        $counter++;
+    }
+
+    if ($counter == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function survey_get_questions($current)
+{
+
+    $array = array();
+    $counter = 1;
+
+    $sql = "SELECT * FROM {node} WHERE type = 'frage' ORDER BY nid ASC";
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        array_push($array, $counter);
+        $counter++;
+    }
+
+    if (sizeof($array) >= $current + 1) {
+        return $array[$current];
+    } else {
+        return -1;
+    }
+}
+
+function survey_get_question_content($current)
+{
+    $array = array();
+    $counter = 1;
+
+    $sql = "SELECT * FROM {node} AS node INNER JOIN {field_data_body} AS body ON node.nid = body.entity_id WHERE node.type = 'frage' ORDER BY node.nid ASC";
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        array_push($array, $item->body_value);
+        $counter++;
+    }
+
+    return $array[$current - 1];
+}
+
+function survey_check_if_question_exists($question) {
+
+    $array = array();
+    $counter = 1;
+
+    $sql = "SELECT * FROM {node} WHERE type = 'frage' ORDER BY nid ASC";
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        array_push($array, $counter);
+        $counter++;
+    }
+
+    if(sizeof($array) >= $question) {
+        return true;
+    } else {
+        return false;
+    }
+}
