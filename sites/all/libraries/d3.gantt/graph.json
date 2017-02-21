@@ -1,0 +1,15 @@
+{
+  "nodes": [
+    {"x": 30, "y": 250, "fixed": true, "color" : "green"},
+    {"x": 150, "y": 270, "fixed": true, "color" : "green"},
+    {"x": 65, "y": 300, "fixed": true, "color" : "green"},
+    {"x": 50, "y": 400, "fixed": true, "color" : "green"},
+    {"x": 200, "y": 500, "fixed": true, "color" : "green"}
+  ],
+  "links": [
+    {"source":  0, "target":  1},
+    {"source":  1, "target":  2},
+    {"source":  2, "target":  3},
+    {"source":  3, "target":  4}
+  ]
+}
