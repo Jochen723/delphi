@@ -22,7 +22,7 @@ function survey_question_evaluation_form() {
 
     $text = survey_get_question_content($question);
 
-    $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br><br>";
+    $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br>";
 
     $form['test']['form_item'] = array(
         '#type' => 'markup',
@@ -274,15 +274,23 @@ function get_graphic() {
 
 
     $test = '
-    <div id="eins" class="container">
-        <div class="boxplot">
-            <div class="linie box"> </div>
-            <div class="whisker box"> </div>
-            <div class="interquart box" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil.'%;"> </div>
-            <div class="median box" style="margin-left: '.$median.'%;"> </div>
-            <div class="mittel box" style="margin-left: '.$avg.'%;"> </div>
-        </div>
-    </div>
+      <div id="eins" class="container">
+          <div class="boxplot">
+              <div class="box linie"> </div>
+              <div class="box whisker"> </div>
+              <div class="box interquart" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil.'%;"> </div>
+              <div class="box median" style="margin-left: '.$median.'%;"> </div>
+              <div class="box mittel" style="margin-left: '.$avg.'%;"> </div>
+
+              <span class="schild s_min" style="margin-left: 0;"> </span>
+              <span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil.' </span>
+              <span class="schild min s_median" style="margin-left: '.$median.'%;"> '.$median.' </span>
+              <span class="schild min s_average" style="margin-left: '.$avg.'%;"> '.$avg.' </span>
+              <span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> '.$third_quantil.' </span>
+              <span class="schild min s_max" style="margin-left: ;"> </span>
+
+          </div>
+      </div>
 
 
 
