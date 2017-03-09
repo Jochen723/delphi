@@ -17,6 +17,9 @@ function survey_question_evaluation_form() {
     $id = 5;
     $form = array();
 
+    global $user;
+    $uid = $user->uid;
+
     $text = survey_get_question_content($question);
 
     $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br><br>";
@@ -29,52 +32,13 @@ function survey_question_evaluation_form() {
 
     $ar = survey_get_answers();
 
-    $testxx = get_graphic("data.csv", "myDiv");
-    $testxx2 = get_graphic("data.csv", "myDiv2");
-    $testxx3 = get_graphic("data.csv", "myDiv3");
-    $testxx4 = get_graphic("data.csv", "myDiv4");
-    $testxx5 = get_graphic("data.csv", "myDiv5");
 
-    /*
-
-    $form['test']['form_item22'] = array(
-        '#type' => 'markup',
-        '#title' => t('My Form Item'),
-        '#prefix' => '<div id="myDiv"></div>',
-    );
-
-
-    $form['test']['form_item22'] = array(
-        '#type' => 'markup',
-        '#title' => t('My Form Item'),
-        '#prefix' => '<div id="myDiv2"></div>',
-    );
-
-    $form['test']['form_item22'] = array(
-        '#type' => 'markup',
-        '#title' => t('My Form Item'),
-        '#prefix' => $testxx2. '<div id="myDiv3"></div>',
-    );
-
-
-
-
-    /*
-    $form['test']['form_item223'] = array(
-        '#type' => 'markup',
-        '#title' => t('My Form Item'),
-        '#prefix' => '<div id="visualization2">'.$testxx2.'</div>',
-    );*/
+    $testxx = get_graphic();
 
     $form['my_markup'] = array(
-        '#markup' => '<div id="myDiv">'.$testxx.'</div>'
+        '#markup' => $testxx,
     );
 
-    /*
-
-    $form['my_markup2'] = array(
-        '#markup' => '<div id="myDiv2"><p>Lorem ipsum</p></div>'.$testxx2.''
-    );*/
 
     $i=1;
 
@@ -85,8 +49,10 @@ function survey_question_evaluation_form() {
         '#options' => $test,
     );
 
+    $testxx = get_graphic();
+
     $form['my_markup2'] = array(
-        '#markup' => '<div id="myDiv2">'.$testxx2.'</div>'
+        '#markup' => $testxx,
     );
 
     $i=2;
@@ -98,9 +64,12 @@ function survey_question_evaluation_form() {
         '#options' => $test,
     );
 
+    $testxx = get_graphic();
+
     $form['my_markup3'] = array(
-        '#markup' => '<div id="myDiv3">'.$testxx3.'</div>'
+        '#markup' => $testxx,
     );
+
 
     $i=3;
 
@@ -111,9 +80,12 @@ function survey_question_evaluation_form() {
         '#options' => $test,
     );
 
+    $testxx = get_graphic();
+
     $form['my_markup4'] = array(
-        '#markup' => '<div id="myDiv4">'.$testxx4.'</div>'
+        '#markup' => $testxx,
     );
+
 
     $i=4;
 
@@ -124,9 +96,12 @@ function survey_question_evaluation_form() {
         '#options' => $test,
     );
 
+    $testxx = get_graphic();
+
     $form['my_markup5'] = array(
-        '#markup' => '<div id="myDiv5">'.$testxx5.'</div>'
+        '#markup' => $testxx,
     );
+
 
     $i=5;
 
@@ -137,27 +112,6 @@ function survey_question_evaluation_form() {
         '#options' => $test,
     );
 
-
-    /*
-    for($i = 1;$i<=$id;$i++) {
-
-        $form['dim'.$i] = array(
-            '#type' => 'radios',
-            '#title' => t('Dimension '.$i),
-            '#default_value' => $ar["dim".$i],
-            '#options' => $test,
-
-        );
-    }
-    */
-
-    /*
-
-    $form['my_markup2'] = array(
-        '#markup' => '<div id="myDiv2"><p>Lorem ipsum</p></div>'.$testxx2.''
-    );
-
-    */
 
     $form['back'] = array(
         '#type' => 'submit',
@@ -239,60 +193,153 @@ function survey_get_next_question($form, &$form_state) {
 
 }
 
-function get_graphic($data, $id) {
+function get_graphic() {
+
+    $median = 0;
+    $first_quantil = 0;
+    $third_quantil = 0;
+    $avg = 0;
+
+    $median_absolut = 0;
+    $first_quantil_absolut = 0;
+    $third_quantil_absolut = 0;
+    $avg_absolut = 0;
+
+    $testArrayOverall = array(1,1,1,1,5,5,5,5,5,5,5,5,5,5,5,5);
+    $rangeArray = array("1"=>0,"1.5"=>12.5,"2"=>25,"2.5"=>37.5,"3"=>50,"3.5"=>62.5,"4"=>75,"4.5"=>87.5,"5" =>100);
 
 
-    /*
+    sort($testArrayOverall);
 
-     //Get data
-        //dsm("Hello");
-        //$result = db_query("SELECT * FROM {node}");
-        //dsm($result);
-        //dsm(drupal_json_encode($result));
-        //$record = $result->fetchAll();
+    if(sizeof($testArrayOverall)>3) {
 
-        //array_walk($record, function(&$value, $key){$value .= "huhuhuhu";});
-        //dsm($record);
-        //dsm($record);
-        //$record = drupal_json_encode($record);
-        //foreach ($result as $r){
-        //    dsm($r->field_anfangsdatum_value);
-        //}
-
-
-
-
-        $chart = array(
-            'id' => $id,
-            'type' => 'gantt',
-            'data' => 'http://localhost/delphi/'.$data,
-        );
+        $avg = (!empty($testArrayOverall) ? array_sum($testArrayOverall) / count($testArrayOverall) : 0);
+        $avg = roundToValidValue($avg);
+        $avg_absolut = $avg;
+        $avg = $rangeArray["$avg"];
 
 
 
-        $d3_chart = d3_draw($chart);
-        return $d3_chart;
+        $temp1 = getQuantil($testArrayOverall);
+        if($temp1["check"]) {
+            $median = ($testArrayOverall[$temp1["number"]-1]+$testArrayOverall[$temp1["number"]])/2;
+            $median_absolut = $median;
+            $median = $rangeArray["$median"];
 
+        } else {
+            $median = $testArrayOverall[$temp1["number"]];
+            $median_absolut = $median;
+            $median = $rangeArray["$median"];
+        }
+
+        $testArray = array_slice($testArrayOverall,0, $temp1["number"]);
+
+        $temp2 = getQuantil($testArray);
+        if($temp2["check"]) {
+            $first_quantil = ($testArray[$temp2["number"]-1]+$testArray[$temp2["number"]])/2;
+            $first_quantil_absolut = $first_quantil;
+            $first_quantil = $rangeArray["$first_quantil"];
+
+        } else {
+            $first_quantil = $testArray[$temp2["number"]];
+            $first_quantil_absolut = $first_quantil;
+            $first_quantil = $rangeArray["$first_quantil"];
+        }
+
+        $testArray = array_slice($testArrayOverall,$temp1["number"]+1);
+
+        $temp3 = getQuantil($testArray);
+
+        if($temp3["check"]) {
+            $third_quantil = ($testArray[$temp3["number"]-1]+$testArray[$temp3["number"]])/2;
+            $third_quantil_absolut = $third_quantil;
+            $third_quantil = $rangeArray["$third_quantil"];
+
+        } else {
+            $third_quantil = $testArray[$temp3["number"]];
+            $third_quantil_absolut = $third_quantil;
+            $third_quantil = $rangeArray["$third_quantil"];
+        }
+
+        /*
+        drupal_set_message("Median: ".$median_absolut." => ".$median."%");
+        drupal_set_message("First: ".$first_quantil_absolut." => ".$first_quantil."%");
+        drupal_set_message("Third: ".$third_quantil_absolut." => ".$third_quantil."%");
+        drupal_set_message("Average: ".$avg_absolut." => ".$avg."%");
 */
 
 
+        $third_quantil = $third_quantil-$first_quantil;
+    }
 
 
-$test = '  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    $test = '
+    <div id="eins" class="container">
+        <div class="boxplot">
+            <div class="linie box"> </div>
+            <div class="whisker box"> </div>
+            <div class="interquart box" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil.'%;"> </div>
+            <div class="median box" style="margin-left: '.$median.'%;"> </div>
+            <div class="mittel box" style="margin-left: '.$avg.'%;"> </div>
+        </div>
+    </div>
 
-        <script>
-        var trace1 = {
-  x: [1, 1, 1, 1, 1, 4, 8, 9, 10],
-  type: \'box\',
-  name: \'Set 1\'
-};
 
-var data = [trace1];
 
-var layout = {};
 
-Plotly.newPlot(\''.$id.'\', data, layout);
-        </script>';
+
+
+
+    ';
 
         return $test;
+}
+
+function getQuantil($array) {
+    $returnArray = array();
+    $temp = sizeof($array)/2;
+    if(is_int($temp)) {
+        $returnArray["number"] = $temp;
+        $returnArray["check"] = true;
+
+    } else {
+        $temp = round($temp, 0, PHP_ROUND_HALF_DOWN);
+        $returnArray["number"] = $temp;
+        $returnArray["check"] = false;
+    }
+
+    return $returnArray;
+}
+
+function roundToValidValue($value) {
+    $tempzahl = explode(".", $value);
+    if (isset($tempzahl[1])) {
+        $value = round($value, 1);
+        $tempzahl = explode(".", $value);
+        switch($tempzahl[1]) {
+            case $tempzahl[1] >=0 && $tempzahl[1] <3:
+                $tempzahl[1] = 0;
+                break;
+            case $tempzahl[1] >=3 && $tempzahl[1] <7:
+                $tempzahl[1] = 5;
+                break;
+            case $tempzahl[1] >=7:
+                $tempzahl[0] = $tempzahl[0]+1;
+                $tempzahl[1] = 0;
+                break;
+            default:
+                break;
+        }
+
+        if($tempzahl[1] == 0) {
+            $zahl = $tempzahl[0];
+        } else {
+            $zahl = implode(".",$tempzahl);
+        }
+
+
+    } else {
+        $zahl = $value;
+    }
+    return $zahl;
 }
