@@ -1,14 +1,47 @@
 
 /* Umfragen stylen */
 
-.form-item {
+/* Radio-Buttons besser zugänglich stylen */
 
+.form-item {
 }
 
 .form-type-radio {
   float: left;
   margin-left: calc(20% - 15.6px);
 }
+
+/* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
+
+.form-type-radio:before {
+  content:'';
+  display: block;
+  visibility: visible;
+  float: left;
+  position: absolute;
+  z-index: 998;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  border: 1px solid #00cccc;
+  background-color: #transparent;
+  margin: -1px 0 0 -1px;
+}
+
+input.form-radio:checked .form-radio:after {
+  content:'';
+  display: block;
+  float: left;
+  position: absolute;
+  z-index: 999;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #00cccc;
+  margin: -1px 0 0 -1px;
+}
+
+*/
 
 .form-radios {
   width: 70%;
