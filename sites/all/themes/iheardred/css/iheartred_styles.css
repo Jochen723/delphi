@@ -1,0 +1,214 @@
+
+#action-links {
+  display:none;
+}
+
+
+#inner_header_wrapper {
+    background: 0;
+    background-color: #dedede;
+}
+
+
+#main-menu li,
+#main-menu li .expanded {
+  border: 0;
+}
+
+.menu_wrapper,
+#main-menu li ul,
+#main-menu ul.menu li li > a {
+  background-color: #359ECF;
+  color: #fff;
+  border: 0;
+}
+
+
+#main-menu li:hover > a,
+#main-menu li a.active,
+#main-menu ul.menu li li:hover > a {
+  background-color: #254563;
+  border: 0;
+}
+
+#main-menu li a {
+  color: #fff;
+}
+
+
+th {
+  background-color: #444;
+}
+
+#methodengrafik_test {
+  width: 100%;
+  height: 400px;
+}
+
+
+
+
+
+
+
+
+
+
+/* Umfragen stylen */
+
+/* Radio-Buttons besser zugänglich stylen */
+
+.form-item {
+  width: 100%;
+}
+
+.form-item-quantity {
+  width: auto;
+}
+
+.form-submit[value="Ändern"] {
+  margin-top: calc(2% + 1rem + 5px);
+}
+
+.form-submit {
+  float: left;
+  clear: none;
+}
+
+.form-submit:first-of-type {
+  clear: left;
+}
+
+
+.form-item-dim0.form-type-radio,
+.form-item-dim1.form-type-radio,
+.form-item-dim2.form-type-radio,
+.form-item-dim3.form-type-radio,
+.form-item-dim4.form-type-radio,
+.form-item-dim5.form-type-radio,
+.form-item-dim6.form-type-radio,
+.form-item-dim7.form-type-radio,
+.form-item-dim8.form-type-radio {
+  width: auto;
+  float: left;
+  margin-left: calc(17.5% - 15.6px);
+}
+
+/* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
+
+.form-type-radio:before {
+  content:'';
+  display: block;
+  visibility: visible;
+  float: left;
+  position: absolute;
+  z-index: 998;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  border: 1px solid #00cccc;
+  background-color: #transparent;
+  margin: -1px 0 0 -1px;
+}
+
+input.form-radio:checked .form-radio:after {
+  content:'';
+  display: block;
+  float: left;
+  position: absolute;
+  z-index: 999;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #00cccc;
+  margin: -1px 0 0 -1px;
+}
+
+*/
+
+.form-radios {
+  width: 100%;
+}
+
+.form-radios .form-type-radio:first-of-type {
+  margin-left: 0;
+}
+
+
+.svg-container {
+  float: left;
+}
+
+.form-type-radios {
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  margin-bottom: 4rem;
+}
+
+
+.form-item {
+  float:left;
+}
+
+
+
+/* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
+
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px 0px 0px;
+  padding: 10px;
+  float: left;
+}
+
+.boxplot {
+  width: 70%;
+  height: 40px;
+  max-width: 600px;
+  position: relative;
+}
+
+.box {
+  width: 100%;
+  height: 40px;
+  position: absolute;
+}
+
+.linie {
+  height: 20px;
+  border-bottom: 1px solid #cc00cc;
+}
+
+.whisker {
+  width: calc(100% - 1px);
+  height: 15px;
+  margin-top: 12.5px;
+  border-left: 1px solid #cc00cc;
+  border-right: 1px solid #cc00cc;
+}
+
+.interquart {
+  background-color: #00cccc;
+  background: repeating-linear-gradient(45deg, #cc00cc, #cc00cc 1px, transparent 1px, transparent 10px),
+              linear-gradient(to bottom, #00cccc, #00cccc);
+  margin-left:60%;
+  width: 35%;
+  height: 40px;
+  border: 1px solid #cc00cc;
+}
+
+.median,
+.mittel {
+  width: 1px;
+  margin-left: 72%;
+  border-right: 1px solid #cc00cc;
+}
+
+.schild {
+  display: inline-block;
+  position: absolute;
+  margin-top: -2rem;
+}
