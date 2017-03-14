@@ -8,19 +8,11 @@
 
 function survey_question_evaluation_form() {
 
-
-
+    $form = "";
     $question = arg(1);
 
-    $test = array(1=>"", 2=>"", 3=>"", 4=>"", 5=>"", 6=>"");
-
-    $id = 5;
-    $form = array();
-
-    global $user;
-    $uid = $user->uid;
-
-    $text = survey_get_question_content($question);
+    $questions = survey_get_all_questions();
+    $text = $questions[$question - 1]->title;
 
     $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br>";
 
@@ -30,88 +22,56 @@ function survey_question_evaluation_form() {
         '#prefix' => $headline,
     );
 
-    $ar = survey_get_answers();
+    $answers = array();
+    $a = array();
+    $test = array(1=>"", 2=>"", 3=>"", 4=>"", 5=>"", 6=>"");
+    $i = 1;
+    $question = arg(1);
+    $user_id = arg(2);
+    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question;
+    $result = db_query($sql);
+    foreach ($result as $item) {
+        array_push($answers, $item);
+    }
 
 
-    $testxx = get_graphic();
 
-    $form['my_markup'] = array(
-        '#markup' => $testxx,
-    );
+    for ($i = 0; $i < sizeof($answers); $i++) {
 
+        $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$item->question_id;
+        $result = db_query($sql);
+        foreach ($result as $item2) {
+            array_push($a, $item2);
+        }
 
-    $i=1;
+        if($a[$i]->isRadioButton) {
+            $testxx = get_graphic();
 
-    $form['dim'.$i] = array(
-        '#type' => 'radios',
-        '#title' => t('Dimension '.$i),
-        '#default_value' => $ar["dim".$i],
-        '#options' => $test,
-    );
+            $form['my_markup'.$i] = array(
+                '#markup' => $testxx,
+            );
+            $form['dim'.$i] = array(
+                '#type' => 'radios',
+                '#title' => $a[$i]->description,
+                '#options' => $test,
+                '#default_value' => $answers[$i]->answer,
+            );
+        } else {
 
-    $testxx = get_graphic();
+            $testxx = get_graphic();
+            $form['my_markup'.$i] = array(
+                '#markup' => $testxx,
+            );
+            $form['quantity' . $i] = array(
+                '#type' => 'textfield',
+                '#title' => $a[$i]->description,
+                '#size' => 2,
+                '#maxlength' => 2,
+                '#default_value' => $answers[$i]->answer,
+            );
+        }
 
-    $form['my_markup2'] = array(
-        '#markup' => $testxx,
-    );
-
-    $i=2;
-
-    $form['dim'.$i] = array(
-        '#type' => 'radios',
-        '#title' => t('Dimension '.$i),
-        '#default_value' => $ar["dim".$i],
-        '#options' => $test,
-    );
-
-    $testxx = get_graphic();
-
-    $form['my_markup3'] = array(
-        '#markup' => $testxx,
-    );
-
-
-    $i=3;
-
-    $form['dim'.$i] = array(
-        '#type' => 'radios',
-        '#title' => t('Dimension '.$i),
-        '#default_value' => $ar["dim".$i],
-        '#options' => $test,
-    );
-
-    $testxx = get_graphic();
-
-    $form['my_markup4'] = array(
-        '#markup' => $testxx,
-    );
-
-
-    $i=4;
-
-    $form['dim'.$i] = array(
-        '#type' => 'radios',
-        '#title' => t('Dimension '.$i),
-        '#default_value' => $ar["dim".$i],
-        '#options' => $test,
-    );
-
-    $testxx = get_graphic();
-
-    $form['my_markup5'] = array(
-        '#markup' => $testxx,
-    );
-
-
-    $i=5;
-
-    $form['dim'.$i] = array(
-        '#type' => 'radios',
-        '#title' => t('Dimension '.$i),
-        '#default_value' => $ar["dim".$i],
-        '#options' => $test,
-    );
-
+    }
 
     $form['back'] = array(
         '#type' => 'submit',
@@ -119,14 +79,10 @@ function survey_question_evaluation_form() {
         '#submit' => array('')
     );
 
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => 'Weiter',
-        '#submit' => array('survey_get_evaluation')
-    );
-
     $button_text = "Weiter zur nächsten Frage";
     $id = survey_get_questions($question);
+
+
     if ($id == -1) {
         $button_text = "Umfrage beenden";
     }
@@ -137,11 +93,25 @@ function survey_question_evaluation_form() {
         '#submit' => array('survey_get_next_question')
     );
 
-
     return $form;
 }
 
 function survey_get_next_question($form, &$form_state) {
+
+
+
+    $question = arg(1);
+    $user_id = arg(2);
+
+    $id = survey_get_questions($question);
+
+    if ($id == -1) {
+        drupal_goto("finish_survey/".$user_id);
+    } else {
+        drupal_goto("survey_question/".$id."/".$user_id);
+    }
+
+    /*
 
     $dim1 = $form_state['values']['dim1'];
     $dim2 = $form_state['values']['dim2'];
@@ -178,16 +148,14 @@ function survey_get_next_question($form, &$form_state) {
         }
 
         $question = arg(1);
-        $id = survey_get_questions($question);
 
-        if ($id == -1) {
-            drupal_goto("finish_survey/".$user_id);
-        } else {
-            drupal_goto("survey_question/".$id."/".$user_id);
-        }
+
+
     } else {
         drupal_set_message("Bitte alle Fragen beantworten!", "error");
     }
+
+    */
 
 
 
