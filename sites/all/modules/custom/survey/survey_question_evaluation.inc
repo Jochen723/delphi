@@ -46,7 +46,6 @@ function survey_question_evaluation_form() {
         }
 
         $form['fieldset'.$i] = array(
-            '#title' => "Test",
             '#type' => 'fieldset',
         );
 
