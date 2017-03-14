@@ -13,12 +13,10 @@ function survey_add_question_form()
 
     $array = array("Radio-Buttons" => "Radio-Buttons", "Textfeld" => "Textfeld");
 
-
     $form['question'] = array(
         '#type' => 'textfield',
         '#title' => "Titel der Frage",
     );
-
 
     $form['quantity'] = array(
         '#type' => 'textfield',
@@ -34,7 +32,6 @@ function survey_add_question_form()
         '#value' => 'Ändern',
         '#submit' => array('survey_add_question_change_quantity')
     );
-
 
     for ($i = 1; $i <= $id; $i++) {
 
@@ -52,7 +49,6 @@ function survey_add_question_form()
             '#options' => $array,
         );
     }
-
 
     $form['submit'] = array(
         '#type' => 'submit',

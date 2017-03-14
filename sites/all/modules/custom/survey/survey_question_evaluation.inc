@@ -40,17 +40,23 @@ function survey_question_evaluation_form() {
 
         $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$item->question_id;
         $result = db_query($sql);
+
         foreach ($result as $item2) {
             array_push($a, $item2);
         }
 
+        $form['fieldset'.$i] = array(
+            '#title' => "Test",
+            '#type' => 'fieldset',
+        );
+
         if($a[$i]->isRadioButton) {
             $testxx = get_graphic();
 
-            $form['my_markup'.$i] = array(
+            $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $testxx,
             );
-            $form['dim'.$i] = array(
+            $form['fieldset'.$i]['dim'.$i] = array(
                 '#type' => 'radios',
                 '#title' => $a[$i]->description,
                 '#options' => $test,
@@ -59,10 +65,10 @@ function survey_question_evaluation_form() {
         } else {
 
             $testxx = get_graphic();
-            $form['my_markup'.$i] = array(
+            $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $testxx,
             );
-            $form['quantity' . $i] = array(
+            $form['fieldset'.$i]['quantity' . $i] = array(
                 '#type' => 'textfield',
                 '#title' => $a[$i]->description,
                 '#size' => 2,
@@ -259,13 +265,6 @@ function get_graphic() {
 
           </div>
       </div>
-
-
-
-
-
-
-
     ';
 
         return $test;
