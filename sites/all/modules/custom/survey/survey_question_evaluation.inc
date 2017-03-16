@@ -12,7 +12,7 @@ function survey_question_evaluation_form() {
     $question = arg(1);
 
     $questions = survey_get_all_questions();
-    $text = $questions[$question - 1]->title;
+    $text = $questions[$question - 1]->title . " - Überprüfung der eigenen Einschätzung";
 
     $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br>";
 
@@ -31,14 +31,22 @@ function survey_question_evaluation_form() {
     $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question;
     $result = db_query($sql);
     foreach ($result as $item) {
-        array_push($answers, $item);
+        $check = searchForAnswerId($item->answer_id,$answers);
+
+        if($check >-1) {
+            $answers[$check] = $item;
+        } else {
+            array_push($answers, $item);
+        }
     }
-
-
 
     for ($i = 0; $i < sizeof($answers); $i++) {
 
-        $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$item->question_id;
+        $question = arg(1);
+        $questions = survey_get_all_questions();
+        $question_id = $questions[$question - 1]->question_id;
+
+        $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$question_id;
         $result = db_query($sql);
 
         foreach ($result as $item2) {
@@ -49,8 +57,9 @@ function survey_question_evaluation_form() {
             '#type' => 'fieldset',
         );
 
+
         if($a[$i]->isRadioButton) {
-            $testxx = get_graphic();
+            $testxx = get_graphic($i, 1);
 
             $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $testxx,
@@ -63,7 +72,7 @@ function survey_question_evaluation_form() {
             );
         } else {
 
-            $testxx = get_graphic();
+            $testxx = get_graphic($i, 0);
             $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $testxx,
             );
@@ -76,13 +85,17 @@ function survey_question_evaluation_form() {
             );
         }
 
+
     }
 
-    $form['back'] = array(
-        '#type' => 'submit',
-        '#value' => 'Zurück',
-        '#submit' => array('')
-    );
+    if($question == 1) {
+    } else {
+        $form['back'] = array(
+            '#type' => 'submit',
+            '#value' => 'Zurück',
+            '#submit' => array('survey_get_back_to_start')
+        );
+    }
 
     $button_text = "Weiter zur nächsten Frage";
     $id = survey_get_questions($question);
@@ -101,12 +114,58 @@ function survey_question_evaluation_form() {
     return $form;
 }
 
-function survey_get_next_question($form, &$form_state) {
+function searchForAnswerId($id, $array) {
 
+    $check = -1;
+
+    foreach ($array as $key => $val) {
+        if (!strcmp($val->answer_id,$id)) {
+            $check = $key;
+        }
+    }
+    return $check;
+}
+
+function survey_get_next_question($form, &$form_state) {
 
 
     $question = arg(1);
     $user_id = arg(2);
+
+
+
+    $questions = survey_get_all_questions();
+
+    $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
+
+    for ($i = 0; $i < sizeof($answers); $i++) {
+
+        if ($answers[$i]->isRadioButton) {
+            $dim1 = $form_state['values']['dim' . $i];
+        } else {
+
+            $dim1 = $form_state['values']['quantity' . $i];
+        }
+
+        $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question. " AND answer_id = ".$i. " ORDER BY question_user_answers_id DESC LIMIT 1";
+        $result = db_query($sql);
+        foreach ($result as $item) {
+            if(!strcmp($dim1, $item->answer)) {
+            } else {
+                db_insert('question_user_answers')
+                    ->fields(array(
+                        'question_id' => $question,
+                        'answer_id' => $i,
+                        'answer' => $dim1,
+                        'user_pw' => $user_id,
+                    ))
+                    ->execute();
+            }
+        }
+    }
+
+
+
 
     $id = survey_get_questions($question);
 
@@ -115,58 +174,26 @@ function survey_get_next_question($form, &$form_state) {
     } else {
         drupal_goto("survey_question/".$id."/".$user_id);
     }
-
-    /*
-
-    $dim1 = $form_state['values']['dim1'];
-    $dim2 = $form_state['values']['dim2'];
-    $dim3 = $form_state['values']['dim3'];
-    $dim4 = $form_state['values']['dim4'];
-    $dim5 = $form_state['values']['dim5'];
-
-    if(!empty($dim1) && !empty($dim2) && !empty($dim3) && !empty($dim4) && !empty($dim5)) {
-        $question = arg(1);
-        $user_id = arg(2);
-
-        $sql = "SELECT * FROM {survey_users} WHERE user_pw = '".$user_id."'";
-        $result = db_query($sql);
-
-        $user = 0;
-
-        foreach ($result as $item) {
-            $user = $item->user_id;
-        }
-
-        $counter = 0;
-        $sql = "SELECT * FROM {survey_user_answers} WHERE user_id = ".$user. " AND question = ".$question;
-        $result = db_query($sql);
-        foreach ($result as $item) {
-            $counter++;
-        }
-
-        if ($counter == 0) {
-            $sql = "INSERT INTO {survey_user_answers} (user_id,question,dim1,dim2,dim3,dim4,dim5) VALUES (".$user.",".$question.",".$dim1.",".$dim2.",".$dim3.",".$dim4.",".$dim5.")";
-            db_query($sql);
-        } else {
-            $sql = "UPDATE {survey_user_answers} SET dim1 = ".$dim1.", dim2 = ".$dim2.", dim3 = ".$dim3.", dim4 = ".$dim4.", dim5 = ".$dim5." WHERE user_id = ".$user." AND question = ".$question;
-            db_query($sql);
-        }
-
-        $question = arg(1);
-
-
-
-    } else {
-        drupal_set_message("Bitte alle Fragen beantworten!", "error");
-    }
-
-    */
-
-
-
 }
 
-function get_graphic() {
+function searchForId($id, $array) {
+
+    $check = -1;
+
+    foreach ($array as $key => $val) {
+        if (!strcmp($val->user_pw,$id)) {
+            $check = $key;
+        }
+    }
+    return $check;
+}
+
+function get_graphic($id, $isRadioButton) {
+
+    $test = "";
+
+    $question_id = arg(1);
+    $user_pw = arg(2);
 
     $median = 0;
     $first_quantil = 0;
@@ -178,9 +205,27 @@ function get_graphic() {
     $third_quantil_absolut = 0;
     $avg_absolut = 0;
 
-    $testArrayOverall = array(1,1,1,1,5,5,5,5,5,5,5,5,5,5,5,5);
-    $rangeArray = array("1"=>0,"1.5"=>12.5,"2"=>25,"2.5"=>37.5,"3"=>50,"3.5"=>62.5,"4"=>75,"4.5"=>87.5,"5" =>100);
+    $testArrayOverall = array();
+    $testArrayOverall2 = array();
 
+    $sql = "SELECT * FROM {question_user_answers} WHERE question_id = ".$question_id." AND answer_id = ".$id;
+    $result = db_query($sql);
+
+    foreach ($result as $item4) {
+        if(strcmp($user_pw, $item4->user_pw)) {
+            $user = $item4->user_pw;
+            $check = searchForId($user, $testArrayOverall2);
+
+            if($check >-1) {
+                unset($testArrayOverall2[$check]);
+                unset($testArrayOverall[$check]);
+            }
+            array_push($testArrayOverall2, $item4);
+            array_push($testArrayOverall, $item4->answer);
+        }
+    }
+
+    $rangeArray = array("1"=>0,"1.5"=>12.5,"2"=>25,"2.5"=>37.5,"3"=>50,"3.5"=>62.5,"4"=>75,"4.5"=>87.5,"5" =>100);
 
     sort($testArrayOverall);
 
@@ -189,20 +234,27 @@ function get_graphic() {
         $avg = (!empty($testArrayOverall) ? array_sum($testArrayOverall) / count($testArrayOverall) : 0);
         $avg = roundToValidValue($avg);
         $avg_absolut = $avg;
-        $avg = $rangeArray["$avg"];
-
+        if($isRadioButton) {
+            $avg = $rangeArray["$avg"];
+        }
 
 
         $temp1 = getQuantil($testArrayOverall);
         if($temp1["check"]) {
             $median = ($testArrayOverall[$temp1["number"]-1]+$testArrayOverall[$temp1["number"]])/2;
             $median_absolut = $median;
-            $median = $rangeArray["$median"];
+            if($isRadioButton) {
+                $median = $rangeArray["$median"];
+            }
+
 
         } else {
             $median = $testArrayOverall[$temp1["number"]];
             $median_absolut = $median;
-            $median = $rangeArray["$median"];
+            if($isRadioButton) {
+                $median = $rangeArray["$median"];
+            }
+
         }
 
         $testArray = array_slice($testArrayOverall,0, $temp1["number"]);
@@ -211,12 +263,18 @@ function get_graphic() {
         if($temp2["check"]) {
             $first_quantil = ($testArray[$temp2["number"]-1]+$testArray[$temp2["number"]])/2;
             $first_quantil_absolut = $first_quantil;
-            $first_quantil = $rangeArray["$first_quantil"];
+            if($isRadioButton) {
+                $first_quantil = $rangeArray["$first_quantil"];
+            }
+
 
         } else {
             $first_quantil = $testArray[$temp2["number"]];
             $first_quantil_absolut = $first_quantil;
-            $first_quantil = $rangeArray["$first_quantil"];
+            if($isRadioButton) {
+                $first_quantil = $rangeArray["$first_quantil"];
+            }
+
         }
 
         $testArray = array_slice($testArrayOverall,$temp1["number"]+1);
@@ -226,24 +284,54 @@ function get_graphic() {
         if($temp3["check"]) {
             $third_quantil = ($testArray[$temp3["number"]-1]+$testArray[$temp3["number"]])/2;
             $third_quantil_absolut = $third_quantil;
-            $third_quantil = $rangeArray["$third_quantil"];
+            if($isRadioButton) {
+                $third_quantil = $rangeArray["$third_quantil"];
+            }
+
 
         } else {
             $third_quantil = $testArray[$temp3["number"]];
             $third_quantil_absolut = $third_quantil;
-            $third_quantil = $rangeArray["$third_quantil"];
+            if($isRadioButton) {
+                $third_quantil = $rangeArray["$third_quantil"];
+            }
+
         }
 
-        /*
-        drupal_set_message("Median: ".$median_absolut." => ".$median."%");
-        drupal_set_message("First: ".$first_quantil_absolut." => ".$first_quantil."%");
-        drupal_set_message("Third: ".$third_quantil_absolut." => ".$third_quantil."%");
-        drupal_set_message("Average: ".$avg_absolut." => ".$avg."%");
-*/
 
 
-        $third_quantil = $third_quantil-$first_quantil;
+
+        $third_quantil2 = $third_quantil-$first_quantil;
+
+
+
+
+    if($isRadioButton) {
+        $min = 1;
+        $max = 5;
+    } else {
+
+        $min = $testArrayOverall[0];
+        $max = $testArrayOverall[sizeof($testArrayOverall)-1];
+
+        $median = round($median/$max*100);
+        $third_quantil = round($third_quantil/$max*100);
+
+        $first_quantil = round($first_quantil/$max*100);
+
+        $third_quantil2 = $third_quantil-$first_quantil;
+
+        $avg = round($avg/$max*100);
     }
+
+        /*
+    drupal_set_message("Average: ".$avg_absolut." => ".$avg."%");
+    drupal_set_message("Min: ".$min);
+    drupal_set_message("Max: ".$max);
+    drupal_set_message("Median: ".$median_absolut." => ".$median."%");
+    drupal_set_message("First: ".$first_quantil_absolut." => ".$first_quantil."%");
+    drupal_set_message("Third: ".$third_quantil_absolut." => ".$third_quantil."%");
+*/
 
 
     $test = '
@@ -251,20 +339,35 @@ function get_graphic() {
           <div class="boxplot">
               <div class="box linie"> </div>
               <div class="box whisker"> </div>
-              <div class="box interquart" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil.'%;"> </div>
+              <div class="box interquart" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil2.'%;"> </div>
               <div class="box median" style="margin-left: '.$median.'%;"> </div>
               <div class="box mittel" style="margin-left: '.$avg.'%;"> </div>
 
-              <span class="schild s_min" style="margin-left: 0;"> </span>
-              <span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil.' </span>
-              <span class="schild min s_median" style="margin-left: '.$median.'%;"> '.$median.' </span>
-              <span class="schild min s_average" style="margin-left: '.$avg.'%;"> '.$avg.' </span>
-              <span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> '.$third_quantil.' </span>
-              <span class="schild min s_max" style="margin-left: ;"> </span>
+
+
+
+              <span class="schild s_min" style="margin-left: 0%;">'.$min.'</span>
+              <span class="schild min s_average" style="margin-left: '.$avg.'%;"> '.$avg_absolut.' </span>
+              <span class="schild min s_median" style="margin-left: '.$median.'%;"> '.$median_absolut.' </span>
+
+              <span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> '.$third_quantil_absolut.' </span>
+<span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil_absolut.' </span>
+
+              <span class="schild min s_max" style="margin-left: 100%;">'.$max.'</span>
+
+
+
+
+
+
 
           </div>
       </div>
     ';
+
+    }
+
+
 
         return $test;
 }

@@ -56,6 +56,21 @@ function survey_menu()
         'file' => 'survey_question_overview.inc'
     );
 
+    $items['delete_question/%'] = array(
+        'access callback' => true,
+        'access callback' => 'user_is_logged_in',
+        'page callback' => 'survey_delete_question',
+        'file' => 'survey_question_overview.inc'
+    );
+
+    $items['change_question/%/%'] = array(
+        'access callback' => true,
+        'page callback' => 'drupal_get_form',
+        'access callback' => 'user_is_logged_in',
+        'page arguments' => array('survey_change_question_form'),
+        'file' => 'survey_add_question.inc'
+    );
+
     return $items;
 }
 
@@ -81,14 +96,13 @@ function survey_get_answers_from_question($question_id)
 {
     $answers = array();
     $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id. " ORDER BY answers_id";
+    drupal_set_message($sql);
     $result = db_query($sql);
     foreach ($result as $item) {
         array_push($answers, $item);
     }
 
     return $answers;
-
-
 }
 
 function survey_form()
@@ -131,6 +145,7 @@ function survey_form()
                     '#prefix' => '<div id ="visualization' . $i . '">',
                     '#title' => $answers[$i]->description,
                     '#default_value' => $default_value,
+                    '#required' => TRUE,
                     '#options' => $test,
                 );
             } else {
@@ -146,11 +161,17 @@ function survey_form()
             }
         }
 
-        $form['back'] = array(
-            '#type' => 'submit',
-            '#value' => 'Zurück',
-            '#submit' => array('survey_get_back_to_start')
-        );
+
+        if($question == 1) {
+        } else {
+            $form['back'] = array(
+                '#type' => 'submit',
+                '#value' => 'Zurück',
+                '#submit' => array('survey_get_back_to_start')
+            );
+        }
+
+
 
         $form['submit'] = array(
             '#type' => 'submit',
@@ -158,8 +179,6 @@ function survey_form()
             '#submit' => array('survey_get_evaluation')
         );
 
-    } else {
-        drupal_set_message("FALSE");
     }
 
     return $form;
@@ -168,7 +187,20 @@ function survey_form()
 
 function survey_get_back_to_start()
 {
-    drupal_goto("start_survey");
+
+    $question_id = arg(1);
+    $user_pw = arg(2);
+
+    drupal_set_message($question_id);
+    drupal_set_message($user_pw);
+
+    if($question_id == 1) {
+        drupal_goto("");
+    } else {
+        $question_id--;
+        drupal_goto("survey_question_evaluation/".$question_id."/".$user_pw);
+    }
+
 }
 
 function survey_get_evaluation($form, &$form_state)
