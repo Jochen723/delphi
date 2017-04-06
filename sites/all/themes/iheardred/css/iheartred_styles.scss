@@ -1,15 +1,125 @@
 
+/*==============================================================================
+*   Colors
+*============================================================================ */
+
+$color-dark: #000;
+
+#action-links {
+  display:none;
+}
+
+#inner_header_wrapper {
+    background: 0;
+    background-color: #dedede;
+}
+
+
+#main-menu li,
+#main-menu li .expanded {
+  border: 0;
+}
+
+.menu_wrapper,
+#main-menu li ul,
+#main-menu ul.menu li li > a {
+  background-color: #359ECF;
+  color: #fff;
+  border: 0;
+}
+
+
+#main-menu li:hover > a,
+#main-menu li a.active,
+#main-menu ul.menu li li:hover > a {
+  background-color: #254563;
+  border: 0;
+}
+
+#main-menu li a {
+  color: #fff;
+}
+
+
+th {
+  background-color: #444;
+}
+
+#methodengrafik_test {
+  width: 100%;
+  height: 400px;
+}
+
+
+
+
+
+
+
+
+
+
 /* Umfragen stylen */
+
+/* Radiobuttons und Boxplots zusammen stylen */
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: 0;
+  border-radius: 0;
+  border: 0;
+
+    &:nth-child(n) {
+      *background-color: #e2e7ed;
+      border-top: 1px solid rgba($color-dark, .4);
+    }
+}
+
 
 /* Radio-Buttons besser zugänglich stylen */
 
 .form-item {
+  width: 100%;
 }
 
-.form-type-radio {
-  float: left;
-  margin-left: calc(20% - 15.6px);
+.form-item-quantity {
+  width: auto;
 }
+
+.form-submit[value="Ändern"] {
+  margin-top: calc(2% + 1rem + 5px);
+}
+
+.form-submit {
+  float: left;
+  clear: none;
+}
+
+.form-submit:first-of-type {
+  clear: left;
+}
+
+
+$dimensions: 8;
+
+%radio_btn_x_dims {
+  width: auto;
+  float: left;
+  margin-left: calc(17.5% - 15.6px);
+}
+
+@mixin radio_btn_x_dims {
+  @for $i from 0 through $dimensions {
+    .form-item-dim#{$i}.form-type-radio {
+      @extend %radio_btn_x_dims;
+    }
+  }
+}
+
+@include radio_btn_x_dims;
+
 
 /* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -44,7 +154,7 @@ input.form-radio:checked .form-radio:after {
 */
 
 .form-radios {
-  width: 70%;
+  width: 100%;
 }
 
 .form-radios .form-type-radio:first-of-type {
@@ -56,11 +166,15 @@ input.form-radio:checked .form-radio:after {
   float: left;
 }
 
+/* spezifischer stylen, damit keine riesigen Lücken entstehen! */
+
 .form-type-radios {
   width: 100%;
+  max-width: 600px;
   padding: 10px;
   margin-bottom: 4rem;
 }
+
 
 .form-item {
   float:left;
@@ -73,10 +187,12 @@ input.form-radio:checked .form-radio:after {
 
 .container {
   width: 100%;
+  max-width: 600px;
   margin: 20px 0px 0px;
   padding: 10px;
   float: left;
 }
+
 
 .boxplot {
   width: 70%;
@@ -87,7 +203,7 @@ input.form-radio:checked .form-radio:after {
 
 .box {
   width: 100%;
-  height: 40px;
+  height: calc(40px + 2rem);
   position: absolute;
 }
 
@@ -97,7 +213,7 @@ input.form-radio:checked .form-radio:after {
 }
 
 .whisker {
-  width: calc(100% - 1px);
+  width: 100%;
   height: 15px;
   margin-top: 12.5px;
   border-left: 1px solid #cc00cc;
@@ -119,10 +235,22 @@ input.form-radio:checked .form-radio:after {
   width: 1px;
   margin-left: 72%;
   border-right: 1px solid #cc00cc;
+  bottom: 0;
+  left: -1px;
 }
 
 .schild {
   display: inline-block;
   position: absolute;
   margin-top: -2rem;
+}
+
+.schild.s_median,
+.schild.s_average {
+  margin-top: -3rem;
+}
+
+.schild.s_first_quantil,
+.schild.s_third_quantil {
+  left: -.5rem;
 }
