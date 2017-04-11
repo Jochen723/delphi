@@ -24,7 +24,7 @@ function survey_question_evaluation_form() {
 
     $answers = array();
     $a = array();
-    $test = array(1=>"", 2=>"", 3=>"", 4=>"", 5=>"", 6=>"");
+    $test = array(1=>"1", 2=>"2", 3=>"3", 4=>"4", 5=>"5", 6=>"k.A.");
     $i = 1;
     $question = arg(1);
     $user_id = arg(2);
@@ -364,10 +364,8 @@ function get_graphic($id, $isRadioButton) {
               <span class="schild s_min" style="margin-left: 0%;">'.$min.'</span>
               <span class="schild min s_average" style="margin-left: '.$avg.'%;"> '.$avg_absolut.' </span>
               <span class="schild min s_median" style="margin-left: '.$median.'%;"> '.$median_absolut.' </span>
-
               <span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> '.$third_quantil_absolut.' </span>
-<span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil_absolut.' </span>
-
+              <span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil_absolut.' </span>
               <span class="schild min s_max" style="margin-left: 100%;">'.$max.'</span>
 
 
