@@ -70,6 +70,14 @@ function survey_question_evaluation_form() {
                 '#options' => $test,
                 '#default_value' => $answers[$i]->answer,
             );
+            $form['fieldset'.$i]['comment_dim'.$i] = array(
+                '#title' => t('Kommentar'),
+                '#resizable' => FALSE,
+                "#default_value" => '',
+                '#type' => 'textarea',
+            );
+
+
         } else {
 
             $testxx = get_graphic($i, 0);
@@ -82,6 +90,13 @@ function survey_question_evaluation_form() {
                 '#size' => 2,
                 '#maxlength' => 2,
                 '#default_value' => $answers[$i]->answer,
+            );
+
+            $form['fieldset'.$i]['comment_dim'.$i] = array(
+                '#title' => t('Kommentar'),
+                '#resizable' => FALSE,
+                "#default_value" => '',
+                '#type' => 'textarea',
             );
         }
 
