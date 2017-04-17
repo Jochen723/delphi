@@ -39,15 +39,16 @@ th {
 /* Umfragen stylen */
 /* Radiobuttons und Boxplots zusammen stylen */
 fieldset {
-  margin: 0;
-  padding: 0;
+  margin: 0 0 2rem 0;
+  padding: 1rem;
   position: relative;
   top: 0;
   border-radius: 0;
-  border: 0; }
+  border: 0;
+  width: 100%;
+  max-width: 600px; }
   fieldset:nth-child(n) {
-    *background-color: #e2e7ed;
-    border-top: 1px solid rgba(0, 0, 0, 0.4); }
+    background-color: #e2e7ed; }
 
 /* Radio-Buttons besser zug├ñnglich stylen */
 .form-item {
@@ -71,6 +72,42 @@ fieldset {
   float: left;
   margin-left: calc(17.5% - 15.6px); }
 
+.form-item-dim0.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim1.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim2.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim3.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim4.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim5.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim6.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim7.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
+.form-item-dim8.form-type-radio label.option {
+  display: block;
+  clear: both; }
+
 /* Es wird ein label Element ben├Âtigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
 .form-type-radio:before {
@@ -83,7 +120,7 @@ fieldset {
   width: 30px;
   height: 30px;
   border-radius: 30px;
-  border: 1px solid #00cccc;
+  border: 1px solid $color-bright;
   background-color: #transparent;
   margin: -1px 0 0 -1px;
 }
@@ -97,7 +134,7 @@ input.form-radio:checked .form-radio:after {
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background-color: #00cccc;
+  background-color: $color-bright;
   margin: -1px 0 0 -1px;
 }
 
@@ -115,18 +152,31 @@ input.form-radio:checked .form-radio:after {
 .form-type-radios {
   width: 100%;
   max-width: 600px;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 4rem; }
+
+.form-wrapper .form-type-radios {
+  margin-bottom: 0; }
 
 .form-item {
   float: left; }
+
+/* Textfelder */
+.form-textarea-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 0px 0px;
+  padding: 0;
+  float: left; }
+  .form-textarea-wrapper .form-textarea {
+    width: 100%; }
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 .container {
   width: 100%;
   max-width: 600px;
-  margin: 20px 0px 0px;
-  padding: 10px;
+  margin: calc(2% + 1rem) 0 2% 0;
+  padding: 0;
   float: left; }
 
 .boxplot {
@@ -142,42 +192,59 @@ input.form-radio:checked .form-radio:after {
 
 .linie {
   height: 20px;
-  border-bottom: 1px solid #cc00cc; }
+  border-bottom: 1px solid #999; }
 
 .whisker {
   width: 100%;
   height: 15px;
   margin-top: 12.5px;
-  border-left: 1px solid #cc00cc;
-  border-right: 1px solid #cc00cc; }
+  border-left: 1px solid #999;
+  border-right: 1px solid #999; }
 
 .interquart {
-  background-color: #00cccc;
-  background: repeating-linear-gradient(45deg, #cc00cc, #cc00cc 1px, transparent 1px, transparent 10px), linear-gradient(to bottom, #00cccc, #00cccc);
+  background-color: #fff;
+  background: repeating-linear-gradient(45deg, #999, #999 1px, transparent 1px, transparent 10px), linear-gradient(to bottom, #fff, #fff);
   margin-left: 60%;
   width: 35%;
   height: 40px;
-  border: 1px solid #cc00cc; }
+  border: 1px solid #999;
+  border-left: 6px solid #29c95f;
+  border-right: 6px solid #74ebff; }
 
 .median,
 .mittel {
   width: 1px;
   margin-left: 72%;
-  border-right: 1px solid #cc00cc;
-  bottom: 0;
-  left: -1px; }
+  border-right: 6px solid #ff5bbd;
+  bottom: 0; }
+
+.median {
+  border-left: 6px solid transparent;
+  border-right: 6px solid #ff7d5f; }
 
 .schild {
   display: inline-block;
   position: absolute;
-  margin-top: -2rem; }
+  margin-top: -1rem;
+  padding: 0 .5rem 0;
+  font-weight: bold;
+  color: #fff;
+  background-color: #999;
+  border-radius: 300px;
+  text-align: center; }
 
 .schild.s_median,
 .schild.s_average {
-  margin-top: -3rem; }
+  margin-top: -3rem;
+  background-color: #ff5bbd; }
 
-.schild.s_first_quantil,
+.schild.s_median {
+  background-color: #ff7d5f; }
+
+.schild.s_first_quantil {
+  background-color: #29c95f; }
+
 .schild.s_third_quantil {
-  left: -.5rem; }
+  background-color: #74ebff; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

@@ -4,6 +4,13 @@
 *============================================================================ */
 
 $color-dark: #000;
+$color-middle: #999;
+$color-bright: #fff;
+
+$color-first-quantil: #29c95f;
+$color-third-quantil: #74ebff;
+$color-median: #ff7d5f;
+$color-average: #ff5bbd;
 
 #action-links {
   display:none;
@@ -64,16 +71,17 @@ th {
 /* Radiobuttons und Boxplots zusammen stylen */
 
 fieldset {
-  margin: 0;
-  padding: 0;
+  margin: 0 0 2rem 0;
+  padding: 1rem;
   position: relative;
   top: 0;
   border-radius: 0;
   border: 0;
+  width: 100%;
+  max-width: 600px;
 
     &:nth-child(n) {
-      *background-color: #e2e7ed;
-      border-top: 1px solid rgba($color-dark, .4);
+      background-color: #e2e7ed;
     }
 }
 
@@ -114,6 +122,10 @@ $dimensions: 8;
   @for $i from 0 through $dimensions {
     .form-item-dim#{$i}.form-type-radio {
       @extend %radio_btn_x_dims;
+      & label.option {
+        display: block;
+        clear: both;
+      }
     }
   }
 }
@@ -133,7 +145,7 @@ $dimensions: 8;
   width: 30px;
   height: 30px;
   border-radius: 30px;
-  border: 1px solid #00cccc;
+  border: 1px solid $color-bright;
   background-color: #transparent;
   margin: -1px 0 0 -1px;
 }
@@ -147,7 +159,7 @@ input.form-radio:checked .form-radio:after {
   width: 20px;
   height: 20px;
   border-radius: 20px;
-  background-color: #00cccc;
+  background-color: $color-bright;
   margin: -1px 0 0 -1px;
 }
 
@@ -171,16 +183,30 @@ input.form-radio:checked .form-radio:after {
 .form-type-radios {
   width: 100%;
   max-width: 600px;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 4rem;
 }
 
+.form-wrapper .form-type-radios {
+  margin-bottom: 0;
+}
 
 .form-item {
   float:left;
 }
 
+/* Textfelder */
 
+.form-textarea-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 0px 0px;
+  padding: 0;
+  float: left;
+  & .form-textarea {
+    width: 100%;
+  }
+}
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 
@@ -188,8 +214,8 @@ input.form-radio:checked .form-radio:after {
 .container {
   width: 100%;
   max-width: 600px;
-  margin: 20px 0px 0px;
-  padding: 10px;
+  margin: calc(2% + 1rem) 0 2% 0;
+  padding: 0;
   float: left;
 }
 
@@ -209,48 +235,68 @@ input.form-radio:checked .form-radio:after {
 
 .linie {
   height: 20px;
-  border-bottom: 1px solid #cc00cc;
+  border-bottom: 1px solid $color-middle;
 }
 
 .whisker {
   width: 100%;
   height: 15px;
   margin-top: 12.5px;
-  border-left: 1px solid #cc00cc;
-  border-right: 1px solid #cc00cc;
+  border-left: 1px solid $color-middle;
+  border-right: 1px solid $color-middle;
 }
 
 .interquart {
-  background-color: #00cccc;
-  background: repeating-linear-gradient(45deg, #cc00cc, #cc00cc 1px, transparent 1px, transparent 10px),
-              linear-gradient(to bottom, #00cccc, #00cccc);
+  background-color: $color-bright;
+  background: repeating-linear-gradient(45deg, $color-middle, $color-middle 1px, transparent 1px, transparent 10px),
+              linear-gradient(to bottom, $color-bright, $color-bright);
   margin-left:60%;
   width: 35%;
   height: 40px;
-  border: 1px solid #cc00cc;
+  border: 1px solid $color-middle;
+  border-left: 6px solid $color-first-quantil;
+  border-right: 6px solid $color-third-quantil;
 }
 
 .median,
 .mittel {
   width: 1px;
   margin-left: 72%;
-  border-right: 1px solid #cc00cc;
+  border-right: 6px solid $color-average;
   bottom: 0;
-  left: -1px;
+}
+
+.median {
+  border-left: 6px solid transparent;
+  border-right: 6px solid $color-median;
 }
 
 .schild {
   display: inline-block;
   position: absolute;
-  margin-top: -2rem;
+  margin-top: -1rem;
+  padding: 0 .5rem 0;
+  font-weight: bold;
+  color: #fff;
+  background-color: $color-middle;
+  border-radius: 300px;
+  text-align: center;
 }
 
 .schild.s_median,
 .schild.s_average {
   margin-top: -3rem;
+  background-color: $color-average;
 }
 
-.schild.s_first_quantil,
+.schild.s_median {
+  background-color: $color-median;
+}
+
+.schild.s_first_quantil {
+  background-color: $color-first-quantil;
+}
+
 .schild.s_third_quantil {
-  left: -.5rem;
+  background-color: $color-third-quantil;
 }
