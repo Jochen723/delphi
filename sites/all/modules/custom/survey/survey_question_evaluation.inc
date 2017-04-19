@@ -24,8 +24,50 @@ function survey_question_evaluation_form() {
 
     $answers = array();
     $a = array();
+
     $test = array(1=>"1", 2=>"2", 3=>"3", 4=>"4", 5=>"5", 6=>"k.A.");
+
+
     $i = 1;
+
+    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question - 1]->question_id . " ORDER BY answer_id";
+    $result = db_query($sql);
+
+    $test = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "");
+
+    $bezeichnungsArray = array();
+
+    $durchlaufsID = 0;
+
+    $checkID = 0;
+
+    $answer_id = 0;
+
+    $uebereinstimmungsHelper = 0;
+    foreach ($result as $item) {
+
+        if($durchlaufsID > 0) {
+            if($item->answer_id == $answer_id) {
+                $checkID++;
+                $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+
+            } else {
+                $checkID = 0;
+                $uebereinstimmungsHelper++;
+                $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+                $answer_id = $item->answer_id;
+
+            }
+        } else {
+            $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+            $answer_id = $item->answer_id;
+        }
+
+        $durchlaufsID++;
+
+    }
+
+
     $question = arg(1);
     $user_id = arg(2);
     $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question;
@@ -40,7 +82,7 @@ function survey_question_evaluation_form() {
         }
     }
 
-    for ($i = 0; $i < sizeof($answers); $i++) {
+    for ($i = 0; $i <sizeof($answers); $i++) {
 
         $question = arg(1);
         $questions = survey_get_all_questions();
@@ -67,14 +109,14 @@ function survey_question_evaluation_form() {
             $form['fieldset'.$i]['dim'.$i] = array(
                 '#type' => 'radios',
                 '#title' => $a[$i]->description,
-                '#options' => $test,
+                '#options' => $bezeichnungsArray[$i],
                 '#default_value' => $answers[$i]->answer,
             );
             $form['fieldset'.$i]['comment_dim'.$i] = array(
                 '#title' => t('Kommentar'),
                 '#resizable' => FALSE,
-                "#default_value" => '',
                 '#type' => 'textarea',
+                '#default_value' => $answers[$i]->comment,
             );
 
 
@@ -95,8 +137,8 @@ function survey_question_evaluation_form() {
             $form['fieldset'.$i]['comment_dim'.$i] = array(
                 '#title' => t('Kommentar'),
                 '#resizable' => FALSE,
-                "#default_value" => '',
                 '#type' => 'textarea',
+                '#default_value' => $answers[$i]->comment,
             );
         }
 
@@ -160,12 +202,17 @@ function survey_get_next_question($form, &$form_state) {
         } else {
 
             $dim1 = $form_state['values']['quantity' . $i];
+
         }
+
+        $comment = $form_state['values']['comment_dim' . $i];
 
         $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question. " AND answer_id = ".$i. " ORDER BY question_user_answers_id DESC LIMIT 1";
         $result = db_query($sql);
         foreach ($result as $item) {
             if(!strcmp($dim1, $item->answer)) {
+                $sql = "UPDATE {question_user_answers} SET comment = '".$comment."' WHERE user_pw = '" . $user_id . "' AND question_id = ".$question. " AND answer_id = ".$i;
+                db_query($sql);
             } else {
                 db_insert('question_user_answers')
                     ->fields(array(
@@ -173,6 +220,7 @@ function survey_get_next_question($form, &$form_state) {
                         'answer_id' => $i,
                         'answer' => $dim1,
                         'user_pw' => $user_id,
+                        'comment' => $comment,
                     ))
                     ->execute();
             }
@@ -236,9 +284,11 @@ function get_graphic($id, $isRadioButton) {
                 unset($testArrayOverall[$check]);
             }
             array_push($testArrayOverall2, $item4);
-            array_push($testArrayOverall, $item4->answer);
+            array_push($testArrayOverall, $item4->answer+1);
         }
     }
+
+
 
     $rangeArray = array("1"=>0,"1.5"=>12.5,"2"=>25,"2.5"=>37.5,"3"=>50,"3.5"=>62.5,"4"=>75,"4.5"=>87.5,"5" =>100);
 
@@ -247,10 +297,11 @@ function get_graphic($id, $isRadioButton) {
     if(sizeof($testArrayOverall)>3) {
 
         $avg = (!empty($testArrayOverall) ? array_sum($testArrayOverall) / count($testArrayOverall) : 0);
-        $avg = roundToValidValue($avg);
-        $avg_absolut = $avg;
++        $avg = roundToValidValue($avg);
++        $avg_absolut = $avg;
         if($isRadioButton) {
             $avg = $rangeArray["$avg"];
+
         }
 
 
@@ -339,7 +390,8 @@ function get_graphic($id, $isRadioButton) {
         $avg = round($avg/$max*100);
     }
 
-        /*
+
+    /*
     drupal_set_message("Average: ".$avg_absolut." => ".$avg."%");
     drupal_set_message("Min: ".$min);
     drupal_set_message("Max: ".$max);
@@ -402,10 +454,16 @@ function getQuantil($array) {
 }
 
 function roundToValidValue($value) {
+
     $tempzahl = explode(".", $value);
+    print_r($tempzahl);
+
     if (isset($tempzahl[1])) {
+
         $value = round($value, 1);
         $tempzahl = explode(".", $value);
+
+
         switch($tempzahl[1]) {
             case $tempzahl[1] >=0 && $tempzahl[1] <3:
                 $tempzahl[1] = 0;
@@ -424,7 +482,13 @@ function roundToValidValue($value) {
         if($tempzahl[1] == 0) {
             $zahl = $tempzahl[0];
         } else {
-            $zahl = implode(".",$tempzahl);
+
+            if($tempzahl[0] != 0) {
+                $zahl = implode(".",$tempzahl);
+            } else {
+                $zahl = 1;
+            }
+
         }
 
 

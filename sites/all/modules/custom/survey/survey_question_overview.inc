@@ -44,7 +44,6 @@ function survey_create_question_overview() {
     foreach ($result as $item) {
 
         $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$item->question_id;
-        drupal_set_message($sql);
         $result = db_query($sql);
 
         $quan = $result->rowCount();

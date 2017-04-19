@@ -94,9 +94,9 @@ function survey_get_all_questions()
 
 function survey_get_answers_from_question($question_id)
 {
+
     $answers = array();
     $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id. " ORDER BY answers_id";
-    drupal_set_message($sql);
     $result = db_query($sql);
     foreach ($result as $item) {
         array_push($answers, $item);
@@ -127,8 +127,47 @@ function survey_form()
             '#prefix' => $headline,
         );
 
-        $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
+        $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question - 1]->question_id ." ORDER BY answer_id";
+        $result = db_query($sql);
+
         $test = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "");
+
+        $bezeichnungsArray = array();
+
+        $durchlaufsID = 0;
+
+        $checkID = 0;
+
+        $answer_id = 0;
+
+        $uebereinstimmungsHelper = 0;
+        foreach ($result as $item) {
+
+            if($durchlaufsID > 0) {
+                if($item->answer_id == $answer_id) {
+                    $checkID++;
+                    $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+
+                } else {
+                    $checkID = 0;
+                    $uebereinstimmungsHelper++;
+                    $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+                    $answer_id = $item->answer_id;
+
+                }
+            } else {
+                $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
+                $answer_id = $item->answer_id;
+            }
+
+            $durchlaufsID++;
+
+        }
+
+        print_r($bezeichnungsArray);
+
+        $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
+
 
         for ($i = 0; $i < sizeof($answers); $i++) {
 
@@ -144,9 +183,8 @@ function survey_form()
                     '#type' => 'radios',
                     '#prefix' => '<div id ="visualization' . $i . '">',
                     '#title' => $answers[$i]->description,
-                    '#default_value' => $default_value,
-                    '#required' => TRUE,
-                    '#options' => $test,
+                    '#required' => true,
+                    '#options' => $bezeichnungsArray[$i],
                 );
             } else {
 
@@ -191,8 +229,6 @@ function survey_get_back_to_start()
     $question_id = arg(1);
     $user_pw = arg(2);
 
-    drupal_set_message($question_id);
-    drupal_set_message($user_pw);
 
     if($question_id == 1) {
         drupal_goto("");
@@ -209,10 +245,13 @@ function survey_get_evaluation($form, &$form_state)
     $question = arg(1);
     $user_pw = arg(2);
 
+    $check = false;
+
     $questions = survey_get_all_questions();
     $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
 
     for ($i = 0; $i < sizeof($answers); $i++) {
+
 
         if ($answers[$i]->isRadioButton) {
             $dim1 = $form_state['values']['dim' . $i];
@@ -221,24 +260,27 @@ function survey_get_evaluation($form, &$form_state)
             $dim1 = $form_state['values']['quantity' . $i];
         }
 
-        $sql = "SELECT * FROM {question_user_answers} WHERE answer_id = ".$i." AND question_id = ".$question. " AND user_pw = '".$user_pw."'";
-        $result = db_query($sql);
+            $sql = "SELECT * FROM {question_user_answers} WHERE answer_id = ".$i." AND question_id = ".$question. " AND user_pw = '".$user_pw."'";
+            $result = db_query($sql);
 
-        if($result->rowCount()) {
-            $sql = "UPDATE {question_user_answers} SET answer = ".$dim1." WHERE answer_id = ".$i." AND question_id = ".$question." AND user_pw = '".$user_pw."' ";
-            db_query($sql);
-        } else {
-            db_insert('question_user_answers')
-                ->fields(array(
-                    'question_id' => $question,
-                    'answer_id' => $i,
-                    'answer' => $dim1,
-                    'user_pw' => $user_pw,
-                ))
-                ->execute();
+            if($result->rowCount()) {
+                $sql = "UPDATE {question_user_answers} SET answer = ".$dim1." WHERE answer_id = ".$i." AND question_id = ".$question." AND user_pw = '".$user_pw."' ";
+                db_query($sql);
+            } else {
+                db_insert('question_user_answers')
+                    ->fields(array(
+                        'question_id' => $question,
+                        'answer_id' => $i,
+                        'answer' => $dim1,
+                        'user_pw' => $user_pw,
+                        'comment' => "",
+                    ))
+                    ->execute();
+            }
+
         }
-    }
-    drupal_goto("survey_question_evaluation/".$question."/".$user_pw);
+        drupal_goto("survey_question_evaluation/".$question."/".$user_pw);
+
 }
 
 function survey_start_form()
