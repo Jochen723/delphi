@@ -52,13 +52,14 @@ fieldset {
 
 /* Radio-Buttons besser zug├ñnglich stylen */
 .form-item {
-  width: 100%; }
+  width: 100%;
+  margin: 2rem auto 1rem auto; }
 
 .form-item-quantity {
   width: auto; }
 
 .form-submit[value="├ändern"] {
-  margin-top: calc(2% + 1rem + 5px); }
+  margin-top: calc(2rem + 1rem + 5px); }
 
 .form-submit {
   float: left;
@@ -74,39 +75,84 @@ fieldset {
 
 .form-item-dim0.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim1.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim2.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim3.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim4.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim5.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim6.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim7.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 .form-item-dim8.form-type-radio label.option {
   display: block;
-  clear: both; }
+  clear: both;
+  float: none;
+  position: absolute;
+  word-break: break-all;
+  width: 4em;
+  line-height: 0.9; }
 
 /* Es wird ein label Element ben├Âtigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -175,7 +221,7 @@ input.form-radio:checked .form-radio:after {
 .container {
   width: 100%;
   max-width: 600px;
-  margin: calc(2% + 1rem) 0 2% 0;
+  margin: calc(2rem + 1rem) 0 2% 0;
   padding: 0;
   float: left; }
 

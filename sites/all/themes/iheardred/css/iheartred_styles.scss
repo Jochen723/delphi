@@ -90,6 +90,7 @@ fieldset {
 
 .form-item {
   width: 100%;
+  margin: 2rem auto 1rem auto;
 }
 
 .form-item-quantity {
@@ -97,7 +98,7 @@ fieldset {
 }
 
 .form-submit[value="Ändern"] {
-  margin-top: calc(2% + 1rem + 5px);
+  margin-top: calc(2rem + 1rem + 5px);
 }
 
 .form-submit {
@@ -125,6 +126,11 @@ $dimensions: 8;
       & label.option {
         display: block;
         clear: both;
+        float: none;
+        position: absolute;
+        word-break: break-all;
+        width: 4em;
+        line-height: 0.9;
       }
     }
   }
@@ -214,7 +220,7 @@ input.form-radio:checked .form-radio:after {
 .container {
   width: 100%;
   max-width: 600px;
-  margin: calc(2% + 1rem) 0 2% 0;
+  margin: calc(2rem + 1rem) 0 2% 0;
   padding: 0;
   float: left;
 }
