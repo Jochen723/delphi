@@ -1,0 +1,60 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 22.04.2017
+ * Time: 18:05
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function delphi_legend_menu()
+{
+    $items = array();
+    $items['delphi_legend'] = array(
+        'name' => 'delphi_legend',
+        'description' => 'Extends the delphi module',
+        'access arguments' => array('Access content'),
+        'page callback' => 'delpi_legend_helper',
+    );
+
+    $items['admin/config/delphi/delphi_legend'] = array(
+        'title' => 'Delphi Legend CSS',
+        'type' => MENU_NORMAL_ITEM,
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('delphi_legend_admin_form'),
+        'access arguments' => array('administer users'),
+    );
+
+
+    return $items;
+}
+
+/**
+ * Implements hook_comment_insert().
+ */
+
+function delpi_legend_helper() { //TODO Array als Parameter
+    $links = array('Hallo', 'Opa', 'Oma',);
+    $legend = array(
+      '#theme' => 'item_list',
+        '#items' => $links,
+        '#type' => 'ul',
+        '#attributes' => array('class' => 'my-list'), //TODO class Attribut als Parameter
+    );
+
+    return $legend;
+}
+
+function delphi_legend_admin_form($form, &$form_state) {
+    $form = array();
+    $form['delphi_legend_css_class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('CSS Class for the legend list'),
+        '#default_value' => variable_get('delphi_legend_css_class','my-list'),
+
+    );
+
+    return system_settings_form($form);
+}
