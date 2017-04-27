@@ -8,32 +8,30 @@
 
 function survey_question_evaluation_form() {
 
-    $form = "";
-    $question = arg(1);
+    $question_id = arg(1);
+
 
     $questions = survey_get_all_questions();
-    $text = $questions[$question - 1]->title . " - Überprüfung der eigenen Einschätzung";
+    $headline = $questions[$question_id - 1]->title . " - Überprüfung der eigenen Einschätzung";
+    $headline = "<h1>Frage ".$question_id."(b)</h1><h2>".$headline."</h2><br>";
 
-    $headline = "<h1>Frage ".$question."(b)</h1><h2>".$text."</h2><br>";
-
-    $form['test']['form_item'] = array(
+    $form['headline']['form_item'] = array(
         '#type' => 'markup',
-        '#title' => t('My Form Item'),
+        '#title' => t('Headline'),
         '#prefix' => $headline,
     );
 
     $answers = array();
+    
     $a = array();
 
-    $test = array(1=>"1", 2=>"2", 3=>"3", 4=>"4", 5=>"5", 6=>"k.A.");
+    //$radio_labels = array(1=>"1", 2=>"2", 3=>"3", 4=>"4", 5=>"5", 6=>"k.A.");
 
 
-    $i = 1;
-
-    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question - 1]->question_id . " ORDER BY answer_id";
+    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question_id - 1]->question_id . " ORDER BY answer_id";
     $result = db_query($sql);
 
-    $test = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "");
+    $radio_labels = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "k.A.");
 
     $bezeichnungsArray = array();
 
@@ -68,9 +66,9 @@ function survey_question_evaluation_form() {
     }
 
 
-    $question = arg(1);
+    $question_id = arg(1);
     $user_id = arg(2);
-    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question;
+    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question_id;
     $result = db_query($sql);
     foreach ($result as $item) {
         $check = searchForAnswerId($item->answer_id,$answers);
@@ -84,9 +82,9 @@ function survey_question_evaluation_form() {
 
     for ($i = 0; $i <sizeof($answers); $i++) {
 
-        $question = arg(1);
+        $question_id = arg(1);
         $questions = survey_get_all_questions();
-        $question_id = $questions[$question - 1]->question_id;
+        $question_id = $questions[$question_id - 1]->question_id;
 
         $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = ".$question_id;
         $result = db_query($sql);
@@ -101,10 +99,11 @@ function survey_question_evaluation_form() {
 
 
         if($a[$i]->isRadioButton) {
-            $testxx = get_graphic($i, 1);
+
+            $boxplot_graphic = get_graphic($i, 1);
 
             $form['fieldset'.$i]['my_markup'.$i] = array(
-                '#markup' => $testxx,
+                '#markup' => $boxplot_graphic,
             );
             $form['fieldset'.$i]['dim'.$i] = array(
                 '#type' => 'radios',
@@ -122,9 +121,9 @@ function survey_question_evaluation_form() {
 
         } else {
 
-            $testxx = get_graphic($i, 0);
+            $boxplot_graphic = get_graphic($i, 0);
             $form['fieldset'.$i]['my_markup'.$i] = array(
-                '#markup' => $testxx,
+                '#markup' => $boxplot_graphic,
             );
             $form['fieldset'.$i]['quantity' . $i] = array(
                 '#type' => 'textfield',
@@ -145,7 +144,7 @@ function survey_question_evaluation_form() {
 
     }
 
-    if($question == 1) {
+    if($question_id == 1) {
     } else {
         $form['back'] = array(
             '#type' => 'submit',
@@ -155,7 +154,7 @@ function survey_question_evaluation_form() {
     }
 
     $button_text = "Weiter zur nächsten Frage";
-    $id = survey_get_questions($question);
+    $id = survey_get_questions($question_id);
 
 
     if ($id == -1) {
@@ -456,7 +455,6 @@ function getQuantil($array) {
 function roundToValidValue($value) {
 
     $tempzahl = explode(".", $value);
-    print_r($tempzahl);
 
     if (isset($tempzahl[1])) {
 

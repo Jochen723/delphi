@@ -13,9 +13,16 @@ function survey_add_question_form()
 
     $array = array("Radio-Buttons" => "Radio-Buttons", "Textfeld" => "Textfeld");
 
+    $form['#id'] = 'question-form';
+
+
     $form['question'] = array(
+        '#name' => 'question-name',
         '#type' => 'textfield',
         '#title' => "Titel der Frage",
+        '#attributes' => array(
+            'id' => 'question-field',
+        ),
     );
 
     $form['quantity'] = array(

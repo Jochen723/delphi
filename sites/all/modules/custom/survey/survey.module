@@ -164,8 +164,6 @@ function survey_form()
 
         }
 
-        print_r($bezeichnungsArray);
-
         $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
 
 
