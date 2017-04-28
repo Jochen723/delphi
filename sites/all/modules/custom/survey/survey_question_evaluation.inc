@@ -8,11 +8,12 @@
 
 function survey_question_evaluation_form() {
 
-    $question_id = arg(1);
+    $question_id = arg(1); //get question id from url
 
 
-    $questions = survey_get_all_questions();
-    $headline = $questions[$question_id - 1]->title . " - Überprüfung der eigenen Einschätzung";
+    $questions = survey_get_all_questions(); //get all questions
+    //Create Headline
+    $headline = $questions[$question_id - 1]->title . " - Überprüfung der eigenen Einschätzung"; //Headline
     $headline = "<h1>Frage ".$question_id."(b)</h1><h2>".$headline."</h2><br>";
 
     $form['headline']['form_item'] = array(
@@ -21,26 +22,21 @@ function survey_question_evaluation_form() {
         '#prefix' => $headline,
     );
 
+    //Init variables
     $answers = array();
     
-    $a = array();
-
-    //$radio_labels = array(1=>"1", 2=>"2", 3=>"3", 4=>"4", 5=>"5", 6=>"k.A.");
-
-
+    $a = array(); //TODO Check for refactoring
+    //SQL-> Get lables for radio buttons
     $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question_id - 1]->question_id . " ORDER BY answer_id";
     $result = db_query($sql);
 
-    $radio_labels = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "k.A.");
-
+    //Init variables
     $bezeichnungsArray = array();
-
     $durchlaufsID = 0;
-
     $checkID = 0;
-
     $answer_id = 0;
-
+    //weired shit needs to be refactorized
+    //iterates saved questions and creates an array with lables for radio buttons or text field
     $uebereinstimmungsHelper = 0;
     foreach ($result as $item) {
 
@@ -65,11 +61,12 @@ function survey_question_evaluation_form() {
 
     }
 
-
     $question_id = arg(1); //get question id from url
     $user_id = arg(2); //get user id from url
+    //fetch answers created previous by the user
     $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question_id;
     $result = db_query($sql);
+    //create an array which shows all answers of the user
     foreach ($result as $item) {
         $check = searchForAnswerId($item->answer_id,$answers);
 
@@ -79,7 +76,7 @@ function survey_question_evaluation_form() {
             array_push($answers, $item);
         }
     }
-
+    //create all answers (grey field in UI)
     for ($i = 0; $i <sizeof($answers); $i++) {
 
         $question_id = arg(1);
@@ -100,7 +97,7 @@ function survey_question_evaluation_form() {
 
         if($a[$i]->isRadioButton) {
 
-            $boxplot_graphic = get_graphic($i, 1);
+            $boxplot_graphic = get_graphic($i, 1, $bezeichnungsArray[$i]);
 
             $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $boxplot_graphic,
@@ -121,7 +118,7 @@ function survey_question_evaluation_form() {
 
         } else {
 
-            $boxplot_graphic = get_graphic($i, 0);
+            $boxplot_graphic = get_graphic($i, 0, array('Min', 'Max'));
             $form['fieldset'.$i]['my_markup'.$i] = array(
                 '#markup' => $boxplot_graphic,
             );
@@ -182,6 +179,7 @@ function searchForAnswerId($id, $array) {
     return $check;
 }
 
+//Button: Weiter
 function survey_get_next_question($form, &$form_state) {
 
 
@@ -237,7 +235,7 @@ function survey_get_next_question($form, &$form_state) {
         drupal_goto("survey_question/".$id."/".$user_id);
     }
 }
-
+//Get id for boxplot
 function searchForId($id, $array) {
 
     $check = -1;
@@ -249,8 +247,8 @@ function searchForId($id, $array) {
     }
     return $check;
 }
-
-function get_graphic($id, $isRadioButton) {
+//Create boxplot
+function get_graphic($id, $isRadioButton, $links) {
 
     $test = "";
 
@@ -390,16 +388,16 @@ function get_graphic($id, $isRadioButton) {
         $avg = round($avg/$max*100);
     }
 
-	  $links = array('Min = ' . $min, 'Max = ' . $max,); //TODO Max min werte
+	  //$links = array('Min = ' . $min, 'Max = ' . $max,); //TODO Max min werte
 
 	  //Boxplot
 	  $test = array(
 		'container' => array(
 		  '#prefix' => '<div id="eins">',
 		  '#suffix' => '</div>',
-		  'markup' => array(
-			'#markup' => 'This is inside the container div',
-		  ),
+		 // 'markup' => array(
+		//	'#markup' => 'This is inside the container div',
+		  //),
 		  'boxplot' => array(
 			'#prefix' => '<div class="boxplot">',
 			'#suffix' => '</div>',
@@ -468,7 +466,9 @@ function get_graphic($id, $isRadioButton) {
 			'legend' => array(
 			  '#theme' => 'item_list',
 			  '#items' => $links,
-			  '#type' => 'ul',
+			  '#type' => 'ol',
+			  '#prefix' => '<div id="legend">',
+			  '#suffix' => '</div>',
 			  '#attributes' => array('class' => 'my-list'),
 			),
 		  ),
