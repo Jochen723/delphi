@@ -66,8 +66,8 @@ function survey_question_evaluation_form() {
     }
 
 
-    $question_id = arg(1);
-    $user_id = arg(2);
+    $question_id = arg(1); //get question id from url
+    $user_id = arg(2); //get user id from url
     $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question_id;
     $result = db_query($sql);
     foreach ($result as $item) {
