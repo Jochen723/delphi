@@ -374,6 +374,7 @@ function get_graphic($id, $isRadioButton) {
     if($isRadioButton) {
         $min = 1;
         $max = 5;
+
     } else {
 
         $min = $testArrayOverall[0];
@@ -389,51 +390,96 @@ function get_graphic($id, $isRadioButton) {
         $avg = round($avg/$max*100);
     }
 
+	  $links = array('Min = ' . $min, 'Max = ' . $max,); //TODO Max min werte
 
-    /*
-    drupal_set_message("Average: ".$avg_absolut." => ".$avg."%");
-    drupal_set_message("Min: ".$min);
-    drupal_set_message("Max: ".$max);
-    drupal_set_message("Median: ".$median_absolut." => ".$median."%");
-    drupal_set_message("First: ".$first_quantil_absolut." => ".$first_quantil."%");
-    drupal_set_message("Third: ".$third_quantil_absolut." => ".$third_quantil."%");
-*/
-
-
-    $test = '
-      <div id="eins" class="container">
-          <div class="boxplot">
-              <div class="box linie"> </div>
-              <div class="box whisker"> </div>
-              <div class="box interquart" style="margin-left: '.$first_quantil.'%;width: '.$third_quantil2.'%;"> </div>
-              <div class="box median" style="margin-left: '.$median.'%;"> </div>
-              <div class="box mittel" style="margin-left: '.$avg.'%;"> </div>
-
-
-
-
-              <span class="schild s_min" style="margin-left: 0%;">'.$min.'</span>
-              <span class="schild min s_average" style="margin-left: '.$avg.'%;"> '.$avg_absolut.' </span>
-              <span class="schild min s_median" style="margin-left: '.$median.'%;"> '.$median_absolut.' </span>
-              <span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> '.$third_quantil_absolut.' </span>
-              <span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> '.$first_quantil_absolut.' </span>
-              <span class="schild min s_max" style="margin-left: 100%;">'.$max.'</span>
-
-
-
-
-
-
-
-          </div>
-      </div>
-    ';
+	  //Boxplot
+	  $test = array(
+		'container' => array(
+		  '#prefix' => '<div id="eins">',
+		  '#suffix' => '</div>',
+		  'markup' => array(
+			'#markup' => 'This is inside the container div',
+		  ),
+		  'boxplot' => array(
+			'#prefix' => '<div class="boxplot">',
+			'#suffix' => '</div>',
+			'boxlinie' => array(
+			  '#prefix' => '<div class="box linie">',
+			  '#suffix' =>'</div>',
+			),
+			'boxwhisker' => array(
+			  '#prefix' => '<div class="box whisker">',
+			  '#suffix' =>'</div>',
+			),
+			'boxinterquant' => array(
+			  '#prefix' => '<div class="box interquart" style="margin-left: '. $first_quantil. '%;width: '.$third_quantil2.'%;">',
+			  '#suffix' =>'</div>',
+			),
+			'boxmedian' => array(
+			  '#prefix' => '<div class="box median" style="margin-left: '.$median.'%;">',
+			  '#suffix' =>'</div>',
+			),
+			'boxmittel' => array(
+			  '#prefix' => '<div class="box mittel" style="margin-left: '.$avg.'%;">',
+			  '#suffix' =>'</div>',
+			),
+			's_min' => array(
+			  '#prefix' => '<span class="schild s_min" style="margin-left: 0%;">',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $min,
+			  ),
+			),
+			's_average' => array(
+			  '#prefix' => '<span class="schild min s_average" style="margin-left: '.$avg.'%;">',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $avg_absolut,
+			  ),
+			),
+			's_median' => array(
+			  '#prefix' => '<span class="schild min s_median" style="margin-left: '.$median.'%;"> ',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $median_absolut,
+			  ),
+			),
+			's_third_quantil' => array(
+			  '#prefix' => '<span class="schild min s_third_quantil" style="margin-left: '.$third_quantil.'%;"> ',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $third_quantil_absolut,
+			  ),
+			),
+			's_first_quantil' => array(
+			  '#prefix' => '<span class="schild s_first_quantil" style="margin-left: '.$first_quantil.'%;"> ',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $first_quantil_absolut,
+			  ),
+			),
+			's_max' => array(
+			  '#prefix' => '<span class="schild min s_max" style="margin-left: 100%;"> ',
+			  '#suffix' =>'</span>',
+			  'markup' => array(
+				'#markup' => $max,
+			  ),
+			),
+			'legend' => array(
+			  '#theme' => 'item_list',
+			  '#items' => $links,
+			  '#type' => 'ul',
+			  '#attributes' => array('class' => 'my-list'),
+			),
+		  ),
+		),
+	  );
 
     }
 
 
 
-        return $test;
+        return render($test);
 }
 
 function getQuantil($array) {
