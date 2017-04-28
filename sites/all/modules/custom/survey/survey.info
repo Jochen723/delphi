@@ -1,3 +1,5 @@
 name = Umfrage
 description = Testbeschreibung
 core = 7.x
+
+files[] = tests/survey.test
