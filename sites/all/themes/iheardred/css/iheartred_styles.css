@@ -73,86 +73,122 @@ fieldset {
   float: left;
   margin-left: calc(17.5% - 15.6px); }
 
-.form-item-dim0.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim0.form-type-radio {
+  position: relative; }
+  .form-item-dim0.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim1.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim1.form-type-radio {
+  position: relative; }
+  .form-item-dim1.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim2.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim2.form-type-radio {
+  position: relative; }
+  .form-item-dim2.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim3.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim3.form-type-radio {
+  position: relative; }
+  .form-item-dim3.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim4.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim4.form-type-radio {
+  position: relative; }
+  .form-item-dim4.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim5.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim5.form-type-radio {
+  position: relative; }
+  .form-item-dim5.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim6.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim6.form-type-radio {
+  position: relative; }
+  .form-item-dim6.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim7.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim7.form-type-radio {
+  position: relative; }
+  .form-item-dim7.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
-.form-item-dim8.form-type-radio label.option {
-  display: block;
-  clear: both;
-  float: none;
-  position: absolute;
-  word-break: break-all;
-  width: 4em;
-  line-height: 0.9; }
+.form-item-dim8.form-type-radio {
+  position: relative; }
+  .form-item-dim8.form-type-radio label.option {
+    display: block;
+    position: absolute;
+    float: none;
+    left: 0.9em;
+    width: 4rem;
+    font-size: 1em;
+    line-height: 1.1;
+    transform: rotate(90deg);
+    transform-origin: left top; }
 
 /* Es wird ein label Element ben├Âtigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -216,6 +252,9 @@ input.form-radio:checked .form-radio:after {
   float: left; }
   .form-textarea-wrapper .form-textarea {
     width: 100%; }
+
+.form-type-textarea {
+  margin-top: 6rem; }
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 .container {
@@ -292,5 +331,14 @@ input.form-radio:checked .form-radio:after {
 
 .schild.s_third_quantil {
   background-color: #74ebff; }
+
+/* Legende fuer Boxplots */
+#legend {
+  float: right;
+  position: absolute;
+  display: block;
+  right: -43%;
+  top: -82%;
+  line-height: 0; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

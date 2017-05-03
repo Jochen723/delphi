@@ -123,14 +123,17 @@ $dimensions: 8;
   @for $i from 0 through $dimensions {
     .form-item-dim#{$i}.form-type-radio {
       @extend %radio_btn_x_dims;
+      position: relative;
       & label.option {
         display: block;
-        clear: both;
-        float: none;
         position: absolute;
-        word-break: break-all;
-        width: 4em;
-        line-height: 0.9;
+        float: none;
+        left: 0.9em;
+        width: 4rem;
+        font-size: 1em;
+        line-height: 1.1;
+        transform: rotate(90deg);
+        transform-origin: left top;
       }
     }
   }
@@ -212,6 +215,10 @@ input.form-radio:checked .form-radio:after {
   & .form-textarea {
     width: 100%;
   }
+}
+
+.form-type-textarea {
+  margin-top: 6rem;
 }
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
@@ -305,4 +312,15 @@ input.form-radio:checked .form-radio:after {
 
 .schild.s_third_quantil {
   background-color: $color-third-quantil;
+}
+
+/* Legende fuer Boxplots */
+
+#legend {
+  float: right;
+  position: absolute;
+  display: block;
+  right: -43%;
+  top: -82%;
+  line-height: 0;
 }
