@@ -459,14 +459,16 @@ function get_graphic($id, $isRadioButton, $links)
                             '#markup' => $max,
                         ),
                     ),
-                    'legend' => array(
-                        '#theme' => 'item_list',
-                        '#items' => $links,
-                        '#type' => 'ol',
-                        '#prefix' => '<div id="legend">',
-                        '#suffix' => '</div>',
-                        '#attributes' => array('class' => 'my-list'),
-                    ),
+                ),
+            ), 'test' => array(
+                'legend' => array(
+                    '#prefix' => '<div class="boxplot_legend_container"><ul class="boxplot_legend">
+    <li> Unteres Quartil </li>
+    <li> Median </li>
+    <li> Mittelwert </li>
+    <li> Oberes Quartil </li>
+  </ul>',
+                    '#suffix' => '</div>',
                 ),
             ),
         );
