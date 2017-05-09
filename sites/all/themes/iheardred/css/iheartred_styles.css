@@ -268,7 +268,8 @@ input.form-radio:checked .form-radio:after {
   width: 70%;
   height: 40px;
   max-width: 600px;
-  position: relative; }
+  position: relative;
+  float: left; }
 
 .box {
   width: 100%;
@@ -333,10 +334,11 @@ input.form-radio:checked .form-radio:after {
   background-color: #74ebff; }
 
 /* Legende fuer Boxplots */
-#legend {
+.legend {
   float: right;
-  position: absolute;
   display: block;
-  line-height: 0; }
+  width: 25%;
+  line-height: 1;
+  margin-top: -1rem; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

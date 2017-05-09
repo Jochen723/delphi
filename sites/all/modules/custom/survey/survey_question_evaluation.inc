@@ -459,14 +459,15 @@ function get_graphic($id, $isRadioButton, $links)
                             '#markup' => $max,
                         ),
                     ),
-                    'legend' => array(
-                        '#theme' => 'item_list',
-                        '#items' => $links,
-                        '#type' => 'ol',
-                        '#prefix' => '<div id="legend">',
-                        '#suffix' => '</div>',
-                        '#attributes' => array('class' => 'my-list'),
-                    ),
+
+                ),
+                'legend' => array(
+                    '#theme' => 'item_list',
+                    '#items' => $links,
+                    '#type' => 'ul',
+                    '#prefix' => '<div class="legend">',
+                    '#suffix' => '</div>',
+                    '#attributes' => array('class' => 'my-list'),
                 ),
             ),
 

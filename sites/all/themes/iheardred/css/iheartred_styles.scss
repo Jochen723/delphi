@@ -238,6 +238,7 @@ input.form-radio:checked .form-radio:after {
   height: 40px;
   max-width: 600px;
   position: relative;
+  float:left;
 }
 
 .box {
@@ -316,9 +317,10 @@ input.form-radio:checked .form-radio:after {
 
 /* Legende fuer Boxplots */
 
-#legend {
+.legend {
   float: right;
-  position: absolute;
   display: block;
-  line-height: 0;
+  width: 25%;
+  line-height: 1;
+  margin-top: -1rem;
 }
