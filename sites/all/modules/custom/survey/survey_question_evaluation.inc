@@ -106,7 +106,7 @@ function survey_question_evaluation_form()
         }
     }
     //Es wird über alle Antworten iteriert (graues Feld in der UI)
-    for ($i = 0; $i < /*sizeof($answers)*/1; $i++) {
+    for ($i = 0; $i < sizeof($answers); $i++) {
 
         //Die Fragen-ID wird aus der URL ausgelesen
         $question_id = arg(1);
@@ -354,8 +354,6 @@ function get_graphic($id, $isRadioButton, $links)
         }
     }
 
-    $testArrayOverall = array(1,1,1,1,1,1,1,1,1,1,1);
-
     sort($testArrayOverall);
 
     for($i=0;$i<sizeof($testArrayOverall);$i++) {
@@ -389,6 +387,10 @@ function get_graphic($id, $isRadioButton, $links)
 
         $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
     }
+
+    print_r($links);
+
+    $links = array(0 =>"unteres Quartil", 1=>"Average", 2=>"Median", 3=>"oberes Quartil");
 
         $test = array(
             'container' => array(
@@ -459,7 +461,6 @@ function get_graphic($id, $isRadioButton, $links)
                             '#markup' => $max,
                         ),
                     ),
-
                 ),
                 'legend' => array(
                     '#theme' => 'item_list',
