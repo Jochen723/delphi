@@ -131,14 +131,15 @@ function delphi_render() {
 				'#markup' => $max,
 			  ),
 			),
+			'legend' => array(
+				'#theme' => 'item_list',
+				'#items' => $links,
+				'#type' => 'ul',
+				'#attributes' => array('class' => 'my-list'),
+			),
 
 		  ),
-		'legend' => array(
-		  '#theme' => 'item_list',
-		  '#items' => $links,
-		  '#type' => 'ul',
-		  '#attributes' => array('class' => 'my-list'),
-		),
+
 	),
   );
 
