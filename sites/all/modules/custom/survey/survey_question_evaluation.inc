@@ -408,19 +408,23 @@ function get_graphic($id, $isRadioButton, $links)
                         '#suffix' => '</div>',
                     ),
                     'boxinterquant' => array(
-                        '#prefix' => '<div class="box interquart" style="margin-left: ' . $first_quantil["procent"] . '%;width: ' . $third_quantil2 . '%;">',
+                        '#prefix' => '<div class="box interquart" style="left: ' . $first_quantil["procent"] . '%;">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxthirdquant' => array(
+                        '#prefix' => '<div class="box thirdquant" style="left: calc(' . $third_quantil2 . '% + ' . $first_quantil["procent"] . '%); width: ' . $third_quantil2 . '%; margin-left: -' . $third_quantil2 . '%;">',
                         '#suffix' => '</div>',
                     ),
                     'boxmedian' => array(
-                        '#prefix' => '<div class="box median" style="margin-left: ' . $median["procent"] . '%;">',
+                        '#prefix' => '<div class="box median" style="left: ' . $median["procent"] . '%;">',
                         '#suffix' => '</div>',
                     ),
                     'boxmittel' => array(
-                        '#prefix' => '<div class="box mittel" style="margin-left: ' . $avg["procent"] . '%;">',
+                        '#prefix' => '<div class="box mittel" style="left: ' . $avg["procent"] . '%;">',
                         '#suffix' => '</div>',
                     ),
                     's_min' => array(
-                        '#prefix' => '<span class="schild s_min" style="margin-left: 0%;">',
+                        '#prefix' => '<span class="schild s_min" style="left: 0%;">',
                         '#suffix' => '</span>',
                         'markup' => array(
                             '#markup' => $min,
