@@ -6,27 +6,26 @@
  * Time: 10:21
  */
 
+require_once("survey_question_evaluation.inc");
 
 function survey_menu()
 {
 
     $items['start_survey'] = array(
         'title' => 'Umfrage starten',
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_start_form'),
     );
 
     $items['survey_question/%/%'] = array(
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_form'),
+        'file' => 'survey_answer_question.inc'
     );
 
     $items['survey_question_evaluation/%/%'] = array(
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_question_evaluation_form'),
@@ -35,13 +34,11 @@ function survey_menu()
 
     $items['finish_survey/%'] = array(
         'title' => 'Ende der Umfrage',
-        'access callback' => true,
         'access callback' => 'user_is_logged_in',
         'page callback' => 'survey_finish_survey',
     );
 
     $items['add_questions/%'] = array(
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_add_question_form'),
@@ -49,7 +46,6 @@ function survey_menu()
     );
 
     $items['question_overview'] = array(
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_question_overview_form'),
@@ -57,14 +53,12 @@ function survey_menu()
     );
 
     $items['delete_question/%'] = array(
-        'access callback' => true,
         'access callback' => 'user_is_logged_in',
         'page callback' => 'survey_delete_question',
         'file' => 'survey_question_overview.inc'
     );
 
     $items['change_question/%/%'] = array(
-        'access callback' => true,
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_change_question_form'),
@@ -74,211 +68,37 @@ function survey_menu()
     return $items;
 }
 
-function survey_finish_survey()
-{
-    return "Danke für Ihre Teilnahme, die Umfrage ist nun beendet!";
-}
-
+/*
+ * Diese Funktion lädt alle verfügbaren Fragen der Umfrage aus der Datenbank und sortiert sie nach der ID
+ * aufsteigend
+ */
 function survey_get_all_questions()
 {
     $questions = array();
     $sql = "SELECT * FROM {question} ORDER BY question_id";
-    $result = db_query($sql);
+    $question_result = db_query($sql);
 
-    foreach ($result as $item) {
-        array_push($questions, $item);
+    foreach ($question_result as $question) {
+        array_push($questions, $question);
     }
 
     return $questions;
 }
 
+/*
+ * Diese Funktion ermittelt alle verfügbaren Antwortmöglichkeiten einer Frage und gibt sie sortiert nach der ID
+ * aufsteigend zurück. Die ID der entsprechenden Frage wird als Parameter übergeben
+ */
 function survey_get_answers_from_question($question_id)
 {
-
     $answers = array();
-    $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id. " ORDER BY answers_id";
-    $result = db_query($sql);
-    foreach ($result as $item) {
-        array_push($answers, $item);
+    $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id . " ORDER BY answers_id";
+    $answer_result = db_query($sql);
+    foreach ($answer_result as $answer) {
+        array_push($answers, $answer);
     }
 
     return $answers;
-}
-
-function survey_form()
-{
-    $user_pw = arg(2);
-    $question = arg(1);
-
-    $form = "";
-    $user_answers = survey_get_answers();
-
-    $questions = survey_get_all_questions();
-    $quantity = sizeof($questions);
-
-    if (survey_check_valid_user_pw($user_pw) && $quantity >= $question) {
-        $text = $questions[$question - 1]->title;
-        $headline = "<h1>Frage " . $question . "(a)</h1><h2>" . $text . "</h2><br><br>";
-
-
-        $form['test']['form_item'] = array(
-            '#type' => 'markup',
-            '#title' => t('My Form Item'),
-            '#prefix' => $headline,
-        );
-
-        $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = ".$questions[$question - 1]->question_id ." ORDER BY answer_id";
-        $result = db_query($sql);
-
-        $test = array(1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "");
-
-        $bezeichnungsArray = array();
-
-        $durchlaufsID = 0;
-
-        $checkID = 0;
-
-        $answer_id = 0;
-
-        $uebereinstimmungsHelper = 0;
-        foreach ($result as $item) {
-
-            if($durchlaufsID > 0) {
-                if($item->answer_id == $answer_id) {
-                    $checkID++;
-                    $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
-
-                } else {
-                    $checkID = 0;
-                    $uebereinstimmungsHelper++;
-                    $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
-                    $answer_id = $item->answer_id;
-
-                }
-            } else {
-                $bezeichnungsArray[$uebereinstimmungsHelper][$checkID] = $item->title; //Array[0][0]
-                $answer_id = $item->answer_id;
-            }
-
-            $durchlaufsID++;
-
-        }
-
-        $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
-
-
-        for ($i = 0; $i < sizeof($answers); $i++) {
-
-            if(!isset($user_answers[$i]->answer)) {
-                $default_value = "";
-            } else {
-                $default_value = $user_answers[$i]->answer;
-            }
-
-
-            if ($answers[$i]->isRadioButton) {
-                $form['dim' . $i] = array(
-                    '#type' => 'radios',
-                    '#prefix' => '<div id ="visualization' . $i . '">',
-                    '#title' => $answers[$i]->description,
-                    '#required' => true,
-                    '#options' => $bezeichnungsArray[$i],
-                );
-            } else {
-
-
-                $form['quantity' . $i] = array(
-                    '#type' => 'textfield',
-                    '#title' => $answers[$i]->description,
-                    '#size' => 2,
-                    '#maxlength' => 2,
-                    '#default_value' => $default_value,
-                );
-            }
-        }
-
-
-        if($question == 1) {
-        } else {
-            $form['back'] = array(
-                '#type' => 'submit',
-                '#value' => 'Zurück',
-                '#submit' => array('survey_get_back_to_start')
-            );
-        }
-
-
-
-        $form['submit'] = array(
-            '#type' => 'submit',
-            '#value' => 'Weiter',
-            '#submit' => array('survey_get_evaluation')
-        );
-
-    }
-
-    return $form;
-
-}
-
-function survey_get_back_to_start()
-{
-
-    $question_id = arg(1);
-    $user_pw = arg(2);
-
-
-    if($question_id == 1) {
-        drupal_goto("");
-    } else {
-        $question_id--;
-        drupal_goto("survey_question_evaluation/".$question_id."/".$user_pw);
-    }
-
-}
-
-function survey_get_evaluation($form, &$form_state)
-{
-
-    $question = arg(1);
-    $user_pw = arg(2);
-
-    $check = false;
-
-    $questions = survey_get_all_questions();
-    $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
-
-    for ($i = 0; $i < sizeof($answers); $i++) {
-
-
-        if ($answers[$i]->isRadioButton) {
-            $dim1 = $form_state['values']['dim' . $i];
-        } else {
-
-            $dim1 = $form_state['values']['quantity' . $i];
-        }
-
-            $sql = "SELECT * FROM {question_user_answers} WHERE answer_id = ".$i." AND question_id = ".$question. " AND user_pw = '".$user_pw."'";
-            $result = db_query($sql);
-
-            if($result->rowCount()) {
-                $sql = "UPDATE {question_user_answers} SET answer = ".$dim1." WHERE answer_id = ".$i." AND question_id = ".$question." AND user_pw = '".$user_pw."' ";
-                db_query($sql);
-            } else {
-                db_insert('question_user_answers')
-                    ->fields(array(
-                        'question_id' => $question,
-                        'answer_id' => $i,
-                        'answer' => $dim1,
-                        'user_pw' => $user_pw,
-                        'comment' => "",
-                    ))
-                    ->execute();
-            }
-
-        }
-        drupal_goto("survey_question_evaluation/".$question."/".$user_pw);
-
 }
 
 function survey_start_form()
@@ -314,12 +134,10 @@ function survey_generateRandomString($length)
     return $randomString;
 }
 
-function survey_get_answers()
+function survey_get_answers($question_id, $user_passcode)
 {
-    $question = arg(1);
-    $user_id = arg(2);
     $object = array();
-    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = ".$question;
+    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_passcode . "' AND question_id = " . $question_id;
     $result = db_query($sql);
 
     foreach ($result as $item) {
@@ -360,8 +178,8 @@ function survey_get_questions($current)
     }
 
 
-    if(sizeof($questions) >= $current+1) {
-        return $current+1;
+    if (sizeof($questions) >= $current + 1) {
+        return $current + 1;
     } else {
         return -1;
     }
