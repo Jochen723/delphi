@@ -6,7 +6,7 @@
  * Time: 10:48
  */
 
-require_once ("survey_create_boxplot.inc");
+require_once("survey_create_boxplot.inc");
 
 function survey_question_evaluation_form()
 {
@@ -37,51 +37,7 @@ function survey_question_evaluation_form()
     $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_id - 1]->question_id . " ORDER BY answer_id";
     $button_title_result = db_query($sql);
 
-    //In diese Variable werden die Antwortmöglichkeiten für jede Frage eingefügt
-    $button_title_array = array();
-
-    //Diese Variable zählt die Durchgänge innerhalb der foreach-Schleife
-    $iterations = 0;
-
-    //Diese Variable zählt die Antwortmöglichkeiten jeder Antwort-ID
-    $response_option_counter = 0;
-
-    //Diese Variable dient zum Vergleich zweier Antwort-IDs
-    $answer_id = 0;
-
-    //Diese Variable zählt die Anzahl der Antworten
-    $answer_id_counter = 0;
-
-    //Es wird über alle Antwortmöglichkeiten iteriert
-    foreach ($button_title_result as $button_title) {
-
-        //Sollte es mindestens der zweite Durchlauf sein:
-        if ($iterations > 0) {
-
-            //Sollte die ID der aktuellen Antwort mit der vorigen übereinstimmen:
-            if ($button_title->answer_id == $answer_id) {
-
-                //Die Antwortmöglichkeit wird um eins erhöht und eingefügt
-                $response_option_counter++;
-                $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
-
-            } else {
-
-                //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
-                $response_option_counter = 0;
-                $answer_id_counter++;
-                $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
-                $answer_id = $button_title->answer_id;
-
-            }
-        } else {
-
-            //Im ersten Durchlauf wird das Array mit der ersten Antwort-ID und der ersten Antwortmöglichkeit befüllt.
-            $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
-            $answer_id = $button_title->answer_id;
-        }
-        $iterations++;
-    }
+    $button_title_array = survey_get_button_titles($button_title_result);
 
     //Die ID der Frage wird aus der URL gelesen
     $question_id = arg(1);
@@ -143,6 +99,8 @@ function survey_question_evaluation_form()
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
             );
+
+            //$button_title_array[$i] = array(1 =>"", 2 => "", 3 => "", 4=> "", 5=>"", 6=>"");
 
             $form['fieldset' . $i]['dim' . $i] = array(
                 '#type' => 'radios',
@@ -356,21 +314,20 @@ function get_graphic($id, $isRadioButton, $links)
 
     sort($testArrayOverall);
 
-    for($i=0;$i<sizeof($testArrayOverall);$i++) {
-        if($testArrayOverall[$i] >4) {
+    for ($i = 0; $i < sizeof($testArrayOverall); $i++) {
+        if ($testArrayOverall[$i] > 4) {
             unset($testArrayOverall[$i]);
         }
     }
 
-    if($isRadioButton) {
+    if ($isRadioButton) {
         $min = 1;
 
         $max = 5;
         $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
         $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
-        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton,4);
+        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
         $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
-
 
 
         $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
@@ -378,7 +335,7 @@ function get_graphic($id, $isRadioButton, $links)
         $max = array_pop($testArrayOverall);
         $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
         $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
-        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton,$max);
+        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
         $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
 
         $min = array_shift($testArrayOverall);
@@ -388,9 +345,7 @@ function get_graphic($id, $isRadioButton, $links)
         $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
     }
 
-    print_r($links);
-
-    $links = array(0 =>"unteres Quartil", 1=>"Average", 2=>"Median", 3=>"oberes Quartil");
+    $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
 
         $test = array(
             'container' => array(
@@ -544,4 +499,56 @@ function roundToValidValue($value)
         $zahl = $value;
     }
     return $zahl;
+}
+
+function survey_get_button_titles($button_title_result)
+{
+
+    //In diese Variable werden die Antwortmöglichkeiten für jede Frage eingefügt
+    $button_title_array = array();
+
+    //Diese Variable zählt die Durchgänge innerhalb der foreach-Schleife
+    $iterations = 0;
+
+    //Diese Variable zählt die Antwortmöglichkeiten jeder Antwort-ID
+    $response_option_counter = 0;
+
+    //Diese Variable dient zum Vergleich zweier Antwort-IDs
+    $answer_id = 0;
+
+    //Diese Variable zählt die Anzahl der Antworten
+    $answer_id_counter = 0;
+
+    //Es wird über alle Antwortmöglichkeiten iteriert
+    foreach ($button_title_result as $button_title) {
+
+        //Sollte es mindestens der zweite Durchlauf sein:
+        if ($iterations > 0) {
+
+            //Sollte die ID der aktuellen Antwort mit der vorigen übereinstimmen:
+            if ($button_title->answer_id == $answer_id) {
+
+                //Die Antwortmöglichkeit wird um eins erhöht und eingefügt
+                $response_option_counter++;
+                $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
+
+            } else {
+
+                //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
+                $response_option_counter = 0;
+                $answer_id_counter++;
+                $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
+                $answer_id = $button_title->answer_id;
+
+            }
+        } else {
+
+            //Im ersten Durchlauf wird das Array mit der ersten Antwort-ID und der ersten Antwortmöglichkeit befüllt.
+            $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
+            $answer_id = $button_title->answer_id;
+        }
+        $iterations++;
+    }
+
+    return $button_title_array;
 }
