@@ -8,7 +8,7 @@ $color-middle: #999;
 $color-bright: #fff;
 
 $color-first-quantil: #29c95f;
-$color-third-quantil: #74ebff;
+$color-third-quantil: #27abf6;
 $color-median: #ff7d5f;
 $color-average: #ff5bbd;
 
@@ -90,7 +90,7 @@ fieldset {
 
 .form-item {
   width: 100%;
-  margin: 2rem auto 1rem auto;
+  margin: auto auto 1rem auto;
 }
 
 .form-item-quantity {
@@ -121,19 +121,24 @@ $dimensions: 8;
 
 @mixin radio_btn_x_dims {
   @for $i from 0 through $dimensions {
-    .form-item-dim#{$i}.form-type-radio {
-      @extend %radio_btn_x_dims;
-      position: relative;
-      & label.option {
-        display: block;
-        position: absolute;
-        float: none;
-        left: 0.9em;
-        width: 4rem;
-        font-size: 1em;
-        line-height: 1.1;
-        transform: rotate(90deg);
-        transform-origin: left top;
+    .form-item-dim#{$i} {
+      margin-top: 4rem;
+
+      &.form-type-radio {
+        @extend %radio_btn_x_dims;
+        position: relative;
+
+        & label.option {
+          display: block;
+          position: absolute;
+          float: none;
+          left: 0.9em;
+          width: 4rem;
+          font-size: 1em;
+          line-height: 1.1;
+          transform: rotate(29deg);
+          transform-origin: 15px 6px;
+        }
       }
     }
   }
@@ -218,8 +223,13 @@ input.form-radio:checked .form-radio:after {
 }
 
 .form-type-textarea {
-  margin-top: 6rem;
+  margin-top: 4rem;
 }
+
+.fieldset-wrapper .form-type-textfield {
+  margin-top: 4rem;
+}
+
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 
@@ -260,28 +270,37 @@ input.form-radio:checked .form-radio:after {
   border-right: 1px solid $color-middle;
 }
 
-.interquart {
+.thirdquant {
   background-color: $color-bright;
   background: repeating-linear-gradient(45deg, $color-middle, $color-middle 1px, transparent 1px, transparent 10px),
               linear-gradient(to bottom, $color-bright, $color-bright);
-  margin-left:60%;
   width: 35%;
   height: 40px;
   border: 1px solid $color-middle;
-  border-left: 6px solid $color-first-quantil;
   border-right: 6px solid $color-third-quantil;
 }
 
+
 .median,
-.mittel {
+.mittel,
+.interquart {
   width: 1px;
-  margin-left: 72%;
   border-right: 6px solid $color-average;
   bottom: 0;
+  z-index: 99;
+}
+
+.interquart {
+    border-right: 6px solid $color-first-quantil;
+    height: 40px;
+}
+
+.mittel {
+  top: 0;
 }
 
 .median {
-  border-left: 6px solid transparent;
+  border-left: 0px solid transparent;
   border-right: 6px solid $color-median;
 }
 
@@ -295,6 +314,7 @@ input.form-radio:checked .form-radio:after {
   background-color: $color-middle;
   border-radius: 300px;
   text-align: center;
+  z-index: 100;
 }
 
 .schild.s_median,
@@ -303,12 +323,17 @@ input.form-radio:checked .form-radio:after {
   background-color: $color-average;
 }
 
+.schild.s_average {
+  margin-top: 4rem;
+}
+
 .schild.s_median {
   background-color: $color-median;
 }
 
 .schild.s_first_quantil {
   background-color: $color-first-quantil;
+  margin-top: 2rem;
 }
 
 .schild.s_third_quantil {
@@ -320,7 +345,36 @@ input.form-radio:checked .form-radio:after {
 .legend {
   float: right;
   display: block;
-  width: 25%;
-  line-height: 1;
+  width: 20%;
   margin-top: -1rem;
-}
+  line-height: 1;
+  font-weight: bold;
+
+  & .item-list ul li {
+    background: none, $color-bright;
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+    }
+
+  & .item-list ul li:nth-child(1) {
+    background: none, $color-first-quantil;
+    color: $color-bright;
+    }
+
+  & .item-list ul li:nth-child(2) {
+    background: none, $color-average;
+    color: $color-bright;
+    }
+
+  & .item-list ul li:nth-child(3) {
+    background: none, $color-median;
+    color: $color-bright;
+    }
+
+  & .item-list ul li:nth-child(4) {
+    background: none, $color-third-quantil;
+    color: $color-bright;
+    }
+
+  }

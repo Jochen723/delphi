@@ -53,7 +53,7 @@ fieldset {
 /* Radio-Buttons besser zug├ñnglich stylen */
 .form-item {
   width: 100%;
-  margin: 2rem auto 1rem auto; }
+  margin: auto auto 1rem auto; }
 
 .form-item-quantity {
   width: auto; }
@@ -73,122 +73,140 @@ fieldset {
   float: left;
   margin-left: calc(17.5% - 15.6px); }
 
-.form-item-dim0.form-type-radio {
-  position: relative; }
-  .form-item-dim0.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim0 {
+  margin-top: 4rem; }
+  .form-item-dim0.form-type-radio {
+    position: relative; }
+    .form-item-dim0.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim1.form-type-radio {
-  position: relative; }
-  .form-item-dim1.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim1 {
+  margin-top: 4rem; }
+  .form-item-dim1.form-type-radio {
+    position: relative; }
+    .form-item-dim1.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim2.form-type-radio {
-  position: relative; }
-  .form-item-dim2.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim2 {
+  margin-top: 4rem; }
+  .form-item-dim2.form-type-radio {
+    position: relative; }
+    .form-item-dim2.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim3.form-type-radio {
-  position: relative; }
-  .form-item-dim3.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim3 {
+  margin-top: 4rem; }
+  .form-item-dim3.form-type-radio {
+    position: relative; }
+    .form-item-dim3.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim4.form-type-radio {
-  position: relative; }
-  .form-item-dim4.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim4 {
+  margin-top: 4rem; }
+  .form-item-dim4.form-type-radio {
+    position: relative; }
+    .form-item-dim4.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim5.form-type-radio {
-  position: relative; }
-  .form-item-dim5.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim5 {
+  margin-top: 4rem; }
+  .form-item-dim5.form-type-radio {
+    position: relative; }
+    .form-item-dim5.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim6.form-type-radio {
-  position: relative; }
-  .form-item-dim6.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim6 {
+  margin-top: 4rem; }
+  .form-item-dim6.form-type-radio {
+    position: relative; }
+    .form-item-dim6.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim7.form-type-radio {
-  position: relative; }
-  .form-item-dim7.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim7 {
+  margin-top: 4rem; }
+  .form-item-dim7.form-type-radio {
+    position: relative; }
+    .form-item-dim7.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
-.form-item-dim8.form-type-radio {
-  position: relative; }
-  .form-item-dim8.form-type-radio label.option {
-    display: block;
-    position: absolute;
-    float: none;
-    left: 0.9em;
-    width: 4rem;
-    font-size: 1em;
-    line-height: 1.1;
-    transform: rotate(90deg);
-    transform-origin: left top; }
+.form-item-dim8 {
+  margin-top: 4rem; }
+  .form-item-dim8.form-type-radio {
+    position: relative; }
+    .form-item-dim8.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
 
 /* Es wird ein label Element ben├Âtigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -254,7 +272,10 @@ input.form-radio:checked .form-radio:after {
     width: 100%; }
 
 .form-type-textarea {
-  margin-top: 6rem; }
+  margin-top: 4rem; }
+
+.fieldset-wrapper .form-type-textfield {
+  margin-top: 4rem; }
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 .container {
@@ -287,25 +308,31 @@ input.form-radio:checked .form-radio:after {
   border-left: 1px solid #999;
   border-right: 1px solid #999; }
 
-.interquart {
+.thirdquant {
   background-color: #fff;
   background: repeating-linear-gradient(45deg, #999, #999 1px, transparent 1px, transparent 10px), linear-gradient(to bottom, #fff, #fff);
-  margin-left: 60%;
   width: 35%;
   height: 40px;
   border: 1px solid #999;
-  border-left: 6px solid #29c95f;
-  border-right: 6px solid #74ebff; }
+  border-right: 6px solid #27abf6; }
 
 .median,
-.mittel {
+.mittel,
+.interquart {
   width: 1px;
-  margin-left: 72%;
   border-right: 6px solid #ff5bbd;
-  bottom: 0; }
+  bottom: 0;
+  z-index: 99; }
+
+.interquart {
+  border-right: 6px solid #29c95f;
+  height: 40px; }
+
+.mittel {
+  top: 0; }
 
 .median {
-  border-left: 6px solid transparent;
+  border-left: 0px solid transparent;
   border-right: 6px solid #ff7d5f; }
 
 .schild {
@@ -317,28 +344,51 @@ input.form-radio:checked .form-radio:after {
   color: #fff;
   background-color: #999;
   border-radius: 300px;
-  text-align: center; }
+  text-align: center;
+  z-index: 100; }
 
 .schild.s_median,
 .schild.s_average {
   margin-top: -3rem;
   background-color: #ff5bbd; }
 
+.schild.s_average {
+  margin-top: 4rem; }
+
 .schild.s_median {
   background-color: #ff7d5f; }
 
 .schild.s_first_quantil {
-  background-color: #29c95f; }
+  background-color: #29c95f;
+  margin-top: 2rem; }
 
 .schild.s_third_quantil {
-  background-color: #74ebff; }
+  background-color: #27abf6; }
 
 /* Legende fuer Boxplots */
 .legend {
   float: right;
   display: block;
-  width: 25%;
+  width: 20%;
+  margin-top: -1rem;
   line-height: 1;
-  margin-top: -1rem; }
+  font-weight: bold; }
+  .legend .item-list ul li {
+    background: none, #fff;
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px; }
+  .legend .item-list ul li:nth-child(1) {
+    background: none, #29c95f;
+    color: #fff; }
+  .legend .item-list ul li:nth-child(2) {
+    background: none, #ff5bbd;
+    color: #fff; }
+  .legend .item-list ul li:nth-child(3) {
+    background: none, #ff7d5f;
+    color: #fff; }
+  .legend .item-list ul li:nth-child(4) {
+    background: none, #27abf6;
+    color: #fff; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */
