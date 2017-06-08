@@ -16,13 +16,6 @@ function survey_question_overview_form() {
         '#prefix' => $headline,
     );
 
-
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => 'Weiter',
-        '#submit' => array('survey_get_evaluation')
-    );
-
     return $form;
 }
 
