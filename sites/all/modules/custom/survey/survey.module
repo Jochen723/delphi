@@ -68,8 +68,12 @@ function survey_menu()
     return $items;
 }
 
-function survey_finish_survey() {
-    return "Vielen Dank. Die Umfrage ist nun beendet.";
+/*
+ * Diese Funktion führt den Nutzer zurück ins Hauptmenü
+ */
+function survey_finish_survey()
+{
+    return "Danke für Ihre Teilnahme, die Umfrage ist nun beendet!";
 }
 
 /*

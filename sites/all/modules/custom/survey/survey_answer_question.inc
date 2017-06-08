@@ -106,14 +106,6 @@ function survey_form()
 }
 
 /*
- * Diese Funktion führt den Nutzer zurück ins Hauptmenü
- */
-function survey_finish_survey()
-{
-    return "Danke für Ihre Teilnahme, die Umfrage ist nun beendet!";
-}
-
-/*
  * Diese Funktion bringt den Nutzer zurück zur letzten Frage
  */
 function survey_get_back_to_start()
