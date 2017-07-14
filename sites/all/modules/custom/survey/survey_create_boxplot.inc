@@ -37,6 +37,8 @@ function survey_testtest($id, $isRadioButton, $links)
 function survey_get_average($testArrayOverall, $isRadioButton, $max)
 {
 
+    //print_r($testArrayOverall);
+
     $avg_array = array();
 
     $avg = (!empty($testArrayOverall) ? array_sum($testArrayOverall) / count($testArrayOverall) : 0);
@@ -139,6 +141,8 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
     $temp = array();
     $n = sizeof($testArrayOverall);
 
+
+
     foreach ($testArrayOverall as $item) {
         array_push($temp, $item);
     }
@@ -148,7 +152,7 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
     if($isRadioButton) {
         if ($np == round($np)) {
 
-            $third_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
+            $third_quantil = 0.5 * ($temp[$np] + $temp[$np+1]);
 
         } else {
             $np = ceil($np);
@@ -173,4 +177,7 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
     }
 
     return $third_quantil_array;
+
+
+    return 0;
 }

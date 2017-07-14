@@ -14,13 +14,23 @@ function survey_question_evaluation_form()
     //Die ID der Frage wird aus der URL gelesen
     $question_id = arg(1);
 
+
     //Es werden alle Fragen aus der Datenbank gelesen
     $questions = survey_get_all_questions();
+    $question_index = 0;
+
+    foreach ( $questions as $q) {
+        if($q->question_id == $question_id) {
+            break;
+        }
+        $question_index++;
+    }
+
 
     //DIe Überschrift wird erstellt
-    $headline = $questions[$question_id - 1]->title . " - Überprüfung der eigenen Einschätzung";
+    $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
     $headline = "
-        <h1>Frage " . $question_id . "(b)</h1>
+        <h1>Frage " . ($question_index+1) . "(b)</h1>
         <h2>" . $headline . "</h2><br>";
 
     $form['headline']['form_item'] = array(
@@ -29,12 +39,15 @@ function survey_question_evaluation_form()
         '#prefix' => $headline,
     );
 
+
     //In diese Variable werden alle Antwortmöglichkeiten der Frage eingespeichert
     $answers = array();
 
     //TODO Check for refactoring
     //SQL-> Get lables for radio buttons
-    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_id - 1]->question_id . " ORDER BY answer_id";
+
+
+    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_index]->question_id . " ORDER BY answer_id";
     $button_title_result = db_query($sql);
 
     $button_title_array = survey_get_button_titles($button_title_result);
@@ -49,6 +62,7 @@ function survey_question_evaluation_form()
     $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = " . $question_id;
     $answers_result = db_query($sql);
 
+
     //Die Antworten werden ausgelesen und in ein Array gespeichert
     foreach ($answers_result as $answer) {
 
@@ -61,6 +75,8 @@ function survey_question_evaluation_form()
             array_push($answers, $answer);
         }
     }
+
+
     //Es wird über alle Antworten iteriert (graues Feld in der UI)
     for ($i = 0; $i < sizeof($answers); $i++) {
 
@@ -71,7 +87,7 @@ function survey_question_evaluation_form()
         $questions = survey_get_all_questions();
 
         //Die aktuelle Fragen-ID wird ermittelt
-        $question_id = $questions[$question_id - 1]->question_id;
+        $question_id = $questions[$question_index]->question_id;
 
         //Die Antwortmöglichkeiten der Frage werden geladen
         $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id;
@@ -143,12 +159,12 @@ function survey_question_evaluation_form()
     }
 
     //Sollte es sich um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
-    if ($question_id == 1) {
+    if ($question_id != 0) {
     } else {
         $form['back'] = array(
             '#type' => 'submit',
             '#value' => 'Zurück',
-            '#submit' => array('survey_get_back_to_start')
+            '#submit' => array('survey_question_evaluation_get_back_to_last_question')
         );
     }
 
@@ -156,7 +172,7 @@ function survey_question_evaluation_form()
     $button_text = "Weiter zur nächsten Frage";
 
     //Die ID der nächsten Frage wird ermittelt
-    $id = survey_get_questions($question_id);
+    $id = survey_question_evaluation_get_next_question(arg(1));
 
     //Sollte es die letzte Frage sein, wird die Umfrage beendet
     if ($id == -1) {
@@ -169,7 +185,31 @@ function survey_question_evaluation_form()
         '#submit' => array('survey_get_next_question')
     );
 
+
     return $form;
+}
+
+function survey_question_evaluation_get_back_to_last_question() {
+    $question_id = arg(1);
+    $user_pw = arg(2);
+
+
+    //Es werden alle Fragen aus der Datenbank gelesen
+    $questions = survey_get_all_questions();
+    $question_index = 0;
+
+    foreach ( $questions as $q) {
+        if($q->question_id == $question_id) {
+            break;
+        }
+        $question_index++;
+    }
+    
+    if($question_index != 0) {
+        drupal_goto("survey_question_evaluation/" . $questions[$question_index-1]->question_id . "/" . $user_pw);
+    } else {
+        drupal_goto("survey_question_evaluation/" . $questions[$question_index]->question_id . "/" . $user_pw);
+    }
 }
 
 /*
@@ -204,8 +244,18 @@ function survey_get_next_question($form, &$form_state)
     //Es werden alle Fragen aus der Datenbank geladen
     $questions = survey_get_all_questions();
 
+    $question_index = 0;
+
+    foreach ( $questions as $q) {
+        if($q->question_id == $question) {
+            break;
+        }
+        $question_index++;
+    }
+
     //Es werden alle Antwortmöglichkeiten aus der Datenbank geladen
-    $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
+    $answers = survey_get_answers_from_question($questions[$question_index]->question_id);
+
 
     //Es wird über alle Antwortmöglichkeiten iteriert
     for ($i = 0; $i < sizeof($answers); $i++) {
@@ -245,14 +295,35 @@ function survey_get_next_question($form, &$form_state)
 
     //Es wird ermittelt, ob es eine weitere Frage gibt. Wenn ja, wird zur nächsten Frage weitergeleitet, andernfalls
     //wird die Umfrage beendet
-    $id = survey_get_questions($question);
+    $id = survey_question_evaluation_get_next_question($question);
 
     if ($id == -1) {
         drupal_goto("finish_survey/" . $user_id);
     } else {
         drupal_goto("survey_question/" . $id . "/" . $user_id);
     }
+
 }
+
+function survey_question_evaluation_get_next_question($question_id) {
+    $questions = array();
+    $sql = "SELECT * FROM {question} ORDER BY question_id";
+    $result = db_query($sql);
+
+    foreach ($result as $item) {
+        array_push($questions, $item->question_id);
+    }
+
+    $in = array_search($question_id, $questions);
+
+    if (sizeof($questions) > $in+1) {
+
+        return $questions[$in+1];
+    }else {
+        return -1;
+    }
+}
+
 
 //Get id for boxplot
 function searchForId($id, $array)
@@ -272,9 +343,6 @@ function searchForId($id, $array)
 function get_graphic($id, $isRadioButton, $links)
 {
 
-    survey_testtest($id, $isRadioButton, $links);
-
-
     $test = "";
 
     $question_id = arg(1);
@@ -284,7 +352,9 @@ function get_graphic($id, $isRadioButton, $links)
     $median = 0;
     $first_quantil = 0;
     $third_quantil = 0;
+    $third_quantil2 = 0;
     $avg = 0;
+    $min = 0;
 
     $median_absolut = 0;
     $first_quantil_absolut = 0;
@@ -298,54 +368,59 @@ function get_graphic($id, $isRadioButton, $links)
     $sql = "SELECT * FROM {question_user_answers} WHERE question_id = " . $question_id . " AND answer_id = " . $id;
     $result = db_query($sql);
 
-    foreach ($result as $item4) {
-        if (strcmp($user_pw, $item4->user_pw)) {
-            $user = $item4->user_pw;
-            $check = searchForId($user, $testArrayOverall2);
+    if($result->rowCount() >5) {
 
-            if ($check > -1) {
-                unset($testArrayOverall2[$check]);
-                unset($testArrayOverall[$check]);
+        foreach ($result as $item4) {
+            if (strcmp($user_pw, $item4->user_pw)) {
+                $user = $item4->user_pw;
+                $check = searchForId($user, $testArrayOverall2);
+
+                if ($check > -1) {
+                    unset($testArrayOverall2[$check]);
+                    unset($testArrayOverall[$check]);
+                }
+                array_push($testArrayOverall2, $item4);
+                array_push($testArrayOverall, $item4->answer);
             }
-            array_push($testArrayOverall2, $item4);
-            array_push($testArrayOverall, $item4->answer);
         }
-    }
 
-    sort($testArrayOverall);
+        sort($testArrayOverall);
 
-    for ($i = 0; $i < sizeof($testArrayOverall); $i++) {
-        if ($testArrayOverall[$i] > 4) {
-            unset($testArrayOverall[$i]);
+        for ($i = 0; $i < sizeof($testArrayOverall); $i++) {
+
+            /*
+            if ($testArrayOverall[$i] > 4) {
+                unset($testArrayOverall[$i]);
+            }*/
         }
-    }
 
-    if ($isRadioButton) {
-        $min = 1;
+        if ($isRadioButton) {
+            $min = 1;
 
-        $max = 5;
-        $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
-        $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
-        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
-        $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
+            $max = 5;
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
 
 
-        $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
-    } else {
-        $max = array_pop($testArrayOverall);
-        $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
-        $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
-        $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
-        $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
+            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
+        } else {
 
-        $min = array_shift($testArrayOverall);
+            $max = array_pop($testArrayOverall);
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
 
-        $max = array_pop($testArrayOverall);
+            $min = array_shift($testArrayOverall);
 
-        $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
-    }
+            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
+        }
 
-    $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
+
+
+        $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
 
         $test = array(
             'container' => array(
@@ -435,7 +510,10 @@ function get_graphic($id, $isRadioButton, $links)
 
         );
 
-    //}
+    } else {
+        $test = "Für den Boxplot werden weitere Daten benötigt.";
+    }
+
 
 
     return render($test);
@@ -533,8 +611,9 @@ function survey_get_button_titles($button_title_result)
                 $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
 
             } else {
-
                 //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
+                $response_option_counter++;
+                $button_title_array[$answer_id_counter][$response_option_counter] = "k.A.";
                 $response_option_counter = 0;
                 $answer_id_counter++;
                 $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
@@ -549,6 +628,10 @@ function survey_get_button_titles($button_title_result)
         }
         $iterations++;
     }
+
+    $response_option_counter++;
+    $button_title_array[$answer_id_counter][$response_option_counter] = "k.A.";
+
 
     return $button_title_array;
 }

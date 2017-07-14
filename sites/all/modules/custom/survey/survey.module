@@ -62,7 +62,7 @@ function survey_menu()
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',
         'page arguments' => array('survey_change_question_form'),
-        'file' => 'survey_add_question.inc'
+        'file' => 'survey_change_question.inc'
     );
 
     return $items;
@@ -182,13 +182,14 @@ function survey_get_questions($current)
     $result = db_query($sql);
 
     foreach ($result as $item) {
-        array_push($questions, $item);
+        array_push($questions, $item->question_id);
     }
 
+    $in = array_search($current, $questions);
 
-    if (sizeof($questions) >= $current + 1) {
-        return $current + 1;
-    } else {
+    if (sizeof($questions) > $in) {
+        return $questions[$in];
+    }else {
         return -1;
     }
 }

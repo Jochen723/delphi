@@ -27,20 +27,33 @@ function survey_form()
 
     //Es werden alle verfügbaren Fragen aus der Datenbank geladen und gezählt
     $questions = survey_get_all_questions();
-    $number_of_questions = sizeof($questions);
+    $number_of_questions = false;
+    $question_index = 0;
+
+    foreach ( $questions as $q) {
+        if($q->question_id == $question_id) {
+            $number_of_questions = true;
+            break;
+        }
+        $question_index++;
+    }
 
     //Sollte es ein valider Passcode des Nutzers sein und die Frage ebenfalls valide sein
-    if (survey_check_valid_user_pw($user_pass) && $number_of_questions >= $question_id) {
+    if (survey_check_valid_user_pw($user_pass) && $number_of_questions) {
+
 
         //Der Titel der Frage wird geladen, die Überschrift wird erstellt
-        $text = $questions[$question_id - 1]->title;
-        $headline = "<h1>Frage " . $question_id . "(a)</h1><h2>" . $text . "</h2><br><br>";
+        $text = $questions[$question_index]->title;
+        $headline = "<h1>Frage " . ($question_index+1) . "(a)</h1><h2>" . $text . "</h2><br><br>";
+
+
 
         //Die Antworten der Frage werden aus der Datenbank geladen
-        $answers = survey_get_answers_from_question($questions[$question_id - 1]->question_id);
+        $answers = survey_get_answers_from_question($questions[$question_index]->question_id);
+
 
         //Die Bezeichungen der Buttons bzw. der Textfelder werden aus der Datenbank geladen
-        $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_id - 1]->question_id . " ORDER BY answer_id";
+        $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_index]->question_id . " ORDER BY answer_id";
         $result = db_query($sql);
 
         //Die Bezeichungen der Buttons werden geladen
@@ -52,6 +65,7 @@ function survey_form()
             '#title' => t('My Form Item'),
             '#prefix' => $headline,
         );
+
 
         //Es wird über jede Antwortmöglichkeit iteriert
         for ($i = 0; $i < sizeof($answers); $i++) {
@@ -86,12 +100,13 @@ function survey_form()
             }
         }
 
+
         //Sollte es sich nicht um die erste Frage handeln
-        if ($question_id != 1) {
+        if ($question_index != 0) {
             $form['back'] = array(
                 '#type' => 'submit',
                 '#value' => 'Zurück',
-                '#submit' => array('survey_get_back_to_start')
+                '#submit' => array('survey_question_evaluation_get_back_to_last_question')
             );
         }
 
@@ -128,6 +143,8 @@ function survey_get_back_to_start()
  */
 function survey_get_evaluation($form, &$form_state)
 {
+
+
     //Die ID der Frage wird aus der URL ausgelesen
     $question = arg(1);
 
@@ -136,37 +153,39 @@ function survey_get_evaluation($form, &$form_state)
 
     //Es werden alle Fragen aus der Datenbank geladen
     $questions = survey_get_all_questions();
-    $answers = survey_get_answers_from_question($questions[$question - 1]->question_id);
+    $answers = survey_get_answers_from_question($question);
+
+
 
     for ($i = 0; $i < sizeof($answers); $i++) {
 
+       if ($answers[$i]->isRadioButton) {
+           $dim1 = $form_state['values']['dim' . $i];
+       } else {
+           $dim1 = $form_state['values']['quantity' . $i];
+       }
 
-        if ($answers[$i]->isRadioButton) {
-            $dim1 = $form_state['values']['dim' . $i];
-        } else {
+       $sql = "SELECT * FROM {question_user_answers} WHERE answer_id = " . $i . " AND question_id = " . $question . " AND user_pw = '" . $user_passcode . "'";
+       $result = db_query($sql);
 
-            $dim1 = $form_state['values']['quantity' . $i];
-        }
+       if ($result->rowCount()) {
+           $sql = "UPDATE {question_user_answers} SET answer = " . $dim1 . " WHERE answer_id = " . $i . " AND question_id = " . $question . " AND user_pw = '" . $user_passcode . "' ";
+           db_query($sql);
+       } else {
 
-        $sql = "SELECT * FROM {question_user_answers} WHERE answer_id = " . $i . " AND question_id = " . $question . " AND user_pw = '" . $user_passcode . "'";
-        $result = db_query($sql);
+           db_insert('question_user_answers')
+               ->fields(array(
+                   'question_id' => $question,
+                   'answer_id' => $i,
+                   'answer' => $dim1,
+                   'user_pw' => $user_passcode,
+                   'comment' => "",
+               ))
+               ->execute();
 
-        if ($result->rowCount()) {
-            $sql = "UPDATE {question_user_answers} SET answer = " . $dim1 . " WHERE answer_id = " . $i . " AND question_id = " . $question . " AND user_pw = '" . $user_passcode . "' ";
-            db_query($sql);
-        } else {
-            db_insert('question_user_answers')
-                ->fields(array(
-                    'question_id' => $question,
-                    'answer_id' => $i,
-                    'answer' => $dim1,
-                    'user_pw' => $user_passcode,
-                    'comment' => "",
-                ))
-                ->execute();
-        }
+       }
 
-    }
-    drupal_goto("survey_question_evaluation/" . $question . "/" . $user_passcode);
+   }
+   drupal_goto("survey_question_evaluation/" . $question . "/" . $user_passcode);
 
 }
