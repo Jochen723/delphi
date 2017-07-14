@@ -204,7 +204,7 @@ function survey_question_evaluation_get_back_to_last_question() {
         }
         $question_index++;
     }
-    
+
     if($question_index != 0) {
         drupal_goto("survey_question_evaluation/" . $questions[$question_index-1]->question_id . "/" . $user_pw);
     } else {
