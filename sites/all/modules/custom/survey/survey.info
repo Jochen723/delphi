@@ -1,5 +1,6 @@
 name = Umfrage
-description = Testbeschreibung
+description = Dieses Modul erstellt eine Umfrage aus den angelegten Fragen und stellt eine grafische Aufbereitung zur Verfügung
 core = 7.x
 
 files[] = tests/survey.test
+dependencies[] = delphi_question

@@ -2,182 +2,247 @@
 /**
  * Created by PhpStorm.
  * User: jonaskortum
- * Date: 09.05.17
- * Time: 08:03
+ * Date: 24.07.17
+ * Time: 12:36
  */
 
-function survey_testtest($id, $isRadioButton, $links)
+//Create boxplot
+function get_graphic($id, $isRadioButton, $links)
 {
 
     $question_id = arg(1);
     $user_pw = arg(2);
 
-
     $testArrayOverall = array();
     $testArrayOverall2 = array();
 
-    $sql = "SELECT * FROM {question_user_answers} WHERE question_id = " . $question_id . " AND answer_id = " . $id;
-    $result = db_query($sql);
+    $quantity_check_result = db_query("SELECT * FROM {question_user_answers} WHERE question_id = :question_id AND answer_id = :answer_id", array(
+        ':question_id' => $question_id,
+        ':answer_id' => $id
+    ));
 
-    foreach ($result as $item4) {
-        if (strcmp($user_pw, $item4->user_pw)) {
-            $user = $item4->user_pw;
-            $check = searchForId($user, $testArrayOverall2);
+    //Sollten es mindestens fünf Antworten geben, kann der Boxplot erstellt werden
+    if ($quantity_check_result->rowCount() > 5) {
 
-            if ($check > -1) {
-                unset($testArrayOverall2[$check]);
-                unset($testArrayOverall[$check]);
+        foreach ($quantity_check_result as $question_user_answer) {
+
+            //Die Antwort des aktuellen Nutzers wird nicht eingerechnet
+            if (strcmp($user_pw, $question_user_answer->user_pw)) {
+
+
+                $user = $question_user_answer->user_pw;
+                $check = survey_create_boxplot_search_for_user_ID($user, $testArrayOverall2);
+
+                if ($check > -1) {
+                    unset($testArrayOverall2[$check]);
+                    unset($testArrayOverall[$check]);
+                }
+                array_push($testArrayOverall2, $question_user_answer);
+                array_push($testArrayOverall, $question_user_answer->answer);
             }
-            array_push($testArrayOverall2, $item4);
-            array_push($testArrayOverall, $item4->answer);
         }
+
+        //Die Antworten werden der Größe nach geordnet
+        sort($testArrayOverall);
+
+        //Wenn es sich bei der Antwortmöglichkeit um Radio-Buttons handelt, kann ein Boxplot erstellt werden
+        if ($isRadioButton) {
+
+            //Die einzelnen Bestandteile eines Boxplots werden ermittelt
+            $min = 1;
+            $max = 5;
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
+            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
+
+            //Für freie Antworten muss ein eigener Boxplot erstellt werden
+        } else {
+
+            $max = array_pop($testArrayOverall);
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
+            $min = array_shift($testArrayOverall);
+            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
+        }
+
+
+        $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
+
+        $boxplot_string = array(
+            'container' => array(
+                '#prefix' => '<div id="eins">',
+                '#suffix' => '</div>',
+                'boxplot' => array(
+                    '#prefix' => '<div class="boxplot">',
+                    '#suffix' => '</div>',
+                    'boxlinie' => array(
+                        '#prefix' => '<div class="box linie">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxwhisker' => array(
+                        '#prefix' => '<div class="box whisker">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxinterquant' => array(
+                        '#prefix' => '<div class="box interquart" style="left: ' . $first_quantil["procent"] . '%;">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxthirdquant' => array(
+                        '#prefix' => '<div class="box thirdquant" style="left: calc(' . $third_quantil2 . '% + ' . $first_quantil["procent"] . '%); width: ' . $third_quantil2 . '%; margin-left: -' . $third_quantil2 . '%;">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxmedian' => array(
+                        '#prefix' => '<div class="box median" style="left: ' . $median["procent"] . '%;">',
+                        '#suffix' => '</div>',
+                    ),
+                    'boxmittel' => array(
+                        '#prefix' => '<div class="box mittel" style="left: ' . $avg["procent"] . '%;">',
+                        '#suffix' => '</div>',
+                    ),
+                    's_min' => array(
+                        '#prefix' => '<span class="schild s_min" style="left: 0%;">',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $min,
+                        ),
+                    ),
+                    's_average' => array(
+                        '#prefix' => '<span class="schild min s_average" style="margin-left: ' . $avg["procent"] . '%;">',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $avg["absolut"],
+                        ),
+                    ),
+                    's_median' => array(
+                        '#prefix' => '<span class="schild min s_median" style="margin-left: ' . $median["procent"] . '%;"> ',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $median["absolut"],
+                        ),
+                    ),
+                    's_third_quantil' => array(
+                        '#prefix' => '<span class="schild min s_third_quantil" style="margin-left: ' . $third_quantil["procent"] . '%;"> ',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $third_quantil["absolut"],
+                        ),
+                    ),
+                    's_first_quantil' => array(
+                        '#prefix' => '<span class="schild s_first_quantil" style="margin-left: ' . $first_quantil["procent"] . '%;"> ',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $first_quantil["absolut"],
+                        ),
+                    ),
+                    's_max' => array(
+                        '#prefix' => '<span class="schild min s_max" style="margin-left: 100%;"> ',
+                        '#suffix' => '</span>',
+                        'markup' => array(
+                            '#markup' => $max,
+                        ),
+                    ),
+                ),
+                'legend' => array(
+                    '#theme' => 'item_list',
+                    '#items' => $links,
+                    '#type' => 'ul',
+                    '#prefix' => '<div class="legend">',
+                    '#suffix' => '</div>',
+                    '#attributes' => array('class' => 'my-list'),
+                ),
+            ),
+
+
+        );
+
+    } else {
+        $boxplot_string = "Für den Boxplot werden weitere Daten benötigt.";
     }
+
+
+    return render($boxplot_string);
 }
 
-function survey_get_average($testArrayOverall, $isRadioButton, $max)
+/*
+ * Diese Funktion rundet einen Wert auf eine ganze Zahl
+ */
+function survey_create_boxplot_round_to_valid_value($value)
 {
 
-    //print_r($testArrayOverall);
+    $tempzahl = explode(".", $value);
 
-    $avg_array = array();
+    if (isset($tempzahl[1])) {
 
-    $avg = (!empty($testArrayOverall) ? array_sum($testArrayOverall) / count($testArrayOverall) : 0);
-    $avg = round($avg, 1);
+        $value = round($value, 1);
+        $tempzahl = explode(".", $value);
 
 
-    if ($isRadioButton) {
-        $avg_array["absolut"] = $avg + 1;
+        switch ($tempzahl[1]) {
+            case $tempzahl[1] >= 0 && $tempzahl[1] < 3:
+                $tempzahl[1] = 0;
+                break;
+            case $tempzahl[1] >= 3 && $tempzahl[1] < 7:
+                $tempzahl[1] = 5;
+                break;
+            case $tempzahl[1] >= 7:
+                $tempzahl[0] = $tempzahl[0] + 1;
+                $tempzahl[1] = 0;
+                break;
+            default:
+                break;
+        }
 
-        $avg_array["procent"] = round($avg / $max * 100, 1);
+        if ($tempzahl[1] == 0) {
+            $zahl = $tempzahl[0];
+        } else {
+
+            if ($tempzahl[0] != 0) {
+                $zahl = implode(".", $tempzahl);
+            } else {
+                $zahl = 1;
+            }
+        }
+
     } else {
-        $avg_array["absolut"] = $avg;
-
-
-        $avg_array["procent"] = round($avg / $max * 100, 1);
+        $zahl = $value;
     }
-
-
-    return $avg_array;
+    return $zahl;
 }
 
-function survey_get_median($testArrayOverall, $isRadioButton, $max)
+/*
+ * Diese Funktion überprüft, ob das User-PW valide ist
+ */
+function survey_create_boxplot_search_for_user_ID($id, $array)
 {
 
-    $temp = array();
-    $n = sizeof($testArrayOverall);
+    $check = -1;
 
-    foreach ($testArrayOverall as $item) {
-        array_push($temp, $item);
-    }
-
-    if ($isRadioButton) {
-        if (sizeof($temp) % 2 == 0) {
-            $median = 0.5 * ($temp[$n / 2 - 1] + $temp[($n / 2)]);
-        } else {
-            $median = $temp[($n) / 2];
+    foreach ($array as $key => $val) {
+        if (!strcmp($val->user_pw, $id)) {
+            $check = $key;
         }
-
-        $median_array["absolut"] = $median + 1;
-        $median_array["procent"] = round($median / $max * 100, 1);
-    } else {
-        if (sizeof($temp) % 2 == 0) {
-            $median = 0.5 * ($temp[$n / 2 - 1] + $temp[($n / 2)]);
-        } else {
-            $median = $temp[($n) / 2];
-        }
-
-        $median_array["absolut"] = $median;
-        $median_array["procent"] = round($median / $max * 100, 1);
     }
-
-
-    return $median_array;
+    return $check;
 }
 
-function survey_get_first_quantil($testArrayOverall, $isRadioButton, $max)
+
+function getQuantil($array)
 {
-    $temp = array();
-    $n = sizeof($testArrayOverall);
+    $returnArray = array();
+    $temp = sizeof($array) / 2;
+    if (is_int($temp)) {
+        $returnArray["number"] = $temp;
+        $returnArray["check"] = true;
 
-    foreach ($testArrayOverall as $item) {
-        array_push($temp, $item);
-    }
-
-    $np = $n * 0.25;
-
-    if($isRadioButton) {
-        if ($np == round($np)) {
-
-            $first_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
-
-        } else {
-            $np = ceil($np);
-            $np = intval($np);
-            $first_quantil = $temp[$np - 1];
-        }
-
-        $first_quantil_array["absolut"] = $first_quantil + 1;
-        $first_quantil_array["procent"] = round($first_quantil / $max * 100, 1);
     } else {
-        if ($np == round($np)) {
-
-            $first_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
-
-        } else {
-            $np = ceil($np);
-            $np = intval($np);
-            $first_quantil = $temp[$np - 1];
-        }
-        $first_quantil_array["absolut"] = $first_quantil;
-        $first_quantil_array["procent"] = round($first_quantil / $max * 100, 1);
+        $temp = round($temp, 0, PHP_ROUND_HALF_DOWN);
+        $returnArray["number"] = $temp;
+        $returnArray["check"] = false;
     }
 
-    return $first_quantil_array;
-}
-
-function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
-{
-
-    $temp = array();
-    $n = sizeof($testArrayOverall);
-
-
-
-    foreach ($testArrayOverall as $item) {
-        array_push($temp, $item);
-    }
-
-    $np = $n * 0.75;
-
-    if($isRadioButton) {
-        if ($np == round($np)) {
-
-            $third_quantil = 0.5 * ($temp[$np] + $temp[$np+1]);
-
-        } else {
-            $np = ceil($np);
-            $np = intval($np);
-            $third_quantil = $temp[$np - 1];
-        }
-
-        $third_quantil_array["absolut"] = $third_quantil + 1;
-        $third_quantil_array["procent"] = round($third_quantil / $max * 100, 1);
-    } else {
-        if ($np == round($np)) {
-
-            $third_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
-
-        } else {
-            $np = ceil($np);
-            $np = intval($np);
-            $third_quantil = $temp[$np - 1];
-        }
-        $third_quantil_array["absolut"] = $third_quantil;
-        $third_quantil_array["procent"] = round($third_quantil / $max * 100, 1);
-    }
-
-    return $third_quantil_array;
-
-
-    return 0;
+    return $returnArray;
 }

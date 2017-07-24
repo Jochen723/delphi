@@ -8,6 +8,7 @@
 
 require_once("survey_question_evaluation.inc");
 
+
 function survey_menu()
 {
 
@@ -38,34 +39,19 @@ function survey_menu()
         'page callback' => 'survey_finish_survey',
     );
 
-    $items['add_questions/%'] = array(
-        'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
-        'page arguments' => array('survey_add_question_form'),
-        'file' => 'survey_add_question.inc'
-    );
-
-    $items['question_overview'] = array(
-        'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
-        'page arguments' => array('survey_question_overview_form'),
-        'file' => 'survey_question_overview.inc'
-    );
-
-    $items['delete_question/%'] = array(
-        'access callback' => 'user_is_logged_in',
-        'page callback' => 'survey_delete_question',
-        'file' => 'survey_question_overview.inc'
-    );
-
-    $items['change_question/%/%'] = array(
-        'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
-        'page arguments' => array('survey_change_question_form'),
-        'file' => 'survey_change_question.inc'
-    );
-
     return $items;
+}
+
+//Diese Funktion baut die Startseite der Umfrage
+function survey_start_form()
+{
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Start',
+        '#submit' => array('survey_start_survey')
+    );
+
+    return $form;
 }
 
 /*
@@ -83,8 +69,7 @@ function survey_finish_survey()
 function survey_get_all_questions()
 {
     $questions = array();
-    $sql = "SELECT * FROM {question} ORDER BY question_id";
-    $question_result = db_query($sql);
+    $question_result = db_query("SELECT * FROM {question} ORDER BY question_id");
 
     foreach ($question_result as $question) {
         array_push($questions, $question);
@@ -100,8 +85,9 @@ function survey_get_all_questions()
 function survey_get_answers_from_question($question_id)
 {
     $answers = array();
-    $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id . " ORDER BY answers_id";
-    $answer_result = db_query($sql);
+    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY answers_id", array(
+        'question_id' => $question_id
+    ));
     foreach ($answer_result as $answer) {
         array_push($answers, $answer);
     }
@@ -109,60 +95,65 @@ function survey_get_answers_from_question($question_id)
     return $answers;
 }
 
-function survey_start_form()
-{
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => 'Start',
-        '#submit' => array('survey_start_survey')
-    );
 
-    return $form;
-}
-
+//Diese Funktion startet die Umfrage. Es wird ein einzigartiges Passwort für den Nutzer erstellt und in die DB
+//geschrieben. Anschließend wird der Nutzer zur ersten Frage weitergeleitet.
 function survey_start_survey()
 {
-    $string = survey_generateRandomString(30);
-    $sql = "INSERT INTO {survey_users} (user_pw) VALUES ('" . $string . "')";
-    db_query($sql);
+    //Einzigartige ID für den Nutzer wird angelegt...
+    $user_check_string = survey_generate_random_string(30);
 
+    //...und abgespeichert
+    db_query("INSERT INTO {survey_users} (user_pw) VALUES (:user_pw)", array(
+        ':user_pw' => $user_check_string
+    ));
 
-    $id = survey_get_questions(0);
-    drupal_goto("survey_question/" . $id . "/" . $string);
+    //Die erste Frage wird geladen
+    $question_id = survey_get_questions(0);
+    drupal_goto("survey_question/" . $question_id . "/" . $user_check_string);
 }
 
-function survey_generateRandomString($length)
+//Diese Funktion generiert eine einzigartige ID für jeden Nutzer die 30 Stellen beinhaltet.
+function survey_generate_random_string($length)
 {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
+    $valid_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters_length = strlen($valid_characters);
+    $random_string = '';
     for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
+        $random_string .= $valid_characters[rand(0, $characters_length - 1)];
     }
-    return $randomString;
+    return $random_string;
 }
 
+//Diese Funktion holt sich die Antworten eines Nutzers zu einer bestimmten Frage aus der DB und gibt diese als Array
+//zurück.
 function survey_get_answers($question_id, $user_passcode)
 {
-    $object = array();
-    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_passcode . "' AND question_id = " . $question_id;
-    $result = db_query($sql);
+    $answers = array();
 
-    foreach ($result as $item) {
-        array_push($object, $item);
+    //Antworten eines Nutzers zu einer Frage werden geladen
+    $answer_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id", array(
+        ':user_pw' => $user_passcode,
+        ':question_id' => $question_id
+    ));
+
+    foreach ($answer_result as $answer) {
+        array_push($answers, $answer);
     }
 
-
-    return $object;
+    return $answers;
 
 }
 
+//Diese Funktion überprüft, ob die eingelesene Nutzer-ID aus der Taskleiste valide ist.
 function survey_check_valid_user_pw($user_pw)
 {
 
     $counter = 0;
-    $sql = "SELECT * FROM {survey_users} WHERE user_pw = '" . $user_pw . "'";
-    $result = db_query($sql);
+    $result = db_query("SELECT * FROM {survey_users} WHERE user_pw = :user_pw", array(
+        ':user_pw' => $user_pw
+    ));
+
     foreach ($result as $item) {
         $counter++;
     }
@@ -174,22 +165,23 @@ function survey_check_valid_user_pw($user_pw)
     }
 }
 
-function survey_get_questions($current)
+//Diese Funktion sucht sich anhand der aktuellen Fragen-ID die nächste Frage aus der DB und gibt diese zurück. Sollte
+//keine Frage mehr folgen, wird eine -1 zurückgegeben.
+function survey_get_questions($current_question_id)
 {
 
     $questions = array();
-    $sql = "SELECT * FROM {question} ORDER BY question_id";
-    $result = db_query($sql);
+    $question_result = db_query("SELECT * FROM {question} ORDER BY question_id");
 
-    foreach ($result as $item) {
-        array_push($questions, $item->question_id);
+    foreach ($question_result as $question) {
+        array_push($questions, $question->question_id);
     }
 
-    $in = array_search($current, $questions);
+    $question_index = array_search($current_question_id, $questions);
 
-    if (sizeof($questions) > $in) {
-        return $questions[$in];
-    }else {
+    if (sizeof($questions) > $question_index) {
+        return $questions[$question_index];
+    } else {
         return -1;
     }
 }

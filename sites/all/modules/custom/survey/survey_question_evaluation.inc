@@ -6,21 +6,24 @@
  * Time: 10:48
  */
 
+require_once("survey_create_boxplot_data.inc");
 require_once("survey_create_boxplot.inc");
 
+/*
+ * Diese Funktion erstellt eine Seite, auf der die Frage mit allen Antwortmöglichkeiten und dem Boxplot angezeigt wird
+ */
 function survey_question_evaluation_form()
 {
 
     //Die ID der Frage wird aus der URL gelesen
     $question_id = arg(1);
 
-
     //Es werden alle Fragen aus der Datenbank gelesen
     $questions = survey_get_all_questions();
     $question_index = 0;
 
-    foreach ( $questions as $q) {
-        if($q->question_id == $question_id) {
+    foreach ($questions as $q) {
+        if ($q->question_id == $question_id) {
             break;
         }
         $question_index++;
@@ -30,7 +33,7 @@ function survey_question_evaluation_form()
     //DIe Überschrift wird erstellt
     $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
     $headline = "
-        <h1>Frage " . ($question_index+1) . "(b)</h1>
+        <h1>Frage " . ($question_index + 1) . "(b)</h1>
         <h2>" . $headline . "</h2><br>";
 
     $form['headline']['form_item'] = array(
@@ -46,9 +49,9 @@ function survey_question_evaluation_form()
     //TODO Check for refactoring
     //SQL-> Get lables for radio buttons
 
-
-    $sql = "SELECT * FROM {question_buttons_title} WHERE question_id = " . $questions[$question_index]->question_id . " ORDER BY answer_id";
-    $button_title_result = db_query($sql);
+    $button_title_result = db_query("SELECT * FROM {question_buttons_title} WHERE question_id = :question_id ORDER BY answer_id", array(
+        ':question_id' => $questions[$question_index]->question_id
+    ));
 
     $button_title_array = survey_get_button_titles($button_title_result);
 
@@ -59,15 +62,15 @@ function survey_question_evaluation_form()
     $user_id = arg(2);
 
     //Die gegebenen Antworten des Nutzers werden geladen
-    $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = " . $question_id;
-    $answers_result = db_query($sql);
-
+    $answers_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id", array(
+        ':user_pw' => $user_id,
+        ':question_id' => $question_id
+    ));
 
     //Die Antworten werden ausgelesen und in ein Array gespeichert
     foreach ($answers_result as $answer) {
 
-
-        $check = searchForAnswerId($answer->answer_id, $answers);
+        $check = survey_question_evaluation_search_for_answer_ID($answer->answer_id, $answers);
 
         if ($check > -1) {
             $answers[$check] = $answer;
@@ -76,12 +79,8 @@ function survey_question_evaluation_form()
         }
     }
 
-
     //Es wird über alle Antworten iteriert (graues Feld in der UI)
     for ($i = 0; $i < sizeof($answers); $i++) {
-
-        //Die Fragen-ID wird aus der URL ausgelesen
-        $question_id = arg(1);
 
         //Es werden alle Fragen aus der Datenbank ausgelesen
         $questions = survey_get_all_questions();
@@ -90,9 +89,9 @@ function survey_question_evaluation_form()
         $question_id = $questions[$question_index]->question_id;
 
         //Die Antwortmöglichkeiten der Frage werden geladen
-        $sql = "SELECT * FROM {question_possible_answers} WHERE question_id = " . $question_id;
-
-        $possible_answers_result = db_query($sql);
+        $possible_answers_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id", array(
+            ':question_id' => $question_id
+        ));
 
         //In dieses Array werden die Antwortmöglichkeiten der entsprechenden Frage gespeichert
         $possible_answers_array = array();
@@ -115,8 +114,6 @@ function survey_question_evaluation_form()
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
             );
-
-            //$button_title_array[$i] = array(1 =>"", 2 => "", 3 => "", 4=> "", 5=>"", 6=>"");
 
             $form['fieldset' . $i]['dim' . $i] = array(
                 '#type' => 'radios',
@@ -155,7 +152,6 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
         }
-
     }
 
     //Sollte es sich um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
@@ -185,11 +181,11 @@ function survey_question_evaluation_form()
         '#submit' => array('survey_get_next_question')
     );
 
-
     return $form;
 }
 
-function survey_question_evaluation_get_back_to_last_question() {
+function survey_question_evaluation_get_back_to_last_question()
+{
     $question_id = arg(1);
     $user_pw = arg(2);
 
@@ -198,24 +194,24 @@ function survey_question_evaluation_get_back_to_last_question() {
     $questions = survey_get_all_questions();
     $question_index = 0;
 
-    foreach ( $questions as $q) {
-        if($q->question_id == $question_id) {
+    foreach ($questions as $q) {
+        if ($q->question_id == $question_id) {
             break;
         }
         $question_index++;
     }
 
-    if($question_index != 0) {
-        drupal_goto("survey_question_evaluation/" . $questions[$question_index-1]->question_id . "/" . $user_pw);
+    if ($question_index != 0) {
+        drupal_goto("survey_question_evaluation/" . $questions[$question_index - 1]->question_id . "/" . $user_pw);
     } else {
         drupal_goto("survey_question_evaluation/" . $questions[$question_index]->question_id . "/" . $user_pw);
     }
 }
 
 /*
- *
+ * Diese Funktion überprüft, ob die Antwort existiert
  */
-function searchForAnswerId($id, $array)
+function survey_question_evaluation_search_for_answer_ID($id, $array)
 {
 
     $check = -1;
@@ -246,8 +242,8 @@ function survey_get_next_question($form, &$form_state)
 
     $question_index = 0;
 
-    foreach ( $questions as $q) {
-        if($q->question_id == $question) {
+    foreach ($questions as $q) {
+        if ($q->question_id == $question) {
             break;
         }
         $question_index++;
@@ -270,15 +266,23 @@ function survey_get_next_question($form, &$form_state)
         $comment = $form_state['values']['comment_dim' . $i];
 
         //Die aktuelle Antwort des Nutzers zur Antwort wird aus der Datenbank geladen
-        $sql = "SELECT * FROM {question_user_answers} WHERE user_pw = '" . $user_id . "' AND question_id = " . $question . " AND answer_id = " . $i . " ORDER BY question_user_answers_id DESC LIMIT 1";
-        $result = db_query($sql);
+        $result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id AND answer_id = :answer_id ORDER BY question_user_answers_id DESC LIMIT 1", array(
+            ':user_pw' => $user_id,
+            ':question_id' => $question,
+            ':answer_id' => $i
+        ));
 
         foreach ($result as $item) {
 
             //Sollte bereits eine Antwort vorliegen, wird diese aktualisiert
             if (!strcmp($dim1, $item->answer)) {
-                $sql = "UPDATE {question_user_answers} SET comment = '" . $comment . "' WHERE user_pw = '" . $user_id . "' AND question_id = " . $question . " AND answer_id = " . $i;
-                db_query($sql);
+                db_query("UPDATE {question_user_answers} SET comment = :comment WHERE user_pw = :user_pw AND question_id = :question_id AND answer_id = :answer_id", array(
+                    ':comment' => $comment,
+                    ':user_pw' => $user_id,
+                    ':question_id' => $question,
+                    ':answer_id' => $i
+
+                ));
             } else {
                 db_insert('question_user_answers')
                     ->fields(array(
@@ -305,10 +309,13 @@ function survey_get_next_question($form, &$form_state)
 
 }
 
-function survey_question_evaluation_get_next_question($question_id) {
+/*
+ * Diese Funktion ermittelt anhand der aktuellen Fragen-ID die nächste
+ */
+function survey_question_evaluation_get_next_question($question_id)
+{
     $questions = array();
-    $sql = "SELECT * FROM {question} ORDER BY question_id";
-    $result = db_query($sql);
+    $result = db_query("SELECT * FROM {question} ORDER BY question_id");
 
     foreach ($result as $item) {
         array_push($questions, $item->question_id);
@@ -316,269 +323,17 @@ function survey_question_evaluation_get_next_question($question_id) {
 
     $in = array_search($question_id, $questions);
 
-    if (sizeof($questions) > $in+1) {
+    if (sizeof($questions) > $in + 1) {
 
-        return $questions[$in+1];
-    }else {
+        return $questions[$in + 1];
+    } else {
         return -1;
     }
 }
 
-
-//Get id for boxplot
-function searchForId($id, $array)
-{
-
-    $check = -1;
-
-    foreach ($array as $key => $val) {
-        if (!strcmp($val->user_pw, $id)) {
-            $check = $key;
-        }
-    }
-    return $check;
-}
-
-//Create boxplot
-function get_graphic($id, $isRadioButton, $links)
-{
-
-    $test = "";
-
-    $question_id = arg(1);
-    $user_pw = arg(2);
-
-
-    $median = 0;
-    $first_quantil = 0;
-    $third_quantil = 0;
-    $third_quantil2 = 0;
-    $avg = 0;
-    $min = 0;
-
-    $median_absolut = 0;
-    $first_quantil_absolut = 0;
-    $third_quantil_absolut = 0;
-    $avg_absolut = 0;
-
-
-    $testArrayOverall = array();
-    $testArrayOverall2 = array();
-
-    $sql = "SELECT * FROM {question_user_answers} WHERE question_id = " . $question_id . " AND answer_id = " . $id;
-    $result = db_query($sql);
-
-    if($result->rowCount() >5) {
-
-        foreach ($result as $item4) {
-            if (strcmp($user_pw, $item4->user_pw)) {
-                $user = $item4->user_pw;
-                $check = searchForId($user, $testArrayOverall2);
-
-                if ($check > -1) {
-                    unset($testArrayOverall2[$check]);
-                    unset($testArrayOverall[$check]);
-                }
-                array_push($testArrayOverall2, $item4);
-                array_push($testArrayOverall, $item4->answer);
-            }
-        }
-
-        sort($testArrayOverall);
-
-        for ($i = 0; $i < sizeof($testArrayOverall); $i++) {
-
-            /*
-            if ($testArrayOverall[$i] > 4) {
-                unset($testArrayOverall[$i]);
-            }*/
-        }
-
-        if ($isRadioButton) {
-            $min = 1;
-
-            $max = 5;
-            $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
-            $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
-            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
-            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
-
-
-            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
-        } else {
-
-            $max = array_pop($testArrayOverall);
-            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
-            $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
-            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
-            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
-
-            $min = array_shift($testArrayOverall);
-
-            $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
-        }
-
-
-
-        $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
-
-        $test = array(
-            'container' => array(
-                '#prefix' => '<div id="eins">',
-                '#suffix' => '</div>',
-                'boxplot' => array(
-                    '#prefix' => '<div class="boxplot">',
-                    '#suffix' => '</div>',
-                    'boxlinie' => array(
-                        '#prefix' => '<div class="box linie">',
-                        '#suffix' => '</div>',
-                    ),
-                    'boxwhisker' => array(
-                        '#prefix' => '<div class="box whisker">',
-                        '#suffix' => '</div>',
-                    ),
-                    'boxinterquant' => array(
-                        '#prefix' => '<div class="box interquart" style="left: ' . $first_quantil["procent"] . '%;">',
-                        '#suffix' => '</div>',
-                    ),
-                    'boxthirdquant' => array(
-                        '#prefix' => '<div class="box thirdquant" style="left: calc(' . $third_quantil2 . '% + ' . $first_quantil["procent"] . '%); width: ' . $third_quantil2 . '%; margin-left: -' . $third_quantil2 . '%;">',
-                        '#suffix' => '</div>',
-                    ),
-                    'boxmedian' => array(
-                        '#prefix' => '<div class="box median" style="left: ' . $median["procent"] . '%;">',
-                        '#suffix' => '</div>',
-                    ),
-                    'boxmittel' => array(
-                        '#prefix' => '<div class="box mittel" style="left: ' . $avg["procent"] . '%;">',
-                        '#suffix' => '</div>',
-                    ),
-                    's_min' => array(
-                        '#prefix' => '<span class="schild s_min" style="left: 0%;">',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $min,
-                        ),
-                    ),
-                    's_average' => array(
-                        '#prefix' => '<span class="schild min s_average" style="margin-left: ' . $avg["procent"] . '%;">',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $avg["absolut"],
-                        ),
-                    ),
-                    's_median' => array(
-                        '#prefix' => '<span class="schild min s_median" style="margin-left: ' . $median["procent"] . '%;"> ',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $median["absolut"],
-                        ),
-                    ),
-                    's_third_quantil' => array(
-                        '#prefix' => '<span class="schild min s_third_quantil" style="margin-left: ' . $third_quantil["procent"] . '%;"> ',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $third_quantil["absolut"],
-                        ),
-                    ),
-                    's_first_quantil' => array(
-                        '#prefix' => '<span class="schild s_first_quantil" style="margin-left: ' . $first_quantil["procent"] . '%;"> ',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $first_quantil["absolut"],
-                        ),
-                    ),
-                    's_max' => array(
-                        '#prefix' => '<span class="schild min s_max" style="margin-left: 100%;"> ',
-                        '#suffix' => '</span>',
-                        'markup' => array(
-                            '#markup' => $max,
-                        ),
-                    ),
-                ),
-                'legend' => array(
-                    '#theme' => 'item_list',
-                    '#items' => $links,
-                    '#type' => 'ul',
-                    '#prefix' => '<div class="legend">',
-                    '#suffix' => '</div>',
-                    '#attributes' => array('class' => 'my-list'),
-                ),
-            ),
-
-
-
-        );
-
-    } else {
-        $test = "Für den Boxplot werden weitere Daten benötigt.";
-    }
-
-
-
-    return render($test);
-}
-
-function getQuantil($array)
-{
-    $returnArray = array();
-    $temp = sizeof($array) / 2;
-    if (is_int($temp)) {
-        $returnArray["number"] = $temp;
-        $returnArray["check"] = true;
-
-    } else {
-        $temp = round($temp, 0, PHP_ROUND_HALF_DOWN);
-        $returnArray["number"] = $temp;
-        $returnArray["check"] = false;
-    }
-
-    return $returnArray;
-}
-
-function roundToValidValue($value)
-{
-
-    $tempzahl = explode(".", $value);
-
-    if (isset($tempzahl[1])) {
-
-        $value = round($value, 1);
-        $tempzahl = explode(".", $value);
-
-
-        switch ($tempzahl[1]) {
-            case $tempzahl[1] >= 0 && $tempzahl[1] < 3:
-                $tempzahl[1] = 0;
-                break;
-            case $tempzahl[1] >= 3 && $tempzahl[1] < 7:
-                $tempzahl[1] = 5;
-                break;
-            case $tempzahl[1] >= 7:
-                $tempzahl[0] = $tempzahl[0] + 1;
-                $tempzahl[1] = 0;
-                break;
-            default:
-                break;
-        }
-
-        if ($tempzahl[1] == 0) {
-            $zahl = $tempzahl[0];
-        } else {
-
-            if ($tempzahl[0] != 0) {
-                $zahl = implode(".", $tempzahl);
-            } else {
-                $zahl = 1;
-            }
-        }
-
-    } else {
-        $zahl = $value;
-    }
-    return $zahl;
-}
-
+/*
+ * Diese Funktion gibt die Titel der Button für Antwortmöglichkeiten zurück
+ */
 function survey_get_button_titles($button_title_result)
 {
 
