@@ -10,7 +10,8 @@ function delphi_question_menu() {
 
     $items['add_questions/%'] = array(
         'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
+        //'access callback' => 'user_is_logged_in',
+	'access arguments' => array('administer users'),
         'page arguments' => array('delphi_question_add_question_form'),
         'file' => 'delphi_question_add_question.inc'
     );
@@ -24,8 +25,9 @@ function delphi_question_menu() {
 
     $items['question_overview'] = array(
         'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
-        'page arguments' => array('delphi_question_question_overview_form'),
+        //'access callback' => 'user_is_logged_in',
+        'access arguments' => array('administer users'),
+	'page arguments' => array('delphi_question_question_overview_form'),
         'file' => 'delphi_question_overview.inc'
     );
 
