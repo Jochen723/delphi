@@ -37,7 +37,7 @@ function delphi_question_add_question_form()
         '#type' => 'textfield',
         '#title' => "Anzahl der Antwortmöglichkeiten",
         '#size' => 2,
-        '#maxlength' => 1,
+        '#maxlength' => 2,
         '#default_value' => $answer_quantity_id,
 
     );

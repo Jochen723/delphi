@@ -73,7 +73,7 @@ fieldset {
 .form-submit:first-of-type {
   clear: left; }
 
-.form-item-dim0.form-type-radio, .form-item-dim1.form-type-radio, .form-item-dim2.form-type-radio, .form-item-dim3.form-type-radio, .form-item-dim4.form-type-radio, .form-item-dim5.form-type-radio, .form-item-dim6.form-type-radio, .form-item-dim7.form-type-radio, .form-item-dim8.form-type-radio {
+.form-item-dim0.form-type-radio, .form-item-dim1.form-type-radio, .form-item-dim2.form-type-radio, .form-item-dim3.form-type-radio, .form-item-dim4.form-type-radio, .form-item-dim5.form-type-radio, .form-item-dim6.form-type-radio, .form-item-dim7.form-type-radio, .form-item-dim8.form-type-radio, .form-item-dim9.form-type-radio, .form-item-dim10.form-type-radio, .form-item-dim11.form-type-radio, .form-item-dim12.form-type-radio, .form-item-dim13.form-type-radio, .form-item-dim14.form-type-radio, .form-item-dim15.form-type-radio, .form-item-dim16.form-type-radio, .form-item-dim17.form-type-radio, .form-item-dim18.form-type-radio, .form-item-dim19.form-type-radio, .form-item-dim20.form-type-radio, .form-item-dim21.form-type-radio, .form-item-dim22.form-type-radio, .form-item-dim23.form-type-radio, .form-item-dim24.form-type-radio {
   width: auto;
   float: left;
   /* Reduziert auf 15%, damit 7 Spalten Skala in eine Reihe passt */
@@ -213,6 +213,262 @@ fieldset {
   .form-item-dim8.form-type-radio {
     position: relative; }
     .form-item-dim8.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim9 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim9.form-type-radio {
+    position: relative; }
+    .form-item-dim9.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim10 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim10.form-type-radio {
+    position: relative; }
+    .form-item-dim10.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim11 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim11.form-type-radio {
+    position: relative; }
+    .form-item-dim11.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim12 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim12.form-type-radio {
+    position: relative; }
+    .form-item-dim12.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim13 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim13.form-type-radio {
+    position: relative; }
+    .form-item-dim13.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim14 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim14.form-type-radio {
+    position: relative; }
+    .form-item-dim14.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim15 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim15.form-type-radio {
+    position: relative; }
+    .form-item-dim15.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim16 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim16.form-type-radio {
+    position: relative; }
+    .form-item-dim16.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim17 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim17.form-type-radio {
+    position: relative; }
+    .form-item-dim17.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim18 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim18.form-type-radio {
+    position: relative; }
+    .form-item-dim18.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim19 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim19.form-type-radio {
+    position: relative; }
+    .form-item-dim19.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim20 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim20.form-type-radio {
+    position: relative; }
+    .form-item-dim20.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim21 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim21.form-type-radio {
+    position: relative; }
+    .form-item-dim21.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim22 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim22.form-type-radio {
+    position: relative; }
+    .form-item-dim22.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim23 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim23.form-type-radio {
+    position: relative; }
+    .form-item-dim23.form-type-radio label.option {
+      display: block;
+      position: absolute;
+      float: none;
+      left: 0.9em;
+      width: 4rem;
+      font-size: 1em;
+      line-height: 1.1;
+      transform: rotate(29deg);
+      transform-origin: 15px 6px; }
+
+.form-item-dim24 {
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
+  .form-item-dim24.form-type-radio {
+    position: relative; }
+    .form-item-dim24.form-type-radio label.option {
       display: block;
       position: absolute;
       float: none;
