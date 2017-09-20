@@ -55,7 +55,7 @@ function delphi_question_add_question_form()
 
         //Für jede Antwortmöglichkeit wird ein Fieldset zur Übersichtlichkeit angelegt
         $form['content' . $i] = array(
-            '#title' => $i . " Antwortmöglichkeit",
+            '#title' => $i . ". Antwortmöglichkeit",
             '#type' => 'fieldset',
             '#description' => ""
         );
@@ -66,6 +66,10 @@ function delphi_question_add_question_form()
             '#title' => "<b>Bezeichnung der Antwortmöglichkeit:</b>",
             '#default_value' => "",
             '#required' => TRUE,
+            '#maxlength' => 254,
+            '#attributes' => array(
+              'class' => array('item-title'),
+            ),
 
         );
 

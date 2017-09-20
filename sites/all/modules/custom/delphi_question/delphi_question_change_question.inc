@@ -86,7 +86,7 @@ function delphi_question_change_question_form()
 
         //Für jede Antwortmöglichkeit wird ein Fieldset zur Übersichtlichkeit angelegt
         $form['content' . $i] = array(
-            '#title' => $i . " Antwortmöglichkeit",
+            '#title' => $i . ". Antwortmöglichkeit",
             '#type' => 'fieldset',
             '#description' => ""
         );
@@ -97,6 +97,10 @@ function delphi_question_change_question_form()
             '#title' => "<b>Bezeichnung der Antwortmöglichkeit:</b>",
             '#default_value' => $answer_array[$i - 1],
             '#required' => TRUE,
+            '#maxlength' => 254,
+            '#attributes' => array(
+              'class' => array('item-title'),
+            ),
         );
 
         //Für jede Antwortmöglichkeit muss bestimmt werden, ob die Antwort per Radio-Buttons oder per Textfeld

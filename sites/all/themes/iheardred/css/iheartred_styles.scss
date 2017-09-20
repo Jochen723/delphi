@@ -128,7 +128,7 @@ $dimensions: 24;
 @mixin radio_btn_x_dims {
   @for $i from 0 through $dimensions {
     .form-item-dim#{$i} {
-      margin-top: 1.5rem; /* Angepasst, um ausschweifende Freiflächen zu reduzieren */
+      margin-top: 1rem; /* Angepasst, um ausschweifende Freiflächen zu reduzieren */
 
       &.form-type-radio {
         @extend %radio_btn_x_dims;
@@ -230,7 +230,7 @@ input.form-radio:checked .form-radio:after {
 
 /* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist */
 #survey-question-evaluation-form .form-type-radios {
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
 }
 
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
@@ -393,7 +393,7 @@ input.form-radio:checked .form-radio:after {
 }
 
 /* Breite des Textfeld für Titel der Frage an Seitenbreite anpassen */
-#question-field {
+#question-field, .item-title {
   width: 100%;
 }
 
@@ -406,4 +406,9 @@ input.form-radio:checked .form-radio:after {
 /* Fix damit Boxplots nichts mehr über Fieldset-Box hinausragen */
 #survey-question-evaluation-form .fieldset-wrapper {
   margin-top: 45px;
+}
+
+/* Abstand Antwortmöglichkeit Textfeld beim Beantworten der Umfrage */
+.answers > .form-type-textfield {
+  margin-top: 1rem;
 }
