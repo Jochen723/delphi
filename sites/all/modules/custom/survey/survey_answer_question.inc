@@ -46,9 +46,7 @@ function survey_form()
         $text = $questions[$question_index]->title;
         $headline = "
             <h1>Frage " . ($question_index + 1) . "(a)</h1>
-            <h2>" . $text . "</h2>
-            <br>
-            <br>";
+            <h2>" . $text . "</h2>";
 
         //Die Antworten der Frage werden aus der Datenbank geladen
         $answers = survey_get_answers_from_question($questions[$question_index]->question_id);
@@ -69,6 +67,7 @@ function survey_form()
         );
 
         //Es wird über jede Antwortmöglichkeit iteriert
+        $countTextfield = 0;
         for ($i = 0; $i < sizeof($answers); $i++) {
 
             //Sollte es bereits eine Antwort vom Nutzer in der Datenbank geben, wird diese als Standardwert
@@ -83,16 +82,26 @@ function survey_form()
             if ($answers[$i]->isRadioButton) {
                 $form['dim' . $i] = array(
                     '#type' => 'radios',
-                    '#prefix' => '<div id ="visualization' . $i . '">',
+                    '#prefix' => '<div id ="visualization' . $i . '" class = "answers">',
+                    '#suffix' => '</div>',
                     '#title' => $answers[$i]->description,
                     '#required' => true,
-                    '#options' => $button_title_array[$i],
+                  // TODO quick fix
+                  // $button_title_array enthält eine Eintrag pro Radio-Button Antwortmöglichkeit. Textfeld
+                  // Antwortmöglichkeiten werden außer acht gelassen. Bei 5 Antwortmöglichkeiten von denen 3 Textfelder
+                  // sind würde $answers 5 Eintrage haben, $button_title_array jedoch nur 2 (-> Undefined offset).
+                  // $countTextfield soll dies kompensieren.
+                    '#options' => $button_title_array[$i - $countTextfield],
+                    '#attributes' => array('class' => array('my-class-1')),
                 );
 
                 //Sollte es sich bei der Antwortmöglichkeit um ein Textfeld handeln
             } else {
+                $countTextfield++;
                 $form['quantity' . $i] = array(
                     '#type' => 'textfield',
+                    '#prefix' => '<div id ="visualization' . $i . '" class = "answers">',
+                    '#suffix' => '</div>',
                     '#title' => $answers[$i]->description,
                     '#size' => 4,
                     '#maxlength' => 4,

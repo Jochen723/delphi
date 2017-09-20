@@ -80,7 +80,8 @@ function survey_question_evaluation_form()
     }
 
     //Es wird über alle Antworten iteriert (graues Feld in der UI)
-    for ($i = 0; $i < sizeof($answers); $i++) {
+  $countTextfield = 0;
+  for ($i = 0; $i < sizeof($answers); $i++) {
 
         //Es werden alle Fragen aus der Datenbank ausgelesen
         $questions = survey_get_all_questions();
@@ -106,10 +107,10 @@ function survey_question_evaluation_form()
         );
 
         //Sollte die aktuelle Antwortmöglichkeit Radio-Buttons beinhalten:
-        if ($possible_answers_array[$i]->isRadioButton) {
+      if ($possible_answers_array[$i]->isRadioButton) {
 
             //Der Boxplot zur Antwort wird geladen
-            $boxplot_graphic = get_graphic($i, 1, $button_title_array[$i]);
+            $boxplot_graphic = get_graphic($i, 1, $button_title_array[$i - $countTextfield]); // TODO quick fix
 
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
@@ -118,7 +119,7 @@ function survey_question_evaluation_form()
             $form['fieldset' . $i]['dim' . $i] = array(
                 '#type' => 'radios',
                 '#title' => $possible_answers_array[$i]->description,
-                '#options' => $button_title_array[$i],
+                '#options' => $button_title_array[$i - $countTextfield], // TODO quick fix
                 '#default_value' => $answers[$i]->answer,
             );
             $form['fieldset' . $i]['comment_dim' . $i] = array(
@@ -130,7 +131,7 @@ function survey_question_evaluation_form()
 
             //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
         } else {
-
+            $countTextfield++;
             //Der Boxplot zur Antwort wird geladen
             $boxplot_graphic = get_graphic($i, 0, array('Min', 'Max'));
 

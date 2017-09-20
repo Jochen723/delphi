@@ -37,6 +37,7 @@ function delphi_question_change_question_form()
         '#attributes' => array(
             'id' => 'question-field',
         ),
+        '#maxlength' => 1000, // DB field type is varchar(1023)
     );
 
     //Textfeld, in das die Anzahl der Antwortmöglichkeiten eingegeben werden soll
