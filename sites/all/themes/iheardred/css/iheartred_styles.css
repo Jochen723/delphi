@@ -542,8 +542,9 @@ input.form-radio:checked .form-radio:after {
   .form-textarea-wrapper .form-textarea {
     width: 100%; }
 
-.form-type-textarea {
-  margin-top: 4rem; }
+/* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist */
+#survey-question-evaluation-form .form-type-radios {
+  margin-bottom: 5rem; }
 
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
@@ -675,5 +676,9 @@ input.form-radio:checked .form-radio:after {
 .answers > div > label {
   font-weight: bold;
   font-size: 110%; }
+
+/* Fix damit Boxplots nichts mehr über Fieldset-Box hinausragen */
+#survey-question-evaluation-form .fieldset-wrapper {
+  margin-top: 45px; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */
