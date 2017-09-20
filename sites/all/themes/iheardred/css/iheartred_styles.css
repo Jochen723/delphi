@@ -50,7 +50,7 @@ fieldset {
   fieldset:nth-child(n) {
     background-color: #e2e7ed; }
 
-/* Radio-Buttons besser zug├ñnglich stylen */
+/* Radio-Buttons besser zugänglich stylen */
 .form-item {
   width: 100%;
   margin: auto auto 1rem auto; }
@@ -58,8 +58,13 @@ fieldset {
 .form-item-quantity {
   width: auto; }
 
-.form-submit[value="├ändern"] {
-  margin-top: calc(2rem + 1rem + 5px); }
+.form-submit[value="Ändern"] {
+  /*
+  margin-top: calc(2rem + 1rem + 5px);
+  */
+  margin-top: 21px;
+  margin-bottom: 2rem;
+  clear: none !important; }
 
 .form-submit {
   float: left;
@@ -71,10 +76,12 @@ fieldset {
 .form-item-dim0.form-type-radio, .form-item-dim1.form-type-radio, .form-item-dim2.form-type-radio, .form-item-dim3.form-type-radio, .form-item-dim4.form-type-radio, .form-item-dim5.form-type-radio, .form-item-dim6.form-type-radio, .form-item-dim7.form-type-radio, .form-item-dim8.form-type-radio {
   width: auto;
   float: left;
-  margin-left: calc(17.5% - 15.6px); }
+  /* Reduziert auf 15%, damit 7 Spalten Skala in eine Reihe passt */
+  margin-left: calc(15.0% - 15.6px); }
 
 .form-item-dim0 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim0.form-type-radio {
     position: relative; }
     .form-item-dim0.form-type-radio label.option {
@@ -89,7 +96,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim1 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim1.form-type-radio {
     position: relative; }
     .form-item-dim1.form-type-radio label.option {
@@ -104,7 +112,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim2 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim2.form-type-radio {
     position: relative; }
     .form-item-dim2.form-type-radio label.option {
@@ -119,7 +128,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim3 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim3.form-type-radio {
     position: relative; }
     .form-item-dim3.form-type-radio label.option {
@@ -134,7 +144,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim4 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim4.form-type-radio {
     position: relative; }
     .form-item-dim4.form-type-radio label.option {
@@ -149,7 +160,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim5 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim5.form-type-radio {
     position: relative; }
     .form-item-dim5.form-type-radio label.option {
@@ -164,7 +176,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim6 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim6.form-type-radio {
     position: relative; }
     .form-item-dim6.form-type-radio label.option {
@@ -179,7 +192,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim7 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim7.form-type-radio {
     position: relative; }
     .form-item-dim7.form-type-radio label.option {
@@ -194,7 +208,8 @@ fieldset {
       transform-origin: 15px 6px; }
 
 .form-item-dim8 {
-  margin-top: 4rem; }
+  margin-top: 1.5rem;
+  /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
   .form-item-dim8.form-type-radio {
     position: relative; }
     .form-item-dim8.form-type-radio label.option {
@@ -208,7 +223,7 @@ fieldset {
       transform: rotate(29deg);
       transform-origin: 15px 6px; }
 
-/* Es wird ein label Element ben├Âtigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
+/* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
 .form-type-radio:before {
   content:'';
@@ -248,7 +263,7 @@ input.form-radio:checked .form-radio:after {
 .svg-container {
   float: left; }
 
-/* spezifischer stylen, damit keine riesigen L├╝cken entstehen! */
+/* spezifischer stylen, damit keine riesigen Lücken entstehen! */
 .form-type-radios {
   width: 100%;
   max-width: 600px;
@@ -274,9 +289,10 @@ input.form-radio:checked .form-radio:after {
 .form-type-textarea {
   margin-top: 4rem; }
 
-.fieldset-wrapper .form-type-textfield {
-  margin-top: 4rem; }
-
+/* Entfernt, um ausschweifende Freiflächen zu reduzieren */
+/*.fieldset-wrapper .form-type-textfield {
+  margin-top: 4rem;
+}*/
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
 .container {
   width: 100%;
@@ -390,5 +406,18 @@ input.form-radio:checked .form-radio:after {
   .legend .item-list ul li:nth-child(4) {
     background: none, #27abf6;
     color: #fff; }
+
+/* [Fix] Antwortmöglichkeiten Blöcke immer in neuer Zeile */
+#delphi-question-change-question-form fieldset {
+  clear: both; }
+
+/* Breite des Textfeld für Titel der Frage an Seitenbreite anpassen */
+#question-field {
+  width: 100%; }
+
+/* Titel der Antwortmöglichkeiten beim Ausfüllen einer Umfrage hervorheben */
+.answers > div > label {
+  font-weight: bold;
+  font-size: 110%; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

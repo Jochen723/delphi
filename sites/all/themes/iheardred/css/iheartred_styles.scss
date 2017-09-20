@@ -98,7 +98,12 @@ fieldset {
 }
 
 .form-submit[value="Ändern"] {
+  /*
   margin-top: calc(2rem + 1rem + 5px);
+  */
+  margin-top: 21px;
+  margin-bottom: 2rem;
+  clear: none !important;
 }
 
 .form-submit {
@@ -116,13 +121,14 @@ $dimensions: 8;
 %radio_btn_x_dims {
   width: auto;
   float: left;
-  margin-left: calc(17.5% - 15.6px);
+  /* Reduziert auf 15%, damit 7 Spalten Skala in eine Reihe passt */
+  margin-left: calc(15.0% - 15.6px);
 }
 
 @mixin radio_btn_x_dims {
   @for $i from 0 through $dimensions {
     .form-item-dim#{$i} {
-      margin-top: 4rem;
+      margin-top: 1.5rem; /* Angepasst, um ausschweifende Freiflächen zu reduzieren */
 
       &.form-type-radio {
         @extend %radio_btn_x_dims;
@@ -226,9 +232,10 @@ input.form-radio:checked .form-radio:after {
   margin-top: 4rem;
 }
 
-.fieldset-wrapper .form-type-textfield {
+/* Entfernt, um ausschweifende Freiflächen zu reduzieren */
+/*.fieldset-wrapper .form-type-textfield {
   margin-top: 4rem;
-}
+}*/
 
 
 /* BOXPLOTS SIND STYLISCH WIE KINYE WEST, JUNGE! */
@@ -378,3 +385,19 @@ input.form-radio:checked .form-radio:after {
     }
 
   }
+
+/* [Fix] Antwortmöglichkeiten Blöcke immer in neuer Zeile */
+#delphi-question-change-question-form fieldset {
+  clear: both;
+}
+
+/* Breite des Textfeld für Titel der Frage an Seitenbreite anpassen */
+#question-field {
+  width: 100%;
+}
+
+/* Titel der Antwortmöglichkeiten beim Ausfüllen einer Umfrage hervorheben */
+.answers > div > label {
+  font-weight: bold;
+  font-size: 110%;
+}
