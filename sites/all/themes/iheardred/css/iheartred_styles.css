@@ -527,7 +527,7 @@ input.form-radio:checked .form-radio:after {
   margin-bottom: 4rem; }
 
 .form-wrapper .form-type-radios {
-  margin-bottom: 0; }
+  margin-bottom: 0.4rem; }
 
 .form-item {
   float: left; }
@@ -674,15 +674,30 @@ input.form-radio:checked .form-radio:after {
 
 /* Titel der Antwortmöglichkeiten beim Ausfüllen einer Umfrage hervorheben */
 .answers > div > label {
-  font-weight: bold;
-  font-size: 110%; }
+  font-weight: bold; }
 
 /* Fix damit Boxplots nichts mehr über Fieldset-Box hinausragen */
 #survey-question-evaluation-form .fieldset-wrapper {
   margin-top: 45px; }
 
+.boxplot-nodata {
+  margin-top: -30px; }
+
 /* Abstand Antwortmöglichkeit Textfeld beim Beantworten der Umfrage */
 .answers > .form-type-textfield {
   margin-top: 1rem; }
+
+/* Radio-Buttons auf einer Höhe mit Labels */
+.answers .form-type-radio label {
+  margin-top: -4px; }
+
+input.form-radio {
+  vertical-align: sub; }
+
+/* Radio-Buttons zur konfiguration der Fragen nebeneinander */
+#delphi-question-change-question-form .form-type-radio,
+#question-form .form-type-radio {
+  width: auto;
+  margin-right: 2rem; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

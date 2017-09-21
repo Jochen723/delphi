@@ -160,7 +160,10 @@ function get_graphic($id, $isRadioButton, $links)
         );
 
     } else {
-        $boxplot_string = "Für den Boxplot werden weitere Daten benötigt.";
+        $boxplot_string = "<div class = 'boxplot-nodata'>" .
+                          "Für den Boxplot werden weitere Daten benötigt." .
+                          "</div>";
+
     }
 
 

@@ -121,7 +121,6 @@ function survey_question_evaluation_form()
                 '#title' => $possible_answers_array[$i]->description,
                 '#options' => $button_title_array[$i - $countTextfield], // TODO quick fix
                 '#default_value' => $answers[$i]->answer,
-                '#disabled' => TRUE,
             );
             $form['fieldset' . $i]['comment_dim' . $i] = array(
                 '#title' => t('Kommentar'),
@@ -146,7 +145,6 @@ function survey_question_evaluation_form()
                 '#maxlength' => 6,
                 '#default_value' => $answers[$i]->answer,
                 '#element_validate' => array('element_validate_number'),
-                '#disabled' => TRUE,
             );
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(
