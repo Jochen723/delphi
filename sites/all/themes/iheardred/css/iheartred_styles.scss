@@ -152,6 +152,18 @@ $dimensions: 24;
 
 @include radio_btn_x_dims;
 
+/* Radio-Buttons als Achsenbeschriftung auf Boxplot skalieren */
+.radios-5 > .form-type-radio {
+  margin-left: calc(20.2%);
+}
+
+.radios-6 > .form-type-radio {
+  margin-left: calc(14.6%);
+}
+
+.radios-7 > .form-type-radio {
+  margin-left: calc(11.2%);
+}
 
 /* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -190,7 +202,7 @@ input.form-radio:checked .form-radio:after {
 }
 
 .form-radios .form-type-radio:first-of-type {
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 
@@ -205,6 +217,10 @@ input.form-radio:checked .form-radio:after {
   max-width: 600px;
   padding: 0;
   margin-bottom: 4rem;
+}
+
+#survey-form .form-type-textfield {
+  max-width: 600px;
 }
 
 .form-wrapper .form-type-radios {
@@ -230,6 +246,7 @@ input.form-radio:checked .form-radio:after {
 
 /* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist */
 #survey-question-evaluation-form .form-type-radios {
+  margin-top: 0;
   margin-bottom: 4rem;
 }
 
@@ -285,7 +302,7 @@ input.form-radio:checked .form-radio:after {
   width: 35%;
   height: 40px;
   border: 1px solid $color-middle;
-  border-right: 6px solid $color-third-quantil;
+  border-right: 3px solid $color-third-quantil;
 }
 
 
@@ -293,13 +310,13 @@ input.form-radio:checked .form-radio:after {
 .mittel,
 .interquart {
   width: 1px;
-  border-right: 6px solid $color-average;
+  border-right: 3px solid $color-average;
   bottom: 0;
   z-index: 99;
 }
 
 .interquart {
-    border-right: 6px solid $color-first-quantil;
+    border-right: 3px solid $color-first-quantil;
     height: 40px;
 }
 
@@ -309,7 +326,7 @@ input.form-radio:checked .form-radio:after {
 
 .median {
   border-left: 0px solid transparent;
-  border-right: 6px solid $color-median;
+  border-right: 3px solid $color-median;
 }
 
 .schild {
@@ -354,7 +371,9 @@ input.form-radio:checked .form-radio:after {
   float: right;
   display: block;
   width: 20%;
-  margin-top: -1rem;
+  /* Legende vertikal an Boxplot ausrichten */
+  margin-top: -2.3rem;
+  margin-bottom: 1rem;
   line-height: 1;
   font-weight: bold;
 
@@ -404,7 +423,7 @@ input.form-radio:checked .form-radio:after {
 
 /* Fix damit Boxplots nichts mehr über Fieldset-Box hinausragen */
 #survey-question-evaluation-form .fieldset-wrapper {
-  margin-top: 45px;
+  margin-top: 55px;
 }
 
 .boxplot-nodata {
@@ -429,4 +448,27 @@ input.form-radio {
 #question-form .form-type-radio{
   width: auto;
   margin-right: 2rem;
+}
+
+/* Fieldset Titel bündig mit Box */
+fieldset legend {
+  left: 0;
+
+  & .fieldset-legend {
+    font-weight: bold;
+  }
+}
+
+/* Rahmen als zur Strukturierung auf Umfrageseite */
+.answers > .form-type-textfield,
+.answers > .form-type-radios {
+  border-style: solid;
+  border-width: 2px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.answers > .form-type-radios {
+  padding-bottom: 4rem;
+  margin-bottom: 0;
 }

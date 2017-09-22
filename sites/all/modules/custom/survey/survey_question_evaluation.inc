@@ -118,10 +118,16 @@ function survey_question_evaluation_form()
 
             $form['fieldset' . $i]['dim' . $i] = array(
                 '#type' => 'radios',
-                '#title' => $possible_answers_array[$i]->description,
+                '#title' => '',
                 '#options' => $button_title_array[$i - $countTextfield], // TODO quick fix
                 '#default_value' => $answers[$i]->answer,
+                '#attributes' => array(
+                    'class' => array('radios-' . count($button_title_array[$i - $countTextfield]))
+                ),
             );
+
+            $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
+
             $form['fieldset' . $i]['comment_dim' . $i] = array(
                 '#title' => t('Kommentar'),
                 '#resizable' => FALSE,
@@ -140,12 +146,13 @@ function survey_question_evaluation_form()
             );
             $form['fieldset' . $i]['quantity' . $i] = array(
                 '#type' => 'textfield',
-                '#title' => $possible_answers_array[$i]->description,
+                '#title' => '',
                 '#size' => 4,
                 '#maxlength' => 6,
                 '#default_value' => $answers[$i]->answer,
                 '#element_validate' => array('element_validate_number'),
             );
+            $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(
                 '#title' => t('Kommentar'),
@@ -174,7 +181,7 @@ function survey_question_evaluation_form()
 
     //Sollte es die letzte Frage sein, wird die Umfrage beendet
     if ($id == -1) {
-        $button_text = "Umfrage beenden";
+        $button_text = "Umfrage abschließen";
     }
 
     $form['submit'] = array(
