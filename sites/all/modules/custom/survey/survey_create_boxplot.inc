@@ -7,7 +7,7 @@
  */
 
 //Create boxplot
-function get_graphic($id, $isRadioButton, $links)
+function get_graphic($id, $isRadioButton, $indexNoAnswer)
 {
 
     $question_id = arg(1);
@@ -38,7 +38,11 @@ function get_graphic($id, $isRadioButton, $links)
                     unset($testArrayOverall[$check]);
                 }
                 array_push($testArrayOverall2, $question_user_answer);
-                array_push($testArrayOverall, $question_user_answer->answer);
+
+                // "keine Ahnung" nicht als Antwort für Boxplot Berechnungen nutzen
+                if ($question_user_answer->answer != $indexNoAnswer) {
+                    array_push($testArrayOverall, $question_user_answer->answer);
+                }
             }
         }
 
@@ -50,11 +54,14 @@ function get_graphic($id, $isRadioButton, $links)
 
             //Die einzelnen Bestandteile eines Boxplots werden ermittelt
             $min = 1;
-            $max = 5;
-            $avg = survey_get_average($testArrayOverall, $isRadioButton, 4);
-            $median = survey_get_median($testArrayOverall, $isRadioButton, 4);
-            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, 4);
-            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, 4);
+            // Maximum der Boxplot-Skala, k.A. nicht Teil der Skala
+            $max = $indexNoAnswer;
+            // (max - 1): Array von 0 bis max-1
+            // TODO Berechnungfunktionen prüfen und refaktorieren, unnötige Unterscheidung, die nur wieder +1 addiert
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max - 1);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, $max - 1);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max - 1);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max - 1);
             $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
 
             //Für freie Antworten muss ein eigener Boxplot erstellt werden

@@ -110,7 +110,9 @@ function survey_question_evaluation_form()
       if ($possible_answers_array[$i]->isRadioButton) {
 
             //Der Boxplot zur Antwort wird geladen
-            $boxplot_graphic = get_graphic($i, 1, $button_title_array[$i - $countTextfield]); // TODO quick fix
+            // Index der Antwortoption "keine Ahnung"
+            $indexNoAnswer = count($button_title_array[$i - $countTextfield]) - 1;
+            $boxplot_graphic = get_graphic($i, 1, $indexNoAnswer); // TODO quick fix
 
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
