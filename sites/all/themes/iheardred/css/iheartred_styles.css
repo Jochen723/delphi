@@ -481,13 +481,13 @@ fieldset {
 
 /* Radio-Buttons als Achsenbeschriftung auf Boxplot skalieren */
 .radios-5 > .form-type-radio {
-  margin-left: calc(20.2%); }
+  margin-left: calc(20.9%); }
 
 .radios-6 > .form-type-radio {
-  margin-left: calc(14.6%); }
+  margin-left: calc(15.1%); }
 
 .radios-7 > .form-type-radio {
-  margin-left: calc(11.2%); }
+  margin-left: calc(11.65%); }
 
 /* Es wird ein label Element benötigt, welches nach dem input auftritt, damit dieses als :checked verwendet werden kann, um die Buttons umzustylen
 
@@ -537,7 +537,8 @@ input.form-radio:checked .form-radio:after {
   margin-bottom: 4rem; }
 
 #survey-form .form-type-textfield {
-  max-width: 600px; }
+  max-width: 600px;
+  margin-bottom: 0; }
 
 .form-wrapper .form-type-radios {
   margin-bottom: 0.4rem; }
@@ -555,10 +556,12 @@ input.form-radio:checked .form-radio:after {
   .form-textarea-wrapper .form-textarea {
     width: 100%; }
 
-/* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist */
+/* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist.
+   Radio-Buttons auf Boxplot-Skala ausrichten. */
 #survey-question-evaluation-form .form-type-radios {
   margin-top: 0;
-  margin-bottom: 4rem; }
+  margin-bottom: 4rem;
+  margin-left: -5px; }
 
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
@@ -727,8 +730,8 @@ fieldset legend {
 .answers > .form-type-radios {
   border-style: solid;
   border-width: 2px;
-  padding: 1rem;
-  margin-top: 1rem; }
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem; }
 
 .answers > .form-type-radios {
   padding-bottom: 4rem;
