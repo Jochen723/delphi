@@ -475,3 +475,20 @@ fieldset legend {
   padding-bottom: 4rem;
   margin-bottom: 0;
 }
+
+/* Ein-/ausblendbare Kommentare */
+.toggleComments {
+
+  & .form-type-checkbox {
+    margin-top: -1rem;
+    margin-bottom: 0;
+  }
+  
+  & * {
+    float: right;
+  }
+
+  & label {
+    margin-right: 0.5rem;
+  }
+}

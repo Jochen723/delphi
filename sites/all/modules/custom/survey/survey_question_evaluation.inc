@@ -137,7 +137,9 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
+            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id);
+
+        //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
         } else {
             $countTextfield++;
             //Der Boxplot zur Antwort wird geladen
@@ -162,7 +164,10 @@ function survey_question_evaluation_form()
                 '#type' => 'textarea',
                 '#default_value' => $answers[$i]->comment,
             );
-        }
+
+        $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id);
+      }
+
     }
 
     //Sollte es sich um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
@@ -400,4 +405,76 @@ function survey_get_button_titles($button_title_result)
 
 
     return $button_title_array;
+}
+
+/**
+ * Returns all user comments for a given question.
+ *
+ * @param $questionId
+ *   ID of the question
+ *
+ * @return array
+ *   All comments associated with the question
+ */
+function getComments($questionId, $answerId) {
+  $commentsResult = db_query("SELECT comment FROM {question_user_answers} WHERE question_id = :question_id and answer_id = :answer_id", array(
+    ':question_id' => $questionId,
+    ':answer_id' => $answerId
+  ));
+
+  $allComments = array();
+  foreach ($commentsResult as $comment) {
+    if ($comment->comment) {
+      array_push($allComments, $comment->comment);
+    }
+  }
+
+  return $allComments;
+}
+
+/**
+ * Adds a toggleable user comment section to the ansers.
+ *
+ * @param $form
+ *    The form array.
+ * @param $i
+ *    The current index.
+ * @param $question_id
+ *    The ID of the current question site.
+ * @param $answer_id
+ *    The ID of the answer.
+ *
+ * @return array
+ *    The extended form array.
+ */
+function addUserComments($form, $i, $question_id, $answer_id) {
+  $userComments = getComments($question_id, $answer_id);
+
+  if (count($userComments) > 0) {
+    $form['fieldset' . $i]['toggleComments' . $i] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Alle Kommentare anzeigen'),
+      '#prefix' => '<div class="toggleComments">',
+      '#suffix' => '</div>',
+    );
+
+    $form['fieldset' . $i]['allComments' . $i] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'class' => array('form-item')),
+      '#states' => array(
+        // Ausblenden, wenn "alle Kommentare anzeigen" nicht ausgewählt ist
+        'invisible' => array(
+          ':input[name="toggleComments' . $i . '"]' => array('checked' => FALSE),
+        )),
+    );
+
+    $form['fieldset' . $i]['allComments' . $i]['comments'] = array(
+      '#theme' => 'item_list',
+      '#list_type' => 'ul',
+      '#items' => $userComments,
+    );
+  }
+
+  return $form;
 }

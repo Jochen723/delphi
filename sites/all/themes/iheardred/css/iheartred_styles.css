@@ -737,4 +737,13 @@ fieldset legend {
   padding-bottom: 4rem;
   margin-bottom: 0; }
 
+/* Ein-/ausblendbare Kommentare */
+.toggleComments .form-type-checkbox {
+  margin-top: -1rem;
+  margin-bottom: 0; }
+.toggleComments * {
+  float: right; }
+.toggleComments label {
+  margin-right: 0.5rem; }
+
 /*# sourceMappingURL=iheartred_styles.css.map */
