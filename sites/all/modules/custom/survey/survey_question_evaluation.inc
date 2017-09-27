@@ -431,7 +431,7 @@ function survey_get_button_titles($button_title_result)
  *   All comments associated with the question
  */
 function getComments($questionId, $answerId) {
-  $commentsResult = db_query("SELECT comment FROM {question_user_answers} WHERE question_id = :question_id and answer_id = :answer_id", array(
+  $commentsResult = db_query("SELECT comment FROM {question_user_answers} WHERE question_id = :question_id and answer_id = :answer_id AND is_last_answer = 1", array(
     ':question_id' => $questionId,
     ':answer_id' => $answerId
   ));
