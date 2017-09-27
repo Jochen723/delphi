@@ -92,8 +92,12 @@ function survey_form()
                   // sind würde $answers 5 Eintrage haben, $button_title_array jedoch nur 2 (-> Undefined offset).
                   // $countTextfield soll dies kompensieren.
                     '#options' => $button_title_array[$i - $countTextfield],
-                    '#attributes' => array('class' => array('my-class-1')),
                 );
+
+                // Antwort vorauswählen, wenn die Frage bereits beantwortet wurde
+                if (isset($user_answers[$i])) {
+                  $form['dim' . $i]['#default_value'] = $user_answers[$i]->answer;
+                }
 
                 //Sollte es sich bei der Antwortmöglichkeit um ein Textfeld handeln
             } else {
@@ -117,7 +121,9 @@ function survey_form()
             $form['back'] = array(
                 '#type' => 'submit',
                 '#value' => 'Zurück',
-                '#submit' => array('survey_question_evaluation_get_back_to_last_question')
+                '#submit' => array('survey_question_evaluation_get_back_to_last_question'),
+                // skip form vaildation on back button
+                '#limit_validation_errors' => array(),
             );
         }
 

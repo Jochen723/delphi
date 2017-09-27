@@ -170,9 +170,8 @@ function survey_question_evaluation_form()
 
     }
 
-    //Sollte es sich um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
-    if ($question_id != 0) {
-    } else {
+    //Sollte es sich nicht um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
+    if ($question_id !== 0) {
         $form['back'] = array(
             '#type' => 'submit',
             '#value' => 'Zurück',
@@ -200,7 +199,7 @@ function survey_question_evaluation_form()
     return $form;
 }
 
-function survey_question_evaluation_get_back_to_last_question()
+function survey_question_evaluation_get_back_to_last_question(&$form)
 {
     $question_id = arg(1);
     $user_pw = arg(2);
@@ -217,10 +216,16 @@ function survey_question_evaluation_get_back_to_last_question()
         $question_index++;
     }
 
+    // Unterscheidung, ob zur letzten Frage- oder Auswertungs-Seite gesprungen werden soll.
+    $gotoPath = 'survey_question_evaluation/';
+    if ($form['#form_id'] === 'survey_question_evaluation_form') {
+      $gotoPath = 'survey_question/';
+    }
+
     if ($question_index != 0) {
-        drupal_goto("survey_question_evaluation/" . $questions[$question_index - 1]->question_id . "/" . $user_pw);
+        drupal_goto($gotoPath . $questions[$question_index - 1]->question_id . "/" . $user_pw);
     } else {
-        drupal_goto("survey_question_evaluation/" . $questions[$question_index]->question_id . "/" . $user_pw);
+        drupal_goto($gotoPath . $questions[$question_index]->question_id . "/" . $user_pw);
     }
 }
 

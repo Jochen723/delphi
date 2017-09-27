@@ -125,20 +125,22 @@ function survey_generate_random_string($length)
     return $random_string;
 }
 
-//Diese Funktion holt sich die Antworten eines Nutzers zu einer bestimmten Frage aus der DB und gibt diese als Array
-//zurück.
+//Diese Funktion holt sich die zuletzt abgegebenen Antworten eines Nutzers zu einer bestimmten Frage aus der DB und gibt
+//diese als Array zurück.
 function survey_get_answers($question_id, $user_passcode)
 {
     $answers = array();
 
     //Antworten eines Nutzers zu einer Frage werden geladen
-    $answer_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id", array(
+    $answer_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id
+                              ORDER BY question_user_answers_id ASC", array(
         ':user_pw' => $user_passcode,
         ':question_id' => $question_id
     ));
 
     foreach ($answer_result as $answer) {
-        array_push($answers, $answer);
+        // Nur die zuletzt abgegebene Antwort zurückgeben.
+        $answers[$answer->answer_id] = $answer;
     }
 
     return $answers;
