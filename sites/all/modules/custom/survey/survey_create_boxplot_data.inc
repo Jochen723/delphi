@@ -100,7 +100,7 @@ function survey_get_first_quantil($testArrayOverall, $isRadioButton, $max)
     } else {
         if ($np == round($np)) {
 
-            $first_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
+            $first_quantil = 0.5 * ($temp[$np - 1] + $temp[$np]);
 
         } else {
             $np = ceil($np);
@@ -134,7 +134,7 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
     if($isRadioButton) {
         if ($np == round($np)) {
 
-            $third_quantil = 0.5 * ($temp[$np] + $temp[$np+1]);
+            $third_quantil = 0.5 * ($temp[$np - 1] + $temp[$np]);
 
         } else {
             $np = ceil($np);
@@ -147,7 +147,7 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
     } else {
         if ($np == round($np)) {
 
-            $third_quantil = 0.5 * ($temp[$np] + $temp[$np + 1]);
+            $third_quantil = 0.5 * ($temp[$np - 1] + $temp[$np]);
 
         } else {
             $np = ceil($np);

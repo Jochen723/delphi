@@ -16,7 +16,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
     $testArrayOverall = array();
     $testArrayOverall2 = array();
 
-    $quantity_check_result = db_query("SELECT * FROM {question_user_answers} WHERE question_id = :question_id AND answer_id = :answer_id", array(
+    $quantity_check_result = db_query("SELECT * FROM {question_user_answers} WHERE question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1", array(
         ':question_id' => $question_id,
         ':answer_id' => $id
     ));
@@ -67,7 +67,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
             //Für freie Antworten muss ein eigener Boxplot erstellt werden
         } else {
 
-            $max = array_pop($testArrayOverall);
+            $max = $testArrayOverall[count($testArrayOverall)-1];
             $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
             $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
             $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
