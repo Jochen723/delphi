@@ -295,16 +295,24 @@ function survey_get_next_question($form, &$form_state)
 
         foreach ($result as $item) {
 
-            //Sollte bereits eine Antwort vorliegen, wird diese aktualisiert
+            // Wurde die Antwort nicht geändert, nur die Kommentare zu den vorhandenen Antworten speichern
             if (!strcmp($dim1, $item->answer)) {
-                db_query("UPDATE {question_user_answers} SET comment = :comment WHERE user_pw = :user_pw AND question_id = :question_id AND answer_id = :answer_id", array(
+                db_query("UPDATE {question_user_answers} SET comment = :comment WHERE user_pw = :user_pw AND question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1", array(
                     ':comment' => $comment,
                     ':user_pw' => $user_id,
                     ':question_id' => $question,
                     ':answer_id' => $i
 
                 ));
+
+            // geänderte Antworten neu speichern und alte Antworten beibehalten
             } else {
+                db_query("UPDATE {question_user_answers} SET is_last_answer = 0 WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw AND is_last_answer = 1", array(
+                  ':answer_id'   => $i,
+                  ':question_id' => $question,
+                  ':user_pw'     => $user_id
+                ));
+
                 db_insert('question_user_answers')
                     ->fields(array(
                         'question_id' => $question,
@@ -312,6 +320,7 @@ function survey_get_next_question($form, &$form_state)
                         'answer' => $dim1,
                         'user_pw' => $user_id,
                         'comment' => $comment,
+                        'is_last_answer' => 1,
                     ))
                     ->execute();
             }

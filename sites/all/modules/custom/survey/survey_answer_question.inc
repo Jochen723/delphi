@@ -181,19 +181,37 @@ function survey_get_evaluation($form, &$form_state)
         }
 
         //Sollten bereits Antworten vorliegen, werden sie aktualisiert. Sonst werden neue Einträge angelegt
-        $result = db_query("SELECT * FROM {question_user_answers} WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw", array(
+        $result = db_query("SELECT * FROM {question_user_answers} WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw and is_last_answer = 1", array(
             ':answer_id' => $i,
             ':question_id' => $question,
             ':user_pw' => $user_passcode
         ));
 
         if ($result->rowCount()) {
-            db_query("UPDATE {question_user_answers} SET answer = :answer WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw", array(
-                ':answer' => $dim1,
-                ':answer_id' => $i,
+          // Es gibt bereits Antworten vom Benutzer. Geänderte Antworten speichern und Änderungen in der DB behalten.
+          foreach ($result as $item) {
+            // Nur wenn Benutzer seine Antwort ändert, diese als neue Antwort speichern. Vorherige Antwort markieren (is_last_answer)
+            if (strcmp($dim1, $item->answer)) {
+              db_query("UPDATE {question_user_answers} SET is_last_answer = 0 WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw", array(
+                ':answer_id'   => $i,
                 ':question_id' => $question,
-                ':user_pw' => $user_passcode
-            ));
+                ':user_pw'     => $user_passcode
+              ));
+
+              db_insert('question_user_answers')
+                ->fields(array(
+                  'question_id' => $question,
+                  'answer_id' => $i,
+                  'answer' => $dim1,
+                  'user_pw' => $user_passcode,
+                  'comment' => $item->comment,
+                  'is_last_answer' => 1,
+                ))
+                ->execute();
+            }
+          }
+
+        // es gibt noch keine Antworten, also nur speichern
         } else {
             db_insert('question_user_answers')
                 ->fields(array(
@@ -202,6 +220,7 @@ function survey_get_evaluation($form, &$form_state)
                     'answer' => $dim1,
                     'user_pw' => $user_passcode,
                     'comment' => "",
+                    'is_last_answer' => 1,
                 ))
                 ->execute();
         }
