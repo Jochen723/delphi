@@ -113,42 +113,42 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
                         '#prefix' => '<span class="schild s_min" style="left: 0%;">',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $min,
+                            '#markup' => _formatNumber($min),
                         ),
                     ),
                     's_average' => array(
                         '#prefix' => '<span class="schild min s_average" style="margin-left: ' . $avg["procent"] . '%;">',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $avg["absolut"],
+                            '#markup' => _formatNumber($avg["absolut"]),
                         ),
                     ),
                     's_median' => array(
                         '#prefix' => '<span class="schild min s_median" style="margin-left: ' . $median["procent"] . '%;"> ',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $median["absolut"],
+                            '#markup' => _formatNumber($median["absolut"]),
                         ),
                     ),
                     's_third_quantil' => array(
                         '#prefix' => '<span class="schild min s_third_quantil" style="margin-left: ' . $third_quantil["procent"] . '%;"> ',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $third_quantil["absolut"],
+                            '#markup' => _formatNumber($third_quantil["absolut"]),
                         ),
                     ),
                     's_first_quantil' => array(
                         '#prefix' => '<span class="schild s_first_quantil" style="margin-left: ' . $first_quantil["procent"] . '%;"> ',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $first_quantil["absolut"],
+                            '#markup' => _formatNumber($first_quantil["absolut"]),
                         ),
                     ),
                     's_max' => array(
                         '#prefix' => '<span class="schild min s_max" style="margin-left: 100%;"> ',
                         '#suffix' => '</span>',
                         'markup' => array(
-                            '#markup' => $max,
+                            '#markup' => _formatNumber($max),
                         ),
                     ),
                 ),
@@ -254,4 +254,24 @@ function getQuantil($array)
     }
 
     return $returnArray;
+}
+
+/**
+ * Formatiert Rationale Zahlen auf eine Nachkommastelle mit Komma als Dezimaltrennzeichen. Ganze Zahlen werden ohne
+ * Nachkommastellen ausgegeben.
+ *
+ * @param number|string $number
+ *   Unformatierte Zahl
+ *
+ * @return number|string
+ *   Formatierte Zahl
+ */
+function _formatNumber($number) {
+  if (is_float($number)) {
+    $number = number_format($number,1, ",", "");
+  } else {
+    $number = number_format($number,0);
+  }
+
+  return $number;
 }
