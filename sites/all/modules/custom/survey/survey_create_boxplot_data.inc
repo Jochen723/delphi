@@ -8,6 +8,7 @@
 
 /*
  * Diese Funktion ermittelt den Average für den Boxplot
+ * TODO refactor duplicate code
  */
 function survey_get_average($testArrayOverall, $isRadioButton, $max)
 {
@@ -20,7 +21,7 @@ function survey_get_average($testArrayOverall, $isRadioButton, $max)
 
 
     if ($isRadioButton) {
-        $avg_array["absolut"] = $avg + 1;
+        $avg_array["absolut"] = $avg;
 
         $avg_array["procent"] = round($avg / $max * 100, 1);
     } else {
@@ -53,7 +54,7 @@ function survey_get_median($testArrayOverall, $isRadioButton, $max)
             $median = $temp[($n) / 2];
         }
 
-        $median_array["absolut"] = $median + 1;
+        $median_array["absolut"] = $median;
         $median_array["procent"] = round($median / $max * 100, 1);
     } else {
         if (sizeof($temp) % 2 == 0) {
@@ -95,7 +96,7 @@ function survey_get_first_quantil($testArrayOverall, $isRadioButton, $max)
             $first_quantil = $temp[$np - 1];
         }
 
-        $first_quantil_array["absolut"] = $first_quantil + 1;
+        $first_quantil_array["absolut"] = $first_quantil;
         $first_quantil_array["procent"] = round($first_quantil / $max * 100, 1);
     } else {
         if ($np == round($np)) {
@@ -142,7 +143,7 @@ function survey_get_third_quantil($testArrayOverall, $isRadioButton, $max)
             $third_quantil = $temp[$np - 1];
         }
 
-        $third_quantil_array["absolut"] = $third_quantil + 1;
+        $third_quantil_array["absolut"] = $third_quantil;
         $third_quantil_array["procent"] = round($third_quantil / $max * 100, 1);
     } else {
         if ($np == round($np)) {

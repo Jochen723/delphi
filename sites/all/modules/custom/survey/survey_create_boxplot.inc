@@ -53,15 +53,14 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
         if ($isRadioButton) {
 
             //Die einzelnen Bestandteile eines Boxplots werden ermittelt
-            $min = 1;
+            $min = 0;
             // Maximum der Boxplot-Skala, k.A. nicht Teil der Skala
-            $max = $indexNoAnswer;
-            // (max - 1): Array von 0 bis max-1
+            $max = $indexNoAnswer - 1;
             // TODO Berechnungfunktionen prüfen und refaktorieren, unnötige Unterscheidung, die nur wieder +1 addiert
-            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max - 1);
-            $median = survey_get_median($testArrayOverall, $isRadioButton, $max - 1);
-            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max - 1);
-            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max - 1);
+            $avg = survey_get_average($testArrayOverall, $isRadioButton, $max);
+            $median = survey_get_median($testArrayOverall, $isRadioButton, $max);
+            $first_quantil = survey_get_first_quantil($testArrayOverall, $isRadioButton, $max);
+            $third_quantil = survey_get_third_quantil($testArrayOverall, $isRadioButton, $max);
             $third_quantil2 = $third_quantil["procent"] - $first_quantil["procent"];
 
             //Für freie Antworten muss ein eigener Boxplot erstellt werden
