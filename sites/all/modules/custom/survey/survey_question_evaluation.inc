@@ -154,7 +154,7 @@ function survey_question_evaluation_form()
                 '#size' => 4,
                 '#maxlength' => 6,
                 '#default_value' => $answers[$i]->answer,
-                '#element_validate' => array('element_validate_number'),
+                '#element_validate' => array('element_validate_integer'),
             );
             $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 

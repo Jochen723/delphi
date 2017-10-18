@@ -111,7 +111,7 @@ function survey_form()
                     '#maxlength' => 6,
                     '#default_value' => $default_value,
                     '#required' => true,
-                    '#element_validate' => array('element_validate_number'),
+                    '#element_validate' => array('element_validate_integer'),
                 );
             }
         }
