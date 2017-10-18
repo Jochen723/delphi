@@ -699,6 +699,9 @@ input.form-radio:checked .form-radio:after {
 #survey-question-evaluation-form .fieldset-wrapper {
   margin-top: 55px; }
 
+#survey-question-evaluation-form .title-long .fieldset-wrapper {
+  margin-top: 80px; }
+
 .boxplot-nodata {
   margin-top: -30px; }
 
@@ -719,10 +722,13 @@ input.form-radio {
   width: auto;
   margin-right: 2rem; }
 
-/* Fieldset Titel bündig mit Box */
-fieldset legend {
-  left: 0; }
-  fieldset legend .fieldset-legend {
+/* Boxplot Fieldset Formatierung */
+#survey-question-evaluation-form fieldset legend {
+  left: 0;
+  height: auto;
+  text-indent: 0;
+  padding-left: 10px; }
+  #survey-question-evaluation-form fieldset legend .fieldset-legend {
     font-weight: bold; }
 
 /* Rahmen als zur Strukturierung auf Umfrageseite */

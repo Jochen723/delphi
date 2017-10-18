@@ -114,6 +114,15 @@ function survey_question_evaluation_form()
             $indexNoAnswer = count($button_title_array[$i - $countTextfield]) - 1;
             $boxplot_graphic = get_graphic($i, 1, $indexNoAnswer); // TODO quick fix
 
+            $answerDescription = $possible_answers_array[$i]->description;
+            $form['fieldset' . $i]['#title'] = $answerDescription;
+
+            // Fieldset legend vergrößern bei langen Titeln
+            if (drupal_strlen($answerDescription) > 102) {
+              $form['fieldset' . $i]['#attributes'] = array(
+                'class' => array('title-long'));
+            }
+
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
             );
@@ -127,8 +136,6 @@ function survey_question_evaluation_form()
                     'class' => array('radios-' . count($button_title_array[$i - $countTextfield]))
                 ),
             );
-
-            $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(
                 '#title' => t('Kommentar'),
@@ -145,6 +152,8 @@ function survey_question_evaluation_form()
             //Der Boxplot zur Antwort wird geladen
             $boxplot_graphic = get_graphic($i, 0, array('Min', 'Max'));
 
+            $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
+
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
             );
@@ -156,7 +165,6 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->answer,
                 '#element_validate' => array('element_validate_integer'),
             );
-            $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(
                 '#title' => t('Kommentar'),

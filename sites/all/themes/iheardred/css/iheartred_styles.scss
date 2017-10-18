@@ -429,6 +429,10 @@ input.form-radio:checked .form-radio:after {
   margin-top: 55px;
 }
 
+#survey-question-evaluation-form .title-long .fieldset-wrapper {
+  margin-top: 80px;
+}
+
 .boxplot-nodata {
   margin-top: -30px;
 }
@@ -453,9 +457,14 @@ input.form-radio {
   margin-right: 2rem;
 }
 
-/* Fieldset Titel bündig mit Box */
-fieldset legend {
+/* Boxplot Fieldset Formatierung */
+#survey-question-evaluation-form fieldset legend {
+  // Fieldset Titel bündig mit Box
   left: 0;
+  // mehrzeiliger Fieldset Titel
+  height: auto;
+  text-indent: 0;
+  padding-left: 10px;
 
   & .fieldset-legend {
     font-weight: bold;
