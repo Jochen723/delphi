@@ -1,151 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="99ab25c9-7143-4a90-8da1-461717a75ad4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_features.png" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_features.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_simple.png" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_simple.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_usa.png" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_usa.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_world.png" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_world.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/drupal.sh" afterPath="$PROJECT_DIR$/scripts/drupal.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/password-hash.sh" afterPath="$PROJECT_DIR$/scripts/password-hash.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/run-tests.sh" afterPath="$PROJECT_DIR$/scripts/run-tests.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/d3.gantt.libraries.info" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/d3.gantt.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/gantt.css" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/gantt.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/gantt.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.gantt/gantt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.min.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.network/d3.network.libraries.info" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.network/d3.network.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.network/miserables.json" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.network/miserables.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.network/network.css" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.network/network.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3.network/network.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3.network/network.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/LICENSE" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3 2.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3 2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3.make.example" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3.make.example" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3.min.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3.module" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3.tpl.php" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/d3min .js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/d3min .js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/libraries/d3/js/d3.js" afterPath="$PROJECT_DIR$/sites/all/libraries/d3/js/d3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/d3_gantt/d3_gantt.info" afterPath="$PROJECT_DIR$/sites/all/modules/custom/d3_gantt/d3_gantt.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/d3_gantt/d3_gantt.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/d3_gantt/d3_gantt.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module" afterPath="$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc" afterPath="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/LICENSE.txt" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/README.txt" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/austausch2.json" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/austausch2.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.admin.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.admin.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.api.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.api.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.drush.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.drush.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.install" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.install" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.make.example" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.make.example" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.module" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/d3.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/data.json" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/data.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3DataMapping.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3DataMapping.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3LibraryInfoController.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3LibraryInfoController.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3LibraryInfoProcessor.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/includes/D3LibraryInfoProcessor.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/js/d3.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/js/d3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/barchart.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/barchart.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/barchart.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/barchart.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/d3.barchart.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/d3.barchart.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/views-settings.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.barchart/views-settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/columnchart.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/columnchart.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/columnchart.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/columnchart.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/d3.columnchart.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/d3.columnchart.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/views-settings.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.columnchart/views-settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.extend/d3.extend.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.extend/d3.extend.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.extend/d3.extend.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.extend/d3.extend.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.forcedirected/d3.forcedirected.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.forcedirected/d3.forcedirected.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.forcedirected/forcedirected.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.forcedirected/forcedirected.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/d3.graphic_points.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/d3.graphic_points.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/graphic_points.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/graphic_points.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/graphic_points.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.graphic_points/graphic_points.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/d3.linegraph.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/d3.linegraph.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/linegraph.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/linegraph.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/linegraph.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/linegraph.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/views-settings.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.linegraph/views-settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.module_dependencies/d3.module_dependencies.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.module_dependencies/d3.module_dependencies.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.module_dependencies/module_dependencies.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.module_dependencies/module_dependencies.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/d3.piechart.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/d3.piechart.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/piechart.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/piechart.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/piechart.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.piechart/piechart.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.tooltip/d3.tooltip.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.tooltip/d3.tooltip.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.tooltip/tooltip.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/d3.tooltip/tooltip.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.js" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/libraries/template/template.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_examples/d3_examples.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_examples/d3_examples.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_examples/d3_examples.module" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_examples/d3_examples.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/austausch.json" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/austausch.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/bekanntheit.json" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/bekanntheit.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/d3_indeko.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/d3_indeko.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/d3_indeko.module" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/d3_indeko.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/interesse.json" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_indeko/interesse.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/css/views_ui_style_options_form.css" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/css/views_ui_style_options_form.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.api.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.api.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.info" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.module" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/d3_views.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsDataMapping.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsDataMapping.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsLibraryInfoController.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsLibraryInfoController.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsLibraryInfoProcessor.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/includes/D3ViewsLibraryInfoProcessor.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/d3_views.views.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/d3_views.views.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/plugins/d3_views_plugin_style_d3.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/plugins/d3_views_plugin_style_d3.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/theme/d3-views-view-d3.tpl.php" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/theme/d3-views-view-d3.tpl.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/theme/d3_views_view_d3.theme.inc" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/modules/d3_views/views/theme/d3_views_view_d3.theme.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/d3/d3/tests/d3_info_handler.test" afterPath="$PROJECT_DIR$/sites/all/modules/d3/d3/tests/d3_info_handler.test" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/CHANGELOG.txt" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/CHANGELOG.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/Gruntfile.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/Gruntfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/LICENSE.txt" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/MIT-LICENSE.txt" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/MIT-LICENSE.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/README.rst" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/README.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/README.txt" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_features.html" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_features.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_simple.html" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_simple.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_usa.html" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_usa.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_world.html" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/demo_world.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/index.html" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/jquery.metadata.min.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/jquery.metadata.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/ui.tabs.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/ui.tabs.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/docs/ui.tabs.pack.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/docs/ui.tabs.pack.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/jquery.maphilight.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/jquery.maphilight.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/jquery.maphilight.min.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/jquery.maphilight.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.api.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.api.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.drush.inc" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.drush.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.install" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.install" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.module" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/libraries.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/package.json" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries.test" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries.test" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/README.txt" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_1.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_2.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_3.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example/example_4.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example_info_file.libraries.info" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/libraries/example_info_file.libraries.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.inc" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.info" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.module" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module.module" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module_post_load.inc" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/modules/libraries_test_module/libraries_test_module_post_load.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.css" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.inc" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.inc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.info" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.info" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.js" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/libraries_test_theme.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/template.php" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tests/themes/libraries_test_theme/template.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tools/parse_path.py" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tools/parse_path.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sites/all/modules/libraries/tools/svg2imagemap.py" afterPath="$PROJECT_DIR$/sites/all/modules/libraries/tools/svg2imagemap.py" />
+    <list default="true" id="99ab25c9-7143-4a90-8da1-461717a75ad4" name="Default" comment="Nur">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sql_dumps/201707141243.sql" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="delphi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -167,51 +25,130 @@
     <favorites_list name="delphi" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="settings.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="survey_question_evaluation.inc" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3960">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="delphi_legend.module" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3388">
-              <caret line="177" column="20" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+            <state relative-caret-position="154">
+              <caret line="227" column="0" lean-forward="false" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
               <folding>
-                <marker date="1493304216435" expanded="true" signature="1397:3863" ph="..." />
-                <marker date="1493304216435" expanded="true" signature="2333:2349" ph="..." />
-                <marker date="1493304216435" expanded="true" signature="2550:2552" ph="..." />
-                <marker date="1493304216435" expanded="true" signature="3432:3450" ph="..." />
+                <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+                <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+                <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+                <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+                <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="survey_question_evaluation.inc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
+      <file leaf-file-name="iheartred_styles.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2464">
-              <caret line="402" column="29" selection-start-line="402" selection-start-column="29" selection-end-line="402" selection-end-column="29" />
+            <state relative-caret-position="17">
+              <caret line="432" column="16" lean-forward="false" selection-start-line="432" selection-start-column="16" selection-end-line="432" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="survey_answer_question.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_answer_question.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="191" column="0" lean-forward="false" selection-start-line="191" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
               <folding>
-                <marker date="1493305471527" expanded="true" signature="681:806" ph="SELECT * FRO... " />
-                <marker date="1493305471527" expanded="true" signature="1826:1917" ph="SELECT * FRO... " />
-                <marker date="1493305471527" expanded="true" signature="2409:2471" ph="SELECT * FRO... " />
-                <marker date="1493305471527" expanded="true" signature="5504:5680" ph="SELECT * FRO... " />
-                <marker date="1493305471527" expanded="true" signature="7217:7308" ph="SELECT * FRO... " />
-                <marker date="1493305471527" expanded="true" signature="11712:11728" ph="..." />
-                <marker date="1493305471527" expanded="true" signature="12811:12829" ph="..." />
+                <marker date="1508315159611" expanded="true" signature="1798:1888" ph="SELECT * FRO... question_buttons_title" />
+                <marker date="1508315159611" expanded="true" signature="6550:6670" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1508315159611" expanded="true" signature="6550:6693" ph="SELECT * FRO... question_user_answers" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="survey_create_boxplot.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+              <folding>
+                <marker date="1509008239871" expanded="true" signature="329:426" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1509008239871" expanded="true" signature="329:449" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1509008239871" expanded="true" signature="5067:5076" ph="..." />
+                <marker date="1509008239871" expanded="true" signature="6981:6999" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="survey_create_boxplot_data.inc" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot_data.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="816">
+              <caret line="95" column="42" lean-forward="false" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="survey.module" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey.module">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2193">
+              <caret line="134" column="67" lean-forward="false" selection-start-line="134" selection-start-column="46" selection-end-line="134" selection-end-column="67" />
+              <folding>
+                <marker date="1506515573230" expanded="true" signature="1775:1820" ph="SELECT * FRO... question" />
+                <marker date="1506515573230" expanded="true" signature="2263:2357" ph="SELECT * FRO... question_possible_answers" />
+                <marker date="1506515573230" expanded="true" signature="2903:2957" ph="INSERT INTO " />
+                <marker date="1506515573230" expanded="true" signature="3963:4056" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1506515573230" expanded="true" signature="3963:4124" ph="SELECT * FRO... question_user_answers" />
+                <marker date="1506515573230" expanded="true" signature="4580:4633" ph="SELECT * FRO... survey_users" />
+                <marker date="1506515573230" expanded="true" signature="5120:5165" ph="SELECT * FRO... question" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>default</find>
+      <find>pop</find>
+      <find>ggeb</find>
+      <find>order by</find>
+      <find>survey_get_average</find>
+      <find>survey_question_evaluation_get_previous_question</find>
+      <find>question_user_answers</find>
+      <find>survey_get_evaluation</find>
+      <find>update</find>
+      <find>allcom</find>
+      <find>allcomment</find>
+      <find>last</find>
+      <find>getComments</find>
+      <find>addUserComments</find>
+      <find>number</find>
+      <find>validate</find>
+      <find>min</find>
+      <find>title</find>
+      <find>legend</find>
+      <find>$possible_answers_array[$i]-&gt;description</find>
+      <find>fieldset-legend</find>
+      <find>class</find>
+      <find>55px</find>
+      <find>margin-left</find>
+      <find>get_aver</find>
+      <find>get_graphic</find>
+      <find>survey_question_evaluation_get_back_to_last_question</find>
+      <find>zurück</find>
+      <find>es</find>
+      <find>ü</find>
+    </findStrings>
+    <dirStrings>
+      <dir>C:\xampp\htdocs\delphi\sites\all\modules\custom</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -220,6 +157,15 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module" />
+        <option value="$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_add_question.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_change_question.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/survey/survey.module" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_answer_question.inc" />
+        <option value="$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot_data.inc" />
+        <option value="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot.inc" />
         <option value="$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc" />
       </list>
     </option>
@@ -230,22 +176,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpServers">
+    <servers>
+      <server host="localhost" id="9f75a477-6173-4a33-8aaf-64f7e2723a65" name="localhost" />
+    </servers>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
     <option name="width" value="1938" />
     <option name="height" value="1050" />
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -262,183 +204,138 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sql_dumps" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="default" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sites" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="all" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="custom" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="delphi_legend" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="modules" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="modules" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="custom" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="modules" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="custom" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="delphi_legend" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="modules" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="custom" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="delphi_question" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="modules" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="custom" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="survey" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="themes" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="themes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="iheardred" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sites" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="all" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="themes" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="iheardred" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="delphi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="delphi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sql_dumps" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
+    <property name="ignore_missing_gitignore" value="true" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
+    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
+    <property name="Constants" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\delphi\sites\all\modules\custom" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
   <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
@@ -454,9 +351,6 @@
       <method />
     </configuration>
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -491,34 +385,221 @@
       <option name="presentableId" value="Default" />
       <updated>1493293109260</updated>
       <workItem from="1493293111096" duration="10556000" />
+      <workItem from="1505848784098" duration="4234000" />
+      <workItem from="1505854644564" duration="276000" />
+      <workItem from="1505854941568" duration="16918000" />
+      <workItem from="1505897186815" duration="1054000" />
+      <workItem from="1505898429011" duration="7000" />
+      <workItem from="1505918569379" duration="6524000" />
+      <workItem from="1505932639471" duration="737000" />
+      <workItem from="1505987564127" duration="5560000" />
+      <workItem from="1506090450824" duration="6810000" />
+      <workItem from="1506322665774" duration="11296000" />
+      <workItem from="1506432824305" duration="12576000" />
+      <workItem from="1506496166012" duration="400000" />
+      <workItem from="1506506079967" duration="12987000" />
+      <workItem from="1506519116788" duration="5377000" />
+      <workItem from="1506874361639" duration="105000" />
+      <workItem from="1508313155571" duration="7418000" />
+      <workItem from="1508756248355" duration="18000" />
+      <workItem from="1508788147183" duration="14000" />
+      <workItem from="1509003108900" duration="7237000" />
     </task>
+    <task id="LOCAL-00001" summary="Diverse Design Anpassungen (s. u.)&#10;&#10;- [Umfrage] Antwortskala mit 7 Items wird ohne Zeilenumbruch dargestellt&#10;- [Umfrage] Horizontale Abstände zwischen Elementen reduziert&#10;- [Frage bearbeiten] Button zum Ändern der Anzahl der Antwortmöglichkeiten inline&#10;- [Frage bearbeiten] 1. Antwortmöglichkeit nicht mehr versetzt zu den nachfolgenden&#10;- [Frage Bearbeiten] Breite der Textfelder für Titel erhöht">
+      <created>1505888554839</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1505888554839</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Diverse Bugfixes (s. u.)&#10;&#10;- Fehlende Antwortmöglichkeiten gefixt (Fehler 'Undefined offset', wenn Frage Textfeld-Antwortmöglichkeiten enthält)&#10;- Fragentitel von bis zu 1000 Zeichen erlaubt&#10;- Fehlende schließende HTML-Tags eingefügt&#10;- Erste allgemeine CSS-Klassen hinzugefügt">
+      <created>1505889377571</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1505889377571</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Erlaubt 99 Antwortmöglichkeiten pro Frage (statt 9)">
+      <created>1505891814425</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1505891814425</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix Antwortmöglichkeit Textfeld (s. u.)&#10;&#10;- Eingabe prüfen und nur ganzzahlige Werte zulassen (max. 6 Stellen) &#10;- Pflichtfeld (nicht leer)&#10;- Eingabefelder auf der Evaluationsseite deaktivieren">
+      <created>1505921921115</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1505921921115</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Titelfelder beim Erstellen von Antwortmöglichkeiten vergrößert und allgemeine CSS-Klassen hinzugefügt">
+      <created>1505924587877</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1505924587877</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Eingabefelder auf der Evaluationsseite aktivieren&#10;&#10;- CSS Anpassungen bei Radio-Buttons">
+      <created>1505992610402</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1505992610402</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Diverse Change Requests (s. u.)&#10;&#10;- Titel der Antwortmöglichkeiten als Fieldset Titel setzen und hervorheben&#10;- Button &quot;Umfrage abschließen&quot;&#10;- Radio-Buttons auf Breite der Boxplots skalieren&#10;- Breite der Boxplot-Marker halbieren&#10;- Boxplot Legende vertikal zentrieren&#10;- Rahmen zur Strukturierung auf Umfrageseite">
+      <created>1506096477987</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1506096477987</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Radio-Buttons mittig an Boxplot-Linien ausgerichtet">
+      <created>1506332980361</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1506332980361</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Berechnung des ersten Quartils korrigiert">
+      <created>1506333141977</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1506333141977</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Boxplot Skala automatisch an die Anzahl der Radio-Buttons anpassen (4+)">
+      <created>1506333211516</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1506333211516</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Optional alle Kommentare unter der Auswertung anzeigen">
+      <created>1506445003890</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1506445003890</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Optional alle Kommentare bei der Auswertung anzeigen">
+      <created>1506446908727</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1506446908727</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Zurück-Button zur Fragen-Seite&#10;&#10;- zurück von der Auswertungs- zur Fragen-Seite&#10;- bereits abgegebene Antworten laden&#10;- keine Validierung bei &quot;zurück&quot;">
+      <created>1506515621664</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1506515621664</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Pro Nutzer geht nur die zuletzt abgegebene Antwort in Berechnungen ein&#10;&#10;- alle vorherigen Antworten werden auch gespeichert und in der DB markiert">
+      <created>1506522612940</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1506522612940</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fix Boxplot&#10;&#10;- Wertebreich für Freitext-Boxplot korrekt berechnet&#10;- Indizes für Quartil-Berechnungen korrigiert">
+      <created>1506522709627</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1506522709627</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Nur zuletzt abgegebene Kommentare anzeigen">
+      <created>1506526444119</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1506526444119</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Boxplot Wertebreich für vorgegebene Antwortmöglichkeiten startet bei 0">
+      <created>1508313990869</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1508313990869</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Antwortmöglichkeit Textfeld akzeptiert nur Integer Werte">
+      <created>1508315299689</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1508315299689</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Komma als Dezimaltrennzeichen im Boxplot">
+      <created>1508317112269</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1508317112269</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fix fieldset legend bei langem Titel auf zwei Zeilen ausweiten">
+      <created>1508319608738</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1508319608738</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Keine Nachkommastellen bei Integers im Boxplot">
+      <created>1509008586839</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1509008586839</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Zurück-Button leitet nur zu Überprüfungsseiten zurück">
+      <created>1509011194797</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1509011194797</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10556000" />
+    <option name="totallyTimeSpent" value="110104000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
+    <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26597938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30130488" sideWeight="0.4364261" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42111507" sideWeight="0.5635739" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977462" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -531,52 +612,476 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Diverse Design Anpassungen (s. u.)&#10;&#10;- [Umfrage] Antwortskala mit 7 Items wird ohne Zeilenumbruch dargestellt&#10;- [Umfrage] Horizontale Abstände zwischen Elementen reduziert&#10;- [Frage bearbeiten] Button zum Ändern der Anzahl der Antwortmöglichkeiten inline&#10;- [Frage bearbeiten] 1. Antwortmöglichkeit nicht mehr versetzt zu den nachfolgenden&#10;- [Frage Bearbeiten] Breite der Textfelder für Titel erhöht" />
+    <MESSAGE value="Diverse Bugfixes (s. u.)&#10;&#10;- Fehlende Antwortmöglichkeiten gefixt (Fehler 'Undefined offset', wenn Frage Textfeld-Antwortmöglichkeiten enthält)&#10;- Fragentitel von bis zu 1000 Zeichen erlaubt&#10;- Fehlende schließende HTML-Tags eingefügt&#10;- Erste allgemeine CSS-Klassen hinzugefügt" />
+    <MESSAGE value="Erlaubt 99 Antwortmöglichkeiten pro Frage (statt 9)" />
+    <MESSAGE value="Fix Antwortmöglichkeit Textfeld (s. u.)&#10;&#10;- Eingabe prüfen und nur ganzzahlige Werte zulassen (max. 6 Stellen) &#10;- Pflichtfeld (nicht leer)&#10;- Eingabefelder auf der Evaluationsseite deaktivieren" />
+    <MESSAGE value="Titelfelder beim Erstellen von Antwortmöglichkeiten vergrößert und allgemeine CSS-Klassen hinzugefügt" />
+    <MESSAGE value="Eingabefelder auf der Evaluationsseite aktivieren&#10;&#10;- CSS Anpassungen bei Radio-Buttons" />
+    <MESSAGE value="Diverse Change Requests (s. u.)&#10;&#10;- Titel der Antwortmöglichkeiten als Fieldset Titel setzen und hervorheben&#10;- Button &quot;Umfrage abschließen&quot;&#10;- Radio-Buttons auf Breite der Boxplots skalieren&#10;- Breite der Boxplot-Marker halbieren&#10;- Boxplot Legende vertikal zentrieren&#10;- Rahmen zur Strukturierung auf Umfrageseite" />
+    <MESSAGE value="Radio-Buttons mittig an Boxplot-Linien ausgerichtet" />
+    <MESSAGE value="Berechnung des ersten Quartils korrigiert" />
+    <MESSAGE value="Boxplot Skala automatisch an die Anzahl der Radio-Buttons anpassen (4+)" />
+    <MESSAGE value="Optional alle Kommentare unter der Auswertung anzeigen" />
+    <MESSAGE value="Optional alle Kommentare bei der Auswertung anzeigen" />
+    <MESSAGE value="Zurück-Button zur Fragen-Seite&#10;&#10;- zurück von der Auswertungs- zur Fragen-Seite&#10;- bereits abgegebene Antworten laden&#10;- keine Validierung bei &quot;zurück&quot;" />
+    <MESSAGE value="Pro Nutzer geht nur die zuletzt abgegebene Antwort in Berechnungen ein&#10;&#10;- alle vorherigen Antworten werden auch gespeichert und in der DB markiert" />
+    <MESSAGE value="Fix Boxplot&#10;&#10;- Wertebreich für Freitext-Boxplot korrekt berechnet&#10;- Indizes für Quartil-Berechnungen korrigiert" />
+    <MESSAGE value="Nur zuletzt abgegebene Kommentare anzeigen" />
+    <MESSAGE value="Boxplot Wertebreich für vorgegebene Antwortmöglichkeiten startet bei 0" />
+    <MESSAGE value="Antwortmöglichkeit Textfeld akzeptiert nur Integer Werte" />
+    <MESSAGE value="Komma als Dezimaltrennzeichen im Boxplot" />
+    <MESSAGE value="Fix fieldset legend bei langem Titel auf zwei Zeilen ausweiten" />
+    <MESSAGE value="Keine Nachkommastellen bei Integers im Boxplot" />
+    <MESSAGE value="Zurück-Button leitet nur zu Überprüfungsseiten zurück" />
+    <option name="LAST_COMMIT_MESSAGE" value="Zurück-Button leitet nur zu Überprüfungsseiten zurück" />
+  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="59" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3960">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+            <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.info">
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_change_question.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="17" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_add_question.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="39" column="25" lean-forward="false" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="28" column="38" lean-forward="false" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="38" />
+          <folding>
+            <marker date="1506515573230" expanded="true" signature="1775:1820" ph="SELECT * FRO... question" />
+            <marker date="1506515573230" expanded="true" signature="2263:2357" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1506515573230" expanded="true" signature="2903:2957" ph="INSERT INTO " />
+            <marker date="1506515573230" expanded="true" signature="3963:4056" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1506515573230" expanded="true" signature="3963:4124" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1506515573230" expanded="true" signature="4580:4633" ph="SELECT * FRO... survey_users" />
+            <marker date="1506515573230" expanded="true" signature="5120:5165" ph="SELECT * FRO... question" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1989">
+          <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3281">
+          <caret line="243" column="7" lean-forward="false" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1530">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css.map">
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3009">
+          <caret line="177" column="20" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2464">
-          <caret line="402" column="29" selection-start-line="402" selection-start-column="29" selection-end-line="402" selection-end-column="29" />
+        <state relative-caret-position="6579">
+          <caret line="392" column="0" lean-forward="false" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
           <folding>
-            <marker date="1493305471527" expanded="true" signature="681:806" ph="SELECT * FRO... " />
-            <marker date="1493305471527" expanded="true" signature="1826:1917" ph="SELECT * FRO... " />
-            <marker date="1493305471527" expanded="true" signature="2409:2471" ph="SELECT * FRO... " />
-            <marker date="1493305471527" expanded="true" signature="5504:5680" ph="SELECT * FRO... " />
-            <marker date="1493305471527" expanded="true" signature="7217:7308" ph="SELECT * FRO... " />
-            <marker date="1493305471527" expanded="true" signature="11712:11728" ph="..." />
-            <marker date="1493305471527" expanded="true" signature="12811:12829" ph="..." />
+            <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+            <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6596">
+          <caret line="388" column="0" lean-forward="true" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3281">
+          <caret line="243" column="7" lean-forward="false" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css.map">
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3009">
+          <caret line="177" column="20" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6664">
+          <caret line="392" column="0" lean-forward="false" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+          <folding>
+            <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+            <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6579">
+          <caret line="387" column="1" lean-forward="false" selection-start-line="387" selection-start-column="1" selection-end-line="387" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6579">
+          <caret line="392" column="0" lean-forward="true" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+          <folding>
+            <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+            <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3388">
-          <caret line="177" column="20" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        <state relative-caret-position="2924">
+          <caret line="177" column="20" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/media.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css.map">
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4875">
+          <caret line="90" column="0" lean-forward="false" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2203">
+          <caret line="177" column="20" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_legend/delphi_legend.test">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/default/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="243" column="7" lean-forward="false" selection-start-line="243" selection-start-column="7" selection-end-line="243" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/navigation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/database/database.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="2482" column="0" lean-forward="false" selection-start-line="2482" selection-start-column="0" selection-end-line="2482" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/bootstrap.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="2574" column="0" lean-forward="false" selection-start-line="2574" selection-start-column="0" selection-end-line="2574" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/form.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="842" column="0" lean-forward="false" selection-start-line="842" selection-start-column="0" selection-end-line="842" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/js/whitelist.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/js/messages.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/js/get_scripts.js.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/js/get_image.js.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/phpmyadmin.css.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/sql.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_overview.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="98" column="48" lean-forward="false" selection-start-line="98" selection-start-column="27" selection-end-line="98" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_change_question.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="183" column="20" lean-forward="false" selection-start-line="183" selection-start-column="20" selection-end-line="183" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question_add_question.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="11" column="29" lean-forward="false" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/delphi_question/delphi_question.install">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey.module">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2193">
+          <caret line="134" column="67" lean-forward="false" selection-start-line="134" selection-start-column="46" selection-end-line="134" selection-end-column="67" />
           <folding>
-            <marker date="1493304216435" expanded="true" signature="1397:3863" ph="..." />
-            <marker date="1493304216435" expanded="true" signature="2333:2349" ph="..." />
-            <marker date="1493304216435" expanded="true" signature="2550:2552" ph="..." />
-            <marker date="1493304216435" expanded="true" signature="3432:3450" ph="..." />
+            <marker date="1506515573230" expanded="true" signature="1775:1820" ph="SELECT * FRO... question" />
+            <marker date="1506515573230" expanded="true" signature="2263:2357" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1506515573230" expanded="true" signature="2903:2957" ph="INSERT INTO " />
+            <marker date="1506515573230" expanded="true" signature="3963:4056" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1506515573230" expanded="true" signature="3963:4124" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1506515573230" expanded="true" signature="4580:4633" ph="SELECT * FRO... survey_users" />
+            <marker date="1506515573230" expanded="true" signature="5120:5165" ph="SELECT * FRO... question" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../phpMyAdmin/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot_data.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="95" column="42" lean-forward="false" selection-start-line="95" selection-start-column="42" selection-end-line="95" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/themes/iheardred/css/iheartred_styles.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="432" column="16" lean-forward="false" selection-start-line="432" selection-start-column="16" selection-end-line="432" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_create_boxplot.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding>
+            <marker date="1509008239871" expanded="true" signature="329:426" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509008239871" expanded="true" signature="329:449" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509008239871" expanded="true" signature="5067:5076" ph="..." />
+            <marker date="1509008239871" expanded="true" signature="6981:6999" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_answer_question.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="191" column="0" lean-forward="false" selection-start-line="191" selection-start-column="0" selection-end-line="191" selection-end-column="0" />
+          <folding>
+            <marker date="1508315159611" expanded="true" signature="1798:1888" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1508315159611" expanded="true" signature="6550:6670" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1508315159611" expanded="true" signature="6550:6693" ph="SELECT * FRO... question_user_answers" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sites/all/modules/custom/survey/survey_question_evaluation.inc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="227" column="0" lean-forward="false" selection-start-line="227" selection-start-column="0" selection-end-line="227" selection-end-column="0" />
+          <folding>
+            <marker date="1509011144762" expanded="true" signature="1318:1408" ph="SELECT * FRO... question_buttons_title" />
+            <marker date="1509011144762" expanded="true" signature="1820:1913" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="2822:2896" ph="SELECT * FRO... question_possible_answers" />
+            <marker date="1509011144762" expanded="true" signature="9645:9812" ph="SELECT * FRO... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="12004:12049" ph="SELECT * FRO... question" />
+            <marker date="1509011144762" expanded="true" signature="14740:14843" ph="SELECT comme... question_user_answers" />
+            <marker date="1509011144762" expanded="true" signature="14740:14866" ph="SELECT comme... question_user_answers" />
           </folding>
         </state>
       </provider>
