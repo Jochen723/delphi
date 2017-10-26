@@ -267,7 +267,7 @@ function getQuantil($array)
  *   Formatierte Zahl
  */
 function _formatNumber($number) {
-  if (is_float($number)) {
+  if (is_numeric($number) && floor($number) != $number) {
     $number = number_format($number,1, ",", "");
   } else {
     $number = number_format($number,0);
