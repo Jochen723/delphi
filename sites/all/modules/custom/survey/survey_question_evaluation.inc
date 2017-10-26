@@ -179,7 +179,7 @@ function survey_question_evaluation_form()
     }
 
     //Sollte es sich nicht um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
-    if ($question_id !== 0) {
+    if ($question_id !== 0 && $question_index !== 0) {
         $form['back'] = array(
             '#type' => 'submit',
             '#value' => 'Zurück',
@@ -224,11 +224,8 @@ function survey_question_evaluation_get_back_to_last_question(&$form)
         $question_index++;
     }
 
-    // Unterscheidung, ob zur letzten Frage- oder Auswertungs-Seite gesprungen werden soll.
+    // "Zurück" führt immer nur zur Überprüfungsseite der vorherigen Frage zurück (nicht zur Umfrageseite)
     $gotoPath = 'survey_question_evaluation/';
-    if ($form['#form_id'] === 'survey_question_evaluation_form') {
-      $gotoPath = 'survey_question/';
-    }
 
     if ($question_index != 0) {
         drupal_goto($gotoPath . $questions[$question_index - 1]->question_id . "/" . $user_pw);
