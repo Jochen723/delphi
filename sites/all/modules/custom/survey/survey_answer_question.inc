@@ -22,8 +22,13 @@ function survey_form()
     //Das Form-Element, welches am Ende zurückgegeben wird, wird erstellt
     $form = "";
 
-    //Die bisherigen antworten des Nutzers auf die Frage werden aus der Datenbank geladen
+    //Die bisherigen Antworten des Nutzers auf die Frage werden aus der Datenbank geladen
     $user_answers = survey_get_answers($question_id, $user_pass);
+
+    // Weiter zur Überprüfungsseite, wenn der Nutzer die Fragen bereits beantwortet hat
+    if (!empty($user_answers)) {
+      drupal_goto("survey_question_evaluation/" . $question_id . "/" . $user_pass);
+    }
 
     //Es werden alle verfügbaren Fragen aus der Datenbank geladen und gezählt
     $questions = survey_get_all_questions();
