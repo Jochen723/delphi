@@ -29,6 +29,12 @@ function survey_question_evaluation_form()
         $question_index++;
     }
 
+    // Fehlermeldung bei unbekannter question_id
+    if (count($questions) === $question_index) {
+      form_set_error('Question', 'Invalid ID');
+      return null;
+    }
+
 
     //DIe Überschrift wird erstellt
     $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
@@ -66,6 +72,12 @@ function survey_question_evaluation_form()
         ':user_pw' => $user_id,
         ':question_id' => $question_id
     ));
+
+    // Keine Antworten des Benutzers gefunden
+    if ($answers_result->rowCount() === 0) {
+      form_set_error('Answers', 'Invalid User');
+      return null;
+    }
 
     //Die Antworten werden ausgelesen und in ein Array gespeichert
     foreach ($answers_result as $answer) {
