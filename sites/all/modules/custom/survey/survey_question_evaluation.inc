@@ -175,7 +175,7 @@ function survey_question_evaluation_form()
                 '#size' => 4,
                 '#maxlength' => 6,
                 '#default_value' => $answers[$i]->answer,
-                '#element_validate' => array('element_validate_integer'),
+                '#element_validate' => array('survey_element_validate_nonnegative_integer'),
             );
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(

@@ -187,3 +187,18 @@ function survey_get_questions($current_question_id)
         return -1;
     }
 }
+
+/**
+ * Überprüft, ob es sich bei der Benutzereingabe um eine nichtnegative Ganzzahl handelt.
+ *
+ * @param $element
+ *   Das zu überprüfende Form-Element
+ */
+function survey_element_validate_nonnegative_integer($element) {
+  $value = $element['#value'];
+  if ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
+    form_error($element, t('%name must be an non-negative integer.', array(
+      '%name' => $element['#title'],
+    )));
+  }
+}
