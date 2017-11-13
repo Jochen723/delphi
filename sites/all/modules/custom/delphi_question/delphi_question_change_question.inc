@@ -81,6 +81,8 @@ function delphi_question_change_question_form()
         array_push($answer_array, "");
     }
 
+    $answerSets = delphi_question_get_answer_sets();
+
     //Diese Schleife wird so oft durchgeführt, wie viele Antwortmöglichkeiten es geben soll
     for ($i = 1; $i <= $number_of_answers; $i++) {
 
@@ -161,6 +163,27 @@ function delphi_question_change_question_form()
                 ),
             ),
 
+        );
+
+        $selectOptions = array();
+
+        foreach ($answerSets as $key => $set) {
+          $selectOptions[] = count($set) . ' ' . implode(', ', $set) ;
+        }
+
+        $form['content' . $i]['answer_sets' . $i] = array(
+          '#title' => t('Antwort-Set'),
+          '#type' => 'select',
+          '#options' => $selectOptions,
+          '#empty_option' => t(''),
+          '#states' => array(
+            'visible' => array(
+              ':input[name="radios' . $var . '"]' => array('value' => 1),
+            ),
+          ),
+          '#attributes' => array(
+            'class' => array('answer-sets'),
+          ),
         );
 
         $form['content' . $i]['textfield_first_button' . $i] = array(
@@ -270,6 +293,16 @@ function delphi_question_change_question_form()
 
         );
     }
+
+    $form['#attached']['js'][] = array(
+      'type' => 'setting',
+      'data' => array('delphi_question' => array('sets' => $answerSets)),
+    );
+
+    $form['#attached']['js'][] = array(
+      'type' => 'file',
+      'data' => drupal_get_path('module', 'delphi_question') . '/js/selectsets.js',
+    );
 
     $form['submit'] = array(
         '#type' => 'submit',

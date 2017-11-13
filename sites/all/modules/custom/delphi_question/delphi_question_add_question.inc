@@ -6,6 +6,7 @@
  * Time: 11:30
  */
 
+// TODO refactor, fast identisch mit delphi_question_change_question.inc
 function delphi_question_add_question_form()
 {
 
@@ -51,6 +52,8 @@ function delphi_question_add_question_form()
         '#submit' => array('delphi_question_add_question_change_quantity')
     );
 
+
+    $answerSets = delphi_question_get_answer_sets();
 
     //Diese Schleife wird so oft durchgeführt, wie viele Antwortmöglichkeiten es geben soll
     for ($i = 1; $i <= $answer_quantity_id; $i++) {
@@ -98,6 +101,27 @@ function delphi_question_add_question_form()
                     ':input[name="radios' . $var . '"]' => array('value' => 'Radio-Buttons'),
                 ),
             ),
+        );
+
+        $selectOptions = array();
+
+        foreach ($answerSets as $key => $set) {
+          $selectOptions[] = count($set) . ' ' . implode(', ', $set) ;
+        }
+
+        $form['content' . $i]['answer_sets' . $i] = array(
+          '#title' => t('Antwort-Set'),
+          '#type' => 'select',
+          '#options' => $selectOptions,
+          '#empty_option' => t(''),
+          '#states' => array(
+            'visible' => array(
+              ':input[name="radios' . $var . '"]' => array('value' => 'Radio-Buttons'),
+            ),
+          ),
+          '#attributes' => array(
+            'class' => array('answer-sets'),
+          ),
         );
 
         //Textfeld für den ersten Button
@@ -211,6 +235,16 @@ function delphi_question_add_question_form()
             ),
         );
     }
+
+    $form['#attached']['js'][] = array(
+      'type' => 'setting',
+      'data' => array('delphi_question' => array('sets' => $answerSets)),
+    );
+
+    $form['#attached']['js'][] = array(
+      'type' => 'file',
+      'data' => drupal_get_path('module', 'delphi_question') . '/js/selectsets.js',
+    );
 
     //Submit-Button
     $form['submit'] = array(
