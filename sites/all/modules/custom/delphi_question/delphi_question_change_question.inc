@@ -65,7 +65,7 @@ function delphi_question_change_question_form()
     $answer_counter = 0;
 
     //Die Antwortmöglichkeiten der Frage werden ermittelt
-    $question_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY question_id", array(
+    $question_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY question_id, answers_id", array(
         ':question_id' => $question_id
     ));
 
