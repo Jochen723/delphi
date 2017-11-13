@@ -47,6 +47,7 @@ function delphi_question_change_question_form()
         '#size' => 2,
         '#maxlength' => 2,
         '#default_value' => $number_of_answers,
+        '#element_validate' => array('element_validate_integer_positive'),
 
     );
 
@@ -54,6 +55,7 @@ function delphi_question_change_question_form()
     $form['back'] = array(
         '#type' => 'submit',
         '#value' => 'Ändern',
+        '#limit_validation_errors' => array(array('quantity')),
         '#submit' => array('delphi_question_change_question_change_quantity')
     );
 
