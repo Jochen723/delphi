@@ -752,4 +752,12 @@ input.form-radio {
 .toggleComments label {
   margin-right: 0.5rem; }
 
+#delphi-question-change-question-form *,
+#question-form * {
+  max-width: 800px; }
+
+#delphi-question-change-question-form .answer-sets,
+#question-form .answer-sets {
+  max-width: 740px; }
+
 /*# sourceMappingURL=iheartred_styles.css.map */

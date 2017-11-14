@@ -24,9 +24,11 @@ function delphi_question_add_question_form()
 
     //Textfeld, in das der Titel der Frage eingesetzt wird
     $form['question'] = array(
-        '#type' => 'textfield',
+        '#type' => 'textarea',
         '#required' => TRUE,
         '#title' => "Titel der Frage",
+        '#resizable' => FALSE,
+        '#rows' => 2,
         '#attributes' => array(
             'id' => 'question-field',
         ),
