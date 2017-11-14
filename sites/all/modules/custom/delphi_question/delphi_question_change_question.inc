@@ -165,26 +165,29 @@ function delphi_question_change_question_form()
 
         );
 
-        $selectOptions = array();
+      // Auswahlliste mit bereits verwendeten Antwort-Sets
+      if (!empty($answerSets)) {
+          $selectOptions = array();
 
-        foreach ($answerSets as $key => $set) {
-          $selectOptions[] = count($set) . ' ' . implode(', ', $set) ;
-        }
+          foreach ($answerSets as $key => $set) {
+            $selectOptions[] = count($set) . ' ' . implode(', ', $set) ;
+          }
 
-        $form['content' . $i]['answer_sets' . $i] = array(
-          '#title' => t('Antwort-Set'),
-          '#type' => 'select',
-          '#options' => $selectOptions,
-          '#empty_option' => t(''),
-          '#states' => array(
-            'visible' => array(
-              ':input[name="radios' . $var . '"]' => array('value' => 1),
+          $form['content' . $i]['answer_sets' . $i] = array(
+            '#title' => t('Antwort-Set'),
+            '#type' => 'select',
+            '#options' => $selectOptions,
+            '#empty_option' => t(''),
+            '#states' => array(
+              'visible' => array(
+                ':input[name="radios' . $var . '"]' => array('value' => 1),
+              ),
             ),
-          ),
-          '#attributes' => array(
-            'class' => array('answer-sets'),
-          ),
-        );
+            '#attributes' => array(
+              'class' => array('answer-sets'),
+            ),
+          );
+        }
 
         $form['content' . $i]['textfield_first_button' . $i] = array(
             '#type' => 'textfield',
