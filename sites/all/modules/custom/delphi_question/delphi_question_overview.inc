@@ -9,73 +9,96 @@
 /*
  * Diese Funktion baut eine Seite, die in einer Tabelle alle Fragen enthält
  */
-function delphi_question_question_overview_form()
-{
-    //Die Tabelle wird geladen
-    $table_data = delphi_question_create_question_overview();
+function delphi_question_question_overview_form($form, &$form_state) {
+  global $base_url;
 
-    $form['test']['form_item'] = array(
-        '#type' => 'markup',
-        '#title' => t('My Form Item'),
-        '#prefix' => $table_data,
+  $form['table'] = array(
+    '#type' => 'markup',
+    '#title' => t('Fragenübersicht'),
+    '#prefix' => '<table class="select-table">',
+    '#suffix' => '</table>'
+  );
+
+  //Kopf der Tabelle wird erstellt
+  $form['table']['header'] = array(
+    '#type' => 'markup',
+    '#markup' => "<th>Nr.</th>
+            <th>Frage</th>
+            <th>Aktion</th>",
+  );
+
+  //Fragen werden geladen
+  $question_result = db_query("SELECT * FROM {question} ORDER BY weight, question_id");
+  $noQuestions = $question_result->rowCount();
+
+  $id = 1;
+  foreach ($question_result as $question) {
+
+    //Antworten der Fragen werden geladen
+    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id", array(
+      ':question_id' => $question->question_id
+    ));
+
+    //Die Antworten werden gezählt
+    $quan = $answer_result->rowCount();
+
+    // Tabellenzeile aufbauen
+    $form['table']['rows'][$id] = array(
+      '#type' => 'markup',
+      '#prefix' => '<tr>',
+      '#suffix' => '</tr>',
     );
 
-    return $form;
+    // Auswahl der Fragengewichtung
+    $options = drupal_map_assoc(range(1, $noQuestions));
+    $form['table']['rows'][$id]['weight' . $id] = array(
+      '#type' => 'select',
+      '#title' => t(''),
+      '#options' => $options,
+      '#default_value' => $id,
+      '#id' => $question->question_id,
+      '#attributes' => array(
+        'class' => array('weight-table-question'),
+        'onChange' => 'this.form.submit();',
+      ),
+      '#prefix' => '<tr><td>',
+      '#suffix' => '</td>',
+    );
+
+    $form['table']['rows'][$id]['title'] = array(
+      '#type' => 'markup',
+      '#titel' => '',
+      '#markup' => '<td>' . check_plain($question->title) . '</td>',
+    );
+
+    //Links zum Ändern und Löschen der Frage werden erstellt
+    $linkDelete = $base_url . "/?q=delete_question/" . $question->question_id;
+    $linkEdit = $base_url . "/?q=change_question/" . $question->question_id . "/" . $quan;
+
+    $form['table']['rows'][$id]['links'] = array(
+      '#type' => 'markup',
+      '#markup' => '<td>'
+        . l('bearbeiten', $linkEdit)
+        . '<br />'
+        . l('löschen', $linkDelete)
+        . '</td>'
+    );
+
+    $id++;
+  }
+
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Geänderte Reihenfolge speichern',
+    '#attributes' => array(
+      'style' => array('display: none;'),
+    ),
+  );
+
+  return $form;
 }
 
-/*
- * Diese Funktion lädt alle Fragen aus der Datenbank und zeigt sie in einer HTML-Tabelle
- */
-function delphi_question_create_question_overview()
-{
-
-    global $base_url;
-
-    //die Variable, die am Ende zurückgegeben wird
-    $temp_string = "";
-
-    //Kopf der Tabelle wird erstellt
-    $temp_string .= "
-        <table>
-            <th>Nr.</th>
-            <th>Frage</th>
-            <th>Aktion</th>";
-
-    //Fragen werden geladen
-    $question_result = db_query("SELECT * FROM {question} ORDER BY question_id");
-
-    $id = 1;
-
-    foreach ($question_result as $question) {
-
-        //Antworten der Fragen werden geladen
-        $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id", array(
-            ':question_id' => $question->question_id
-        ));
-
-        //Die Antworten werden gezählt
-        $quan = $answer_result->rowCount();
-
-        //Links zum Ändern und Löschen der Frage werden erstellt
-        $link = $base_url . "/?q=delete_question/" . $question->question_id;
-        $link2 = $base_url . "/?q=change_question/" . $question->question_id . "/" . $quan;
-
-        //Für die Frage wird eine neue Zeile erstellt
-        $temp_string .= "
-            <tr>
-                <td>" . $id . "</td>
-                <td>$question->title</td>
-                <td><a href='" . $link2 . "'>bearbeiten</a><br><a href='" . $link . "'>löschen</a></td>
-            </tr>";
-        $id++;
-    }
-
-    //Tabelle wird geschlossen
-    $temp_string .= "</table>";
-
-    return $temp_string;
-
-}
 
 /*
  * Diese Funktion löscht eine Frage aus der Datenbank
@@ -102,4 +125,99 @@ function delphi_question_delete_question()
 
     drupal_set_message("Frage wurde gelöscht");
     drupal_goto("question_overview");
+}
+
+
+/**
+ * Implements drupal_form_submit().
+ *
+ * Saves the changed question ordering.
+ */
+function delphi_question_question_overview_form_submit($form, &$form_state) {
+  foreach ($form['table']['rows'] as $key => $row) {
+    if(isset($row['weight' . $key])) {
+      $rowData = $row['weight' . $key];
+      $weightOld = $rowData['#default_value'];
+      $weightNew = $rowData['#options'][$rowData['#value']];
+
+      // Update only if the weight changed.
+      // Break on first change since only one weight change is possible at a time (form gets updated).
+      if ($weightNew !== $weightOld) {
+        $questionId = $rowData['#id'];
+        delphi_question_update_question_order($questionId, $weightOld, $weightNew);
+        break;
+      }
+    }
+  }
+
+  drupal_goto("question_overview");
+}
+
+
+/**
+ * Updates the weight of a question and dependent questions to change the question order.
+ *
+ * @param $questionId
+ *   The ID of the question to be updated.
+ * @param $weightOld
+ *   The question weight before the update.
+ * @param $weightNew
+ *   The new question weight.
+ */
+function delphi_question_update_question_order($questionId, $weightOld, $weightNew) {
+
+  // Updates all question weights that are influenced by the new ordering (question in between the old und new weight).
+  if ($weightNew > $weightOld) {
+    while ($weightNew !== $weightOld) {
+      $qId = delphi_question_get_question_by_weight($weightOld + 1);
+      delphi_question_update_question_weight($qId, $weightOld);
+      $weightOld++;
+    }
+
+    delphi_question_update_question_weight($questionId, $weightNew);
+
+  } else if ($weightNew < $weightOld) {
+    while ($weightNew !== $weightOld) {
+      $qId = delphi_question_get_question_by_weight($weightOld - 1);
+      delphi_question_update_question_weight($qId, $weightOld);
+      $weightOld--;
+    }
+
+    delphi_question_update_question_weight($questionId, $weightNew);
+  }
+}
+
+
+/**
+ * Returns the questions ID that matches the given weight.
+ *
+ * @param $weight
+ *   Question weight to look for.
+ *
+ * @return int
+ *   Question ID.
+ */
+function delphi_question_get_question_by_weight($weight) {
+  $id = db_query("SELECT question_id FROM {question} WHERE weight = :w",
+    array(':w' => $weight))->fetchField();
+
+  return $id;
+}
+
+
+/**
+ * Updates the weight of a question.
+ *
+ * @param $questionId
+ *   ID of the question to be updated
+ * @param $newWeight
+ *   New question weight.
+ */
+function delphi_question_update_question_weight($questionId, $newWeight) {
+  db_update('question')
+    ->fields(array(
+      'weight' => $newWeight,
+    ))
+    ->condition('question_id', $questionId, '=')
+    ->execute();
 }
