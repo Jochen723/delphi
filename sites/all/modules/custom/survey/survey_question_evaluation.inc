@@ -362,7 +362,7 @@ function survey_get_next_question($form, &$form_state)
 function survey_question_evaluation_get_next_question($question_id)
 {
     $questions = array();
-    $result = db_query("SELECT * FROM {question} ORDER BY question_id");
+    $result = db_query("SELECT * FROM {question} ORDER BY weight, question_id");
 
     foreach ($result as $item) {
         array_push($questions, $item->question_id);

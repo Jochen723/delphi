@@ -274,11 +274,13 @@ function delphi_question_add_question_save_question($form, &$form_state)
 {
     $question_title = $form_state['values']['question'];
     $number_of_answers = arg(1);
+    $noQuestions = db_query("SELECT COUNT(*) FROM {question}")->fetchField();
 
     //Der Titel der Frage wird in die DB gespeichert, um eine Fragen-ID zu erhalten
     $nid = db_insert('question')
         ->fields(array(
             'title' => $question_title,
+            'weight' => $noQuestions + 1,
         ))
         ->execute();
 

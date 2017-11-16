@@ -63,13 +63,13 @@ function survey_finish_survey()
 }
 
 /*
- * Diese Funktion lädt alle verfügbaren Fragen der Umfrage aus der Datenbank und sortiert sie nach der ID
- * aufsteigend
+ * Diese Funktion lädt alle verfügbaren Fragen der Umfrage aus der Datenbank und sortiert sie aufsteigend nach
+ * Benutzer-Gewichtung und der ID
  */
 function survey_get_all_questions()
 {
     $questions = array();
-    $question_result = db_query("SELECT * FROM {question} ORDER BY question_id");
+    $question_result = db_query("SELECT * FROM {question} ORDER BY weight, question_id");
 
     foreach ($question_result as $question) {
         array_push($questions, $question);
@@ -173,7 +173,7 @@ function survey_get_questions($current_question_id)
 {
 
     $questions = array();
-    $question_result = db_query("SELECT * FROM {question} ORDER BY question_id");
+    $question_result = db_query("SELECT * FROM {question} ORDER BY weight, question_id");
 
     foreach ($question_result as $question) {
         array_push($questions, $question->question_id);
