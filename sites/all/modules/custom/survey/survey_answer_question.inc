@@ -58,7 +58,7 @@ function survey_form()
 
 
         //Die Bezeichungen der Buttons bzw. der Textfelder werden aus der Datenbank geladen
-        $result = db_query("SELECT * FROM {question_buttons_title} WHERE question_id = :question_id ORDER BY answer_id", array(
+        $result = db_query("SELECT * FROM {question_buttons_title} WHERE question_id = :question_id ORDER BY answer_id, button_id", array(
             ':question_id' => $questions[$question_index]->question_id
         ));
 

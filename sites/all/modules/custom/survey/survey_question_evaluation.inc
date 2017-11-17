@@ -55,7 +55,7 @@ function survey_question_evaluation_form()
     //TODO Check for refactoring
     //SQL-> Get lables for radio buttons
 
-    $button_title_result = db_query("SELECT * FROM {question_buttons_title} WHERE question_id = :question_id ORDER BY answer_id", array(
+    $button_title_result = db_query("SELECT * FROM {question_buttons_title} WHERE question_id = :question_id ORDER BY answer_id, button_id", array(
         ':question_id' => $questions[$question_index]->question_id
     ));
 
