@@ -85,7 +85,7 @@ function survey_get_all_questions()
 function survey_get_answers_from_question($question_id)
 {
     $answers = array();
-    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY answers_id", array(
+    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY weight", array(
         'question_id' => $question_id
     ));
     foreach ($answer_result as $answer) {

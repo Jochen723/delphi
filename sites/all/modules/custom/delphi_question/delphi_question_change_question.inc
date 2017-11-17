@@ -67,7 +67,7 @@ function delphi_question_change_question_form()
     $answer_counter = 0;
 
     //Die Antwortmöglichkeiten der Frage werden ermittelt
-    $question_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY question_id, answers_id", array(
+    $question_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY question_id, weight, answers_id", array(
         ':question_id' => $question_id
     ));
 
@@ -312,6 +312,7 @@ function delphi_question_change_question_form()
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => 'Speichern',
+        '#id' => 'submit',
         '#submit' => array('delphi_question_change_question_save_changes')
     );
 
@@ -371,7 +372,8 @@ function delphi_question_change_question_save_changes($form, &$form_state)
             ->fields(array(
                 'description' => $description,
                 'isRadioButton' => $check,
-                'question_id' => $question_id
+                'question_id' => $question_id,
+                'weight' => $i,
             ))
             ->execute();
 
@@ -436,7 +438,8 @@ function delphi_question_change_question_change_quantity($form, &$form_state)
                 ->fields(array(
                     'description' => "Neue Antwortmöglichkeit",
                     'isRadioButton' => 1,
-                    'question_id' => $question_id
+                    'question_id' => $question_id,
+                    'weight' => $quantity + 1,
                 ))
                 ->execute();
 

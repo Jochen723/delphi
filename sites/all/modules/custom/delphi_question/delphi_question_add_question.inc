@@ -302,7 +302,8 @@ function delphi_question_add_question_save_question($form, &$form_state)
             ->fields(array(
                 'description' => $description,
                 'isRadioButton' => $type_check,
-                'question_id' => $nid
+                'question_id' => $nid,
+                'weight' => $i,
             ))
             ->execute();
 

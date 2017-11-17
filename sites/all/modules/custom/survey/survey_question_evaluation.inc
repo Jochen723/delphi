@@ -102,7 +102,7 @@ function survey_question_evaluation_form()
         $question_id = $questions[$question_index]->question_id;
 
         //Die Antwortmöglichkeiten der Frage werden geladen
-        $possible_answers_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id", array(
+        $possible_answers_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY weight", array(
             ':question_id' => $question_id
         ));
 
