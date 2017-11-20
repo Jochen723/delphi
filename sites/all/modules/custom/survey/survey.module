@@ -21,14 +21,14 @@ function survey_menu()
 
     $items['survey_question/%/%'] = array(
         'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
+        'access callback' => TRUE,
         'page arguments' => array('survey_form'),
         'file' => 'survey_answer_question.inc'
     );
 
     $items['survey_question_evaluation/%/%'] = array(
         'page callback' => 'drupal_get_form',
-        'access callback' => 'user_is_logged_in',
+        'access callback' => TRUE,
         'page arguments' => array('survey_question_evaluation_form'),
         'file' => 'survey_question_evaluation.inc'
     );
@@ -38,6 +38,19 @@ function survey_menu()
         'access callback' => 'user_is_logged_in',
         'page callback' => 'survey_finish_survey',
     );
+
+    $items['survey/tokens'] = array(
+      'page callback' => 'drupal_get_form',
+      'access arguments' => array('administer users'),
+      'page arguments' => array('survey_token_form'),
+    );
+
+    $items['survey/%'] = array(
+      'title' => 'Umfrage starten',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('survey_start_form'),
+      'access callback' => TRUE,
+      );
 
     return $items;
 }
@@ -100,13 +113,11 @@ function survey_get_answers_from_question($question_id)
 //geschrieben. Anschließend wird der Nutzer zur ersten Frage weitergeleitet.
 function survey_start_survey()
 {
-    //Einzigartige ID für den Nutzer wird angelegt...
-    $user_check_string = survey_generate_random_string(30);
-
-    //...und abgespeichert
-    db_query("INSERT INTO {survey_users} (user_pw) VALUES (:user_pw)", array(
-        ':user_pw' => $user_check_string
-    ));
+    if(arg(0) === 'survey') {
+      $user_check_string = arg(1);
+    } else {
+      $user_check_string = survey_create_token();
+    }
 
     //Die erste Frage wird geladen
     $question_id = survey_get_questions(0);
@@ -124,6 +135,101 @@ function survey_generate_random_string($length)
     }
     return $random_string;
 }
+
+/**
+ * Generates and saves a unique user token.
+ *
+ * @return string
+ *   The generated unique user token.
+ */
+function survey_create_token() {
+  //Einzigartige ID für den Nutzer wird angelegt...
+  do {
+    $user_check_string = survey_generate_random_string(30);
+    $success = true;
+
+    //...und abgespeichert
+    try {
+      db_query("INSERT INTO {survey_users} (user_pw) VALUES (:user_pw)", array(
+        ':user_pw' => $user_check_string
+      ));
+    } catch (PDOException $e) {
+      // generated token already used, try again
+      $success = false;
+    }
+  } while (!$success);
+
+  return $user_check_string;
+}
+
+
+/**
+ * @param $token
+ *   Unique string user token.
+ *
+ * @return string
+ *   Full link to the survey.
+ */
+function survey_get_survey_link($token) {
+  global $base_url;
+  $link = check_plain($base_url . '/survey/' . $token);
+
+  return $link;
+}
+
+
+/**
+ * Builds the form to manage survey participants / tokens.
+ */
+function survey_token_form($form, &$form_state) {
+  if (empty($form_state['values']['token_quantity'])) {
+    // form to create new tokens
+    $form['token_quantity'] = array(
+      '#type' => 'textfield',
+      '#title' => "Zugangsschlüssel",
+      '#title_display' => 'invisible',
+      '#size' => 1,
+      '#maxlength' => 3,
+      '#element_validate' => array('element_validate_integer_positive'),
+      '#field_suffix' => t('Zugansschlüssel für Umfrageteilnehmer erstellen.'),
+    );
+
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Zugangsschlüssel erstellen',
+    );
+
+  } else {
+    // table with created tokens and full survey links.
+    $noTokens = $form_state['values']['token_quantity'];
+    $count = 1;
+
+    $header = array(t('Zugangsschlüssel'), t('Umfrage-URL'));
+    $rows = array();
+    while ($count <= $noTokens) {
+      $token = survey_create_token();
+      $rows[] = array(
+        $token,
+        survey_get_survey_link($token)
+      );
+      $count++;
+    }
+
+    $form['tokens_table'] = array (
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#title' => t('Zugangsschlüssel'),
+    );
+  }
+
+  return $form;
+}
+
+function survey_token_form_submit($form, &$form_state) {
+  $form_state['rebuild'] = true;
+}
+
 
 //Diese Funktion holt sich die zuletzt abgegebenen Antworten eines Nutzers zu einer bestimmten Frage aus der DB und gibt
 //diese als Array zurück.
