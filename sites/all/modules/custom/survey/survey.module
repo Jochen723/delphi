@@ -45,6 +45,13 @@ function survey_menu()
       'page arguments' => array('survey_token_form'),
     );
 
+    $items['survey/tokens/download'] = array(
+      'title' => t('Zugangsschlüssel CSV Export'),
+      'page callback' => '_survey_token_csv_export_callback',
+      'type' => MENU_CALLBACK,
+      'access arguments' => array('administer users'),
+    );
+
     $items['survey/%'] = array(
       'title' => 'Umfrage starten',
       'page callback' => 'drupal_get_form',
@@ -191,7 +198,7 @@ function survey_token_form($form, &$form_state) {
       '#size' => 1,
       '#maxlength' => 3,
       '#element_validate' => array('element_validate_integer_positive'),
-      '#field_suffix' => t('Zugansschlüssel für Umfrageteilnehmer erstellen.'),
+      '#field_suffix' => t('Zugangsschlüssel für Umfrageteilnehmer erstellen.'),
     );
 
     $form['submit'] = array(
@@ -209,8 +216,8 @@ function survey_token_form($form, &$form_state) {
     while ($count <= $noTokens) {
       $token = survey_create_token();
       $rows[] = array(
-        $token,
-        survey_get_survey_link($token)
+        'token' => $token,
+        'link' => survey_get_survey_link($token)
       );
       $count++;
     }
@@ -221,6 +228,18 @@ function survey_token_form($form, &$form_state) {
       '#rows' => $rows,
       '#title' => t('Zugangsschlüssel'),
     );
+
+    $form['csv_export'] = array(
+      '#type' => 'link',
+      '#title' => t('Zugangsschlüssel als CSV exportieren'),
+      '#href' => 'survey/tokens/download',
+    );
+
+    $form['csv_submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Download CSV'),
+      '#submit' => array('_survey_token_csv_export_callback'),
+    );
   }
 
   return $form;
@@ -228,6 +247,31 @@ function survey_token_form($form, &$form_state) {
 
 function survey_token_form_submit($form, &$form_state) {
   $form_state['rebuild'] = true;
+}
+
+/**
+ * Exports survey links as a csv file.
+ * @see http://drupalpeople.com/blog/output-data-csv-file-drupal-download
+ */
+function _survey_token_csv_export_callback($form, &$form_state) {
+  // add necessary headers for browsers
+  drupal_add_http_header('Content-Type', 'text/csv; utf-8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename = survey_tokens.csv');
+
+  //instead of writing down to a file we write to the output stream
+  $fh = fopen('php://output', 'w');
+
+  //form header
+  fputcsv($fh, array(t('Token'), t('Link')));
+
+  //write data in the CSV format
+  foreach ($form['tokens_table']['#rows'] as $row) {
+    fputcsv($fh, array($row['token'], $row['link']));
+  }
+
+  //close the stream
+  fclose($fh);
+  drupal_exit();
 }
 
 

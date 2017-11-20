@@ -415,7 +415,7 @@ function survey_get_button_titles($button_title_result)
             } else {
                 //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
                 $response_option_counter++;
-                $button_title_array[$answer_id_counter][$response_option_counter] = "k.A.";
+                $button_title_array[$answer_id_counter][$response_option_counter] = "k.&#8239;A.";
                 $response_option_counter = 0;
                 $answer_id_counter++;
                 $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
@@ -432,7 +432,7 @@ function survey_get_button_titles($button_title_result)
     }
 
     $response_option_counter++;
-    $button_title_array[$answer_id_counter][$response_option_counter] = "k.A.";
+    $button_title_array[$answer_id_counter][$response_option_counter] = "k.&#8239;A.";
 
 
     return $button_title_array;
