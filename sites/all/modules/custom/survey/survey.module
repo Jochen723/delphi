@@ -229,15 +229,9 @@ function survey_token_form($form, &$form_state) {
       '#title' => t('Zugangsschlüssel'),
     );
 
-    $form['csv_export'] = array(
-      '#type' => 'link',
-      '#title' => t('Zugangsschlüssel als CSV exportieren'),
-      '#href' => 'survey/tokens/download',
-    );
-
     $form['csv_submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Download CSV'),
+      '#value' => t('Zugangsschlüssel als CSV exportieren'),
       '#submit' => array('_survey_token_csv_export_callback'),
     );
   }
