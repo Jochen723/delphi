@@ -12,6 +12,21 @@
 function delphi_question_question_overview_form($form, &$form_state) {
   global $base_url;
 
+
+  $form['links']['new_questiongroup'] = array(
+    '#type' => 'link',
+    '#title' => t('Themenbereich hinzufügen'),
+    '#href' => 'add_group/group',
+  );
+
+  $form['links']['new_question'] = array(
+    '#type' => 'link',
+    '#title' => t('These hinzufügen'),
+    '#href' => 'add_questions/1',
+  );
+
+
+
   $form['table'] = array(
     '#type' => 'markup',
     '#title' => t('Thesenübersicht'),
@@ -43,9 +58,15 @@ function delphi_question_question_overview_form($form, &$form_state) {
     $quan = $answer_result->rowCount();
 
     // Tabellenzeile aufbauen
+    $rowClass = 'question-row';
+
+    if ($question->type === 'group') {
+      $rowClass = 'question-group-row';
+    }
+
     $form['table']['rows'][$id] = array(
       '#type' => 'markup',
-      '#prefix' => '<tr>',
+      '#prefix' => '<tr class="' . $rowClass . '">',
       '#suffix' => '</tr>',
     );
 
@@ -61,7 +82,7 @@ function delphi_question_question_overview_form($form, &$form_state) {
         'class' => array('weight-table-question'),
         'onChange' => 'this.form.submit();',
       ),
-      '#prefix' => '<tr><td>',
+      '#prefix' => '<td>',
       '#suffix' => '</td>',
     );
 
@@ -95,6 +116,8 @@ function delphi_question_question_overview_form($form, &$form_state) {
       'style' => array('display: none;'),
     ),
   );
+
+  drupal_set_title('Thesenübersicht');
 
   return $form;
 }

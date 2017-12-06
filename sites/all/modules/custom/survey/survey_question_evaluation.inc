@@ -18,13 +18,23 @@ function survey_question_evaluation_form()
     //Die ID der Frage wird aus der URL gelesen
     $question_id = arg(1);
 
+    //Die ID des aktuellen Benutzers wird aus der URL gelesen
+    $user_id = arg(2);
+
     //Es werden alle Fragen aus der Datenbank gelesen
     $questions = survey_get_all_questions();
     $question_index = 0;
+    $questionGroupIndex = 0;
+    $questionType = 'question';
 
     foreach ($questions as $q) {
         if ($q->question_id == $question_id) {
-            break;
+          $questionType = $q->type;
+          break;
+        }
+
+        if ($q->type === 'group') {
+          $questionGroupIndex++;
         }
         $question_index++;
     }
@@ -35,11 +45,16 @@ function survey_question_evaluation_form()
       return null;
     }
 
+    // no evauluation page for question groups
+    if ($questionType === 'group') {
+      drupal_goto("survey_question/" . $question_id . "/" . $user_id);
+    }
+
 
     //DIe Überschrift wird erstellt
     $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
     $headline = "
-        <h1>These " . ($question_index + 1) . "(b)</h1>
+        <h1>These " . ($question_index -$questionGroupIndex + 1) . "(b)</h1>
         <h2>" . $headline . "</h2><br>";
 
     $form['headline']['form_item'] = array(
@@ -60,12 +75,6 @@ function survey_question_evaluation_form()
     ));
 
     $button_title_array = survey_get_button_titles($button_title_result);
-
-    //Die ID der Frage wird aus der URL gelesen
-    $question_id = arg(1);
-
-    //Die ID des aktuellen Benutzers wird aus der URL gelesen
-    $user_id = arg(2);
 
     //Die gegebenen Antworten des Nutzers werden geladen
     $answers_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id", array(

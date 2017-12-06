@@ -16,6 +16,14 @@ function delphi_question_menu() {
         'file' => 'delphi_question_add_question.inc'
     );
 
+  $items['add_group/group'] = array(
+    'page callback' => 'drupal_get_form',
+    //'access callback' => 'user_is_logged_in',
+    'access arguments' => array('administer users'),
+    'page arguments' => array('delphi_question_add_question_form'),
+    'file' => 'delphi_question_add_question.inc'
+  );
+
     $items['change_question/%/%'] = array(
         'page callback' => 'drupal_get_form',
         'access callback' => 'user_is_logged_in',

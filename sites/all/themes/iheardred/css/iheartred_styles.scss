@@ -520,3 +520,21 @@ input.form-radio {
 .select-table .form-type-select {
   margin: auto;
 }
+
+/* Hide elements on question group form */
+.question-group-form {
+  & .form-item-quantity,
+  #edit-back,
+  .form-type-radios {
+    display: none !important;
+  }
+}
+
+/* Highlight question group rows on question overview*/
+.question-group-row td {
+  background-color: lightyellow;
+}
+
+#edit-new-questiongroup {
+  margin-right: 2em;
+}

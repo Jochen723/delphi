@@ -26,7 +26,10 @@ function survey_form()
     $user_answers = survey_get_answers($question_id, $user_pass);
 
     // Weiter zur Überprüfungsseite, wenn der Nutzer die Fragen bereits beantwortet hat
-    if (!empty($user_answers)) {
+
+    $questionType = _survey_get_question_type($question_id);
+
+    if (!empty($user_answers) && $questionType !== 'group') {
       drupal_goto("survey_question_evaluation/" . $question_id . "/" . $user_pass);
     }
 
@@ -34,11 +37,16 @@ function survey_form()
     $questions = survey_get_all_questions();
     $number_of_questions = false;
     $question_index = 0;
+    $questionGroupIndex = 0;
 
     foreach ($questions as $q) {
         if ($q->question_id == $question_id) {
             $number_of_questions = true;
             break;
+        }
+
+        if ($q->type === 'group') {
+          $questionGroupIndex++;
         }
         $question_index++;
     }
@@ -49,9 +57,18 @@ function survey_form()
 
         //Der Titel der Frage wird geladen, die Überschrift wird erstellt
         $text = $questions[$question_index]->title;
-        $headline = "
-            <h1>These " . ($question_index + 1) . "(a)</h1>
+        $questionType = $questions[$question_index]->type;
+
+        if ($questionType === 'group') {
+          $headline = "
+            <h1>Themenbereich " . ($questionGroupIndex + 1) . "</h1>
             <h2>" . $text . "</h2>";
+        } else {
+          $headline = "
+            <h1>These " . ($question_index - $questionGroupIndex + 1) . "(a)</h1>
+            <h2>" . $text . "</h2>";
+        }
+
 
         //Die Antworten der Frage werden aus der Datenbank geladen
         $answers = survey_get_answers_from_question($questions[$question_index]->question_id);
@@ -230,5 +247,18 @@ function survey_get_evaluation($form, &$form_state)
                 ->execute();
         }
     }
-    drupal_goto("survey_question_evaluation/" . $question . "/" . $user_passcode);
+
+    // no evaluation for question group pages
+    $questionType = _survey_get_question_type($question);
+    if ($questionType === 'group') {
+      $nextQuestionId = survey_question_evaluation_get_next_question($question);
+
+      if ($nextQuestionId == -1) {
+        drupal_goto("finish_survey/" . $user_passcode);
+      } else {
+        drupal_goto("survey_question/" . $nextQuestionId . "/" . $user_passcode);
+      }
+    } else {
+      drupal_goto("survey_question_evaluation/" . $question . "/" . $user_passcode);
+    }
 }

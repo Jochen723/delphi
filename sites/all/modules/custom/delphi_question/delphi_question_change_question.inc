@@ -17,22 +17,30 @@ function delphi_question_change_question_form()
 
     $number_of_answers = arg(2);
     $question_title = "";
+    $questionType = "";
 
     //Die entsprechende Frage wird aus der DB geladen
     $question_result = db_query("SELECT * FROM {question} WHERE question_id = :question_id", array(
         ':question_id' => $question_id
     ));
 
-    //Der Titel der Frage wird ermittelt
+    // Eigenschaften der Frage werden ermittelt
     foreach ($question_result as $question) {
         $question_title = $question->title;
+        $questionType = $question->type;
     }
+
+    $title = "Titel der These";
+    if ($questionType === 'group') {
+        $title = "Titel des Themenbereichs";
+        $form['#attributes']['class'][] = 'question-group-form';
+      }
 
     //Textfeld, in das der Titel der Frage eingesetzt wird
     $form['question'] = array(
         '#type' => 'textarea',
         '#required' => TRUE,
-        '#title' => "Titel der These",
+        '#title' => $title,
         '#resizable' => FALSE,
         '#rows' => 2,
         '#default_value' => $question_title,

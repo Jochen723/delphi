@@ -12,6 +12,16 @@ function delphi_question_add_question_form()
 
     //Die Anzahl der Antwortmöglichkeiten wird geladen
     $answer_quantity_id = arg(1);
+    $isQuestionGroup = FALSE;
+
+    // Übersichtsseite für einen Fragenblock erzeugen. Wird intern wie eine Frage behandelt (enthält auch genau eine
+    // Bewertungsskala zur Speicherung der Selbsteinschätzung), aber enthält weniger Elemente.
+    if ($answer_quantity_id === 'group') {
+      $isQuestionGroup = TRUE;
+      $answer_quantity_id = 1;
+
+      $form['#attributes']['class'][] = 'question-group-form';
+    }
 
     //Der Form wird eine ID übergeben
     $form['#id'] = 'question-form';
@@ -26,7 +36,7 @@ function delphi_question_add_question_form()
     $form['question'] = array(
         '#type' => 'textarea',
         '#required' => TRUE,
-        '#title' => "Titel der These",
+        '#title' => "Titel des Themenbereichs",
         '#resizable' => FALSE,
         '#rows' => 2,
         '#attributes' => array(
@@ -80,30 +90,48 @@ function delphi_question_add_question_form()
 
         );
 
-        //Für jede Antwortmöglichkeit muss bestimmt werden, ob die Antwort per Radio-Buttons oder per Textfeld
-        //gegeben werden soll
-        $form['content' . $i]['radios' . $i] = array(
-            '#type' => 'radios',
-            '#title' => 'Art der Antwortmöglichkeit:',
-            '#default_value' => $answer_choose_array["Radio-Buttons"],
-            '#options' => $answer_choose_array,
-        );
-
         $var = $i;
 
         //Sollte es sich bei der Antwortmöglichkeit um Radio-Buttons handeln, muss festgelegt werden, viele viele
         //Buttons für die Antwort vorgesehen sind.
-        $form['content' . $i]['button_radios' . $i] = array(
+        // Eine Fragengruppe hat immer nur eine Skala mit 5 Radio-Buttons zur Selbsteinschätzung.
+        if ($isQuestionGroup) {
+          $form['content' . $i]['radios' . $i] = array(
             '#type' => 'radios',
-            '#title' => "<b>Anzahl der vorhandenen Radio-Boxen</b>",
+            '#title' => 'Art der Antwortmöglichkeit:',
+            '#default_value' => $answer_choose_array["Radio-Buttons"],
+            '#options' => $answer_choose_array,
+          );
+
+          $form['content' . $i]['button_radios' . $i] = array(
+            '#type'          => 'radios',
+            '#title'         => "<b>Anzahl der vorhandenen Radio-Boxen</b>",
+            '#default_value' => 5,
+            '#options'       => $button_array,
+          );
+
+        } else {
+
+          //Für jede Antwortmöglichkeit muss bestimmt werden, ob die Antwort per Radio-Buttons oder per Textfeld
+          //gegeben werden soll
+          $form['content' . $i]['radios' . $i] = array(
+            '#type' => 'radios',
+            '#title' => 'Art der Antwortmöglichkeit:',
+            '#default_value' => $answer_choose_array["Radio-Buttons"],
+            '#options' => $answer_choose_array,
+          );
+          $form['content' . $i]['button_radios' . $i] = array(
+            '#type'          => 'radios',
+            '#title'         => "<b>Anzahl der vorhandenen Radio-Boxen</b>",
             '#default_value' => $button_array[4],
-            '#options' => $button_array,
-            '#states' => array(
-                'visible' => array(
-                    ':input[name="radios' . $var . '"]' => array('value' => 'Radio-Buttons'),
-                ),
+            '#options'       => $button_array,
+            '#states'        => array(
+              'visible' => array(
+                ':input[name="radios' . $var . '"]' => array('value' => 'Radio-Buttons'),
+              ),
             ),
-        );
+          );
+        }
 
         // Auswahlliste mit bereits verwendeten Antwort-Sets
         if (!empty($answerSets)) {
@@ -129,12 +157,24 @@ function delphi_question_add_question_form()
           );
         }
 
+        $defaultValues = array_fill(0, 6, 'Dimension ' . $var);
+        if ($isQuestionGroup) {
+          $defaultValues = array(
+            '... kenne ich mich überhaupt nicht aus.',
+            '.',
+            '.',
+            '.',
+            '... kenne ich mich sehr gut aus.',
+            '.'
+          );
+        }
+
         //Textfeld für den ersten Button
         $form['content' . $i]['textfield_first_button' . $i] = array(
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der ersten Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[0]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -153,7 +193,7 @@ function delphi_question_add_question_form()
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der zweiten Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[1]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -172,7 +212,7 @@ function delphi_question_add_question_form()
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der dritten Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[2]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -191,7 +231,7 @@ function delphi_question_add_question_form()
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der vierten Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[3]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -210,7 +250,7 @@ function delphi_question_add_question_form()
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der fünften Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[4]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -228,7 +268,7 @@ function delphi_question_add_question_form()
             '#type' => 'textfield',
             '#require' => TRUE,
             '#title' => "Bezeichnung der sechsten Radio-Box",
-            '#default_value' => "Dimension " . $var,
+            '#default_value' => t($defaultValues[5]),
             '#required' => TRUE,
             '#states' => array(
                 'visible' => array(
@@ -273,7 +313,20 @@ function delphi_question_add_question_change_quantity($form, &$form_state)
 function delphi_question_add_question_save_question($form, &$form_state)
 {
     $question_title = $form_state['values']['question'];
-    $number_of_answers = arg(1);
+
+    $isQuestionGroup = FALSE;
+    $questionType = "";
+
+    // Fragegruppen haben nur eine Antwortmöglichkeit
+    if (arg(1) === 'group') {
+      $number_of_answers = 1;
+      $isQuestionGroup = TRUE;
+      $questionType = 'group';
+    } else {
+      $number_of_answers = arg(1);
+      $questionType = 'question';
+    }
+
     $noQuestions = db_query("SELECT COUNT(*) FROM {question}")->fetchField();
 
     //Der Titel der Frage wird in die DB gespeichert, um eine Fragen-ID zu erhalten
@@ -281,6 +334,7 @@ function delphi_question_add_question_save_question($form, &$form_state)
         ->fields(array(
             'title' => $question_title,
             'weight' => $noQuestions + 1,
+            'type' => $questionType,
         ))
         ->execute();
 
@@ -345,5 +399,5 @@ function delphi_question_add_question_save_question($form, &$form_state)
             }
         }
     }
-    drupal_goto("");
+    drupal_goto("question_overview");
 }

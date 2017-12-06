@@ -346,3 +346,27 @@ function survey_element_validate_nonnegative_integer($element) {
     )));
   }
 }
+
+/**
+ * Returns the type of a question.
+ *
+ * @param $questionId
+ *  The question ID to be looked up.
+ *
+ * @return string
+ *  The question type or -1 if the query failed.
+ */
+function _survey_get_question_type($questionId) {
+  $type = '';
+  try {
+    $result = db_query("SELECT type FROM {question} WHERE question_id = :question_id", array(
+      'question_id' => $questionId,
+    ));
+    $type = $result->fetchField();
+
+  } catch (PDOException $e) {
+    $type = 'error';
+  }
+
+  return $type;
+}
