@@ -50,7 +50,7 @@ function survey_form()
         //Der Titel der Frage wird geladen, die Überschrift wird erstellt
         $text = $questions[$question_index]->title;
         $headline = "
-            <h1>Frage " . ($question_index + 1) . "(a)</h1>
+            <h1>These " . ($question_index + 1) . "(a)</h1>
             <h2>" . $text . "</h2>";
 
         //Die Antworten der Frage werden aus der Datenbank geladen

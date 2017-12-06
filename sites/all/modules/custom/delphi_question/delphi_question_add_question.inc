@@ -26,7 +26,7 @@ function delphi_question_add_question_form()
     $form['question'] = array(
         '#type' => 'textarea',
         '#required' => TRUE,
-        '#title' => "Titel der Frage",
+        '#title' => "Titel der These",
         '#resizable' => FALSE,
         '#rows' => 2,
         '#attributes' => array(

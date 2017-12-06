@@ -39,7 +39,7 @@ function survey_question_evaluation_form()
     //DIe Überschrift wird erstellt
     $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
     $headline = "
-        <h1>Frage " . ($question_index + 1) . "(b)</h1>
+        <h1>These " . ($question_index + 1) . "(b)</h1>
         <h2>" . $headline . "</h2><br>";
 
     $form['headline']['form_item'] = array(
@@ -200,7 +200,7 @@ function survey_question_evaluation_form()
     }
 
     //Der zweite Button führt zur zweiten Frage
-    $button_text = "Weiter zur nächsten Frage";
+    $button_text = "Weiter zur nächsten These";
 
     //Die ID der nächsten Frage wird ermittelt
     $id = survey_question_evaluation_get_next_question(arg(1));
@@ -415,7 +415,7 @@ function survey_get_button_titles($button_title_result)
             } else {
                 //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
                 $response_option_counter++;
-                $button_title_array[$answer_id_counter][$response_option_counter] = "k.&#8239;A.";
+                $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / k.&#8239;A.";
                 $response_option_counter = 0;
                 $answer_id_counter++;
                 $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
@@ -432,7 +432,7 @@ function survey_get_button_titles($button_title_result)
     }
 
     $response_option_counter++;
-    $button_title_array[$answer_id_counter][$response_option_counter] = "k.&#8239;A.";
+    $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / k.&#8239;A.";
 
 
     return $button_title_array;

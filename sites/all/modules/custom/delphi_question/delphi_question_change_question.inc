@@ -32,7 +32,7 @@ function delphi_question_change_question_form()
     $form['question'] = array(
         '#type' => 'textarea',
         '#required' => TRUE,
-        '#title' => "Titel der Frage",
+        '#title' => "Titel der These",
         '#resizable' => FALSE,
         '#rows' => 2,
         '#default_value' => $question_title,

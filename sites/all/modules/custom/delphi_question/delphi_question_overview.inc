@@ -14,7 +14,7 @@ function delphi_question_question_overview_form($form, &$form_state) {
 
   $form['table'] = array(
     '#type' => 'markup',
-    '#title' => t('Fragenübersicht'),
+    '#title' => t('Thesenübersicht'),
     '#prefix' => '<table class="select-table">',
     '#suffix' => '</table>'
   );
@@ -23,7 +23,7 @@ function delphi_question_question_overview_form($form, &$form_state) {
   $form['table']['header'] = array(
     '#type' => 'markup',
     '#markup' => "<th>Nr.</th>
-            <th>Frage</th>
+            <th>These</th>
             <th>Aktion</th>",
   );
 
@@ -123,7 +123,7 @@ function delphi_question_delete_question()
         ':question_id' => $question_id
     ));
 
-    drupal_set_message("Frage wurde gelöscht");
+    drupal_set_message("These wurde gelöscht");
     drupal_goto("question_overview");
 }
 

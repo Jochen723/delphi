@@ -76,7 +76,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
         }
 
 
-        $links = array(0 => "unteres Quartil", 1 => "Average", 2 => "Median", 3 => "oberes Quartil");
+        $links = array(0 => "unteres Quartil", 1 => "Mittelwert", 2 => "Median", 3 => "oberes Quartil");
 
         $boxplot_string = array(
             'container' => array(
@@ -167,7 +167,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
 
     } else {
         $boxplot_string = "<div class = 'boxplot-nodata'>" .
-                          "Für den Boxplot werden weitere Daten benötigt." .
+                          "Zu diesem Thema wurden noch nicht genügend Einschätzungen abgegeben." .
                           "</div>";
 
     }

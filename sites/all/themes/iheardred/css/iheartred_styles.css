@@ -563,6 +563,10 @@ input.form-radio:checked .form-radio:after {
   margin-bottom: 4rem;
   margin-left: -5px; }
 
+/* Abstand bei fünf Radio-Buttons anpassen, damit Beschriftung noch in Fieldset passt. */
+#survey-question-evaluation-form .radios-5 .form-type-radio:last-of-type {
+  right: 2em; }
+
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
   margin-top: 4rem;
