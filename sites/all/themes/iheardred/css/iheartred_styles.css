@@ -556,6 +556,16 @@ input.form-radio:checked .form-radio:after {
   .form-textarea-wrapper .form-textarea {
     width: 100%; }
 
+/* Format survey configuration form */
+#survey-configure-form * {
+  max-width: 100% !important; }
+#survey-configure-form .fieldset-wrapper {
+  margin-top: 0px; }
+#survey-configure-form .text-format-wrapper, #survey-configure-form .form-textarea-wrapper {
+  margin-bottom: 2em; }
+#survey-configure-form .filter-wrapper {
+  display: none; }
+
 /* Zusätzlicher Abstand nur nach den Radio-Buttons der Evaluationsseite, damit Platz für die Beschriftung ist.
    Radio-Buttons auf Boxplot-Skala ausrichten. */
 #survey-question-evaluation-form .form-type-radios {
@@ -776,6 +786,9 @@ input.form-radio {
 /* Highlight question group rows on question overview*/
 .question-group-row td {
   background-color: lightyellow; }
+
+.question-row td:first-child {
+  padding-left: 20px; }
 
 #edit-new-questiongroup {
   margin-right: 2em; }

@@ -45,6 +45,14 @@ function survey_menu()
       'page arguments' => array('survey_token_form'),
     );
 
+    $items['survey/configure'] = array(
+      'page callback' => 'drupal_get_form',
+      'access arguments' => array('administer users'),
+      'page arguments' => array('survey_configure_form'),
+      'file' => 'survey_configure.inc'
+
+    );
+
     $items['survey/tokens/download'] = array(
       'title' => t('Zugangsschlüssel CSV Export'),
       'page callback' => '_survey_token_csv_export_callback',
@@ -65,9 +73,17 @@ function survey_menu()
 //Diese Funktion baut die Startseite der Umfrage
 function survey_start_form()
 {
+  $survey = _survey_get_survey(1);
+
+  drupal_set_title($survey['title']);
+
+  $form['welcome'] = array(
+    '#markup' => $survey['welcome_msg'],
+  );
+
     $form['submit'] = array(
         '#type' => 'submit',
-        '#value' => 'Start',
+        '#value' => 'Umfrage starten',
         '#submit' => array('survey_start_survey')
     );
 
@@ -79,7 +95,8 @@ function survey_start_form()
  */
 function survey_finish_survey()
 {
-    return "Danke für Ihre Teilnahme, die Umfrage ist nun beendet!";
+  $survey = _survey_get_survey(1);
+  return $survey['end_msg'];
 }
 
 /*
@@ -369,4 +386,27 @@ function _survey_get_question_type($questionId) {
   }
 
   return $type;
+}
+
+/**
+ * Returns the survey configuration data.
+ *
+ * @param $surveyId
+ *  The survey ID to be looked up.
+ *
+ * @return array
+ *  Associative array of the survey data.
+ */
+function _survey_get_survey($surveyId) {
+  try {
+    $result = db_query("SELECT * FROM {survey} WHERE sid = :surveyId", array(
+      'surveyId' => $surveyId,
+    ));
+    $survey = $result->fetchAssoc();
+
+  } catch (PDOException $e) {
+    $survey = array();
+  }
+
+  return $survey;
 }
