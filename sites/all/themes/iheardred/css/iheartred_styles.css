@@ -50,6 +50,21 @@
     padding-top: calc(95px + 10px + 40px); }
   .evaluation-content-wrapper.four-rows {
     padding-top: calc(95px + 10px + 60px); }
+  .evaluation-content-wrapper .form-type-textfield {
+    width: 77px !important;
+    margin-top: 60px !important; }
+  .evaluation-content-wrapper .form-type-checkbox {
+    width: 200px;
+    margin-top: 67px; }
+    .evaluation-content-wrapper .form-type-checkbox label {
+      vertical-align: text-bottom; }
+
+.question-content-wrapper .form-type-checkbox {
+  margin-top: -36px;
+  margin-left: 100px; }
+  .question-content-wrapper .form-type-checkbox label {
+    vertical-align: text-bottom;
+    font-weight: normal; }
 
 #content {
   margin-top: 0; }
@@ -130,6 +145,9 @@ fieldset {
   /* Reduziert auf 15%, damit 7 Spalten Skala in eine Reihe passt */
   margin-left: calc(15.0% - 15.6px); }
 
+.evaluation-content-wrapper label.option {
+  transform-origin: 24px 2px !important; }
+
 .form-item-dim0 {
   margin-top: 1rem;
   /* Angepasst, um ausschweifende Freiflächen zu reduzieren */ }
@@ -140,7 +158,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -156,7 +174,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -172,7 +190,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -188,7 +206,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -204,7 +222,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -220,7 +238,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -236,7 +254,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -252,7 +270,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -268,7 +286,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -284,7 +302,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -300,7 +318,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -316,7 +334,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -332,7 +350,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -348,7 +366,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -364,7 +382,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -380,7 +398,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -396,7 +414,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -412,7 +430,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -428,7 +446,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -444,7 +462,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -460,7 +478,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -476,7 +494,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -492,7 +510,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -508,7 +526,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);
@@ -524,7 +542,7 @@ fieldset {
       position: absolute;
       float: none;
       left: 0.9em;
-      width: 4rem;
+      width: 5rem;
       font-size: 1em;
       line-height: 1.1;
       transform: rotate(29deg);

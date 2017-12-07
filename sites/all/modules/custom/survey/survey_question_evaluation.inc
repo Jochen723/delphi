@@ -158,7 +158,7 @@ function survey_question_evaluation_form()
             $form['fieldset' . $i]['#title'] = $answerDescription;
 
             // Fieldset legend vergrößern bei langen Titeln
-            if (drupal_strlen($answerDescription) > 102) {
+            if (drupal_strlen($answerDescription) > 97) {
               $form['fieldset' . $i]['#attributes'] = array(
                 'class' => array('title-long'));
             }
@@ -197,13 +197,37 @@ function survey_question_evaluation_form()
             $form['fieldset' . $i]['my_markup' . $i] = array(
                 '#markup' => $boxplot_graphic,
             );
+
+            // -99999 ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
+            // TODO Typ DB-Feld für Antworten ändern?!
+            $isChecked = FALSE;
+            if ($answers[$i]->answer === '-99999') {
+              $answers[$i]->answer = '';
+              $isChecked = TRUE;
+            }
+
             $form['fieldset' . $i]['quantity' . $i] = array(
                 '#type' => 'textfield',
                 '#title' => '',
                 '#size' => 4,
                 '#maxlength' => 6,
+                '#required' => FALSE,
                 '#default_value' => $answers[$i]->answer,
+                '#states'        => array(
+                  'disabled' => array(
+                    ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
+                  ),
+                ),
                 '#element_validate' => array('survey_element_validate_nonnegative_integer'),
+            );
+
+            $form['fieldset' . $i]['quantity_check' . $i] = array(
+              '#type' => 'checkbox',
+              '#title' => 'weiß nicht / keine Angabe',
+              '#attributes' => array(
+                'class' => array('text-checkbox')
+              ),
+              '#default_value' => $isChecked,
             );
 
             $form['fieldset' . $i]['comment_dim' . $i] = array(
@@ -228,6 +252,7 @@ function survey_question_evaluation_form()
         $form['back'] = array(
             '#type' => 'submit',
             '#value' => 'Zurück',
+            '#limit_validation_errors' => array(),
             '#submit' => array('survey_question_evaluation_get_back_to_last_question')
         );
     }
@@ -252,6 +277,17 @@ function survey_question_evaluation_form()
     // The survey progress bar
     $form['progress_bar'] = array(
       '#markup' => _survey_get_status_bar($user_id),
+    );
+
+    // Drupal error messages mess with the fixed quesstion headers. Unset fixed if error messages are visible.
+    $form['#attached']['js'][] = array(
+      'type' => 'inline',
+      'data' => "jQuery(document).ready(function () {if (jQuery('.messages.error').length) {
+            jQuery('.question-header').css('position', 'unset');
+            jQuery('.question-content-wrapper').css('padding-top', 0);
+          }
+          });",
+      'scope' => 'footer',
     );
 
     return $form;
@@ -453,7 +489,7 @@ function survey_get_button_titles($button_title_result)
             } else {
                 //Sollte die ID der aktuellen Antwort nicht mit der vorigen übereinstimmen:
                 $response_option_counter++;
-                $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / k.&#8239;A.";
+                $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / keine Angabe";
                 $response_option_counter = 0;
                 $answer_id_counter++;
                 $button_title_array[$answer_id_counter][$response_option_counter] = $button_title->title;
@@ -470,7 +506,7 @@ function survey_get_button_titles($button_title_result)
     }
 
     $response_option_counter++;
-    $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / k.&#8239;A.";
+    $button_title_array[$answer_id_counter][$response_option_counter] = "weiß nicht / keine Angabe";
 
 
     return $button_title_array;

@@ -140,17 +140,40 @@ function survey_form()
                 //Sollte es sich bei der Antwortmöglichkeit um ein Textfeld handeln
             } else {
                 $countTextfield++;
+
+                // -99999 ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
+                // TODO Typ DB-Feld für Antworten ändern?!
+                $isChecked = FALSE;
+                if ($default_value === '-99999') {
+                  $default_value = '';
+                  $isChecked = TRUE;
+                }
+
                 $form['quantity' . $i] = array(
                     '#type' => 'textfield',
                     '#prefix' => '<div id ="visualization' . $i . '" class = "answers">',
-                    '#suffix' => '</div>',
                     '#title' => $answers[$i]->description,
                     '#size' => 4,
                     '#maxlength' => 6,
                     '#default_value' => $default_value,
-                    '#required' => true,
+                    '#required' => FALSE,
+                    '#states'        => array(
+                      'disabled' => array(
+                        ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
+                      ),
+                    ),
                     '#element_validate' => array('survey_element_validate_nonnegative_integer'),
                 );
+                $form['quantity_check' . $i] = array(
+                  '#type' => 'checkbox',
+                  '#title' => 'weiß nicht / keine Angabe',
+                  '#attributes' => array(
+                    'class' => array('text-checkbox')
+                  ),
+                  '#default_value' => $isChecked,
+                  '#suffix' => '</div>',
+                );
+
             }
         }
 
@@ -181,6 +204,17 @@ function survey_form()
           '#markup' => _survey_get_status_bar($user_pass),
         );
     }
+
+    // Drupal error messages mess with the fixed quesstion headers. Unset fixed if error messages are visible.
+    $form['#attached']['js'][] = array(
+      'type' => 'inline',
+      'data' => "jQuery(document).ready(function () {if (jQuery('.messages.error').length) {
+          jQuery('.question-header').css('position', 'unset');
+          jQuery('.question-content-wrapper').css('padding-top', 0);
+        }
+        });",
+      'scope' => 'footer',
+    );
 
     return $form;
 }

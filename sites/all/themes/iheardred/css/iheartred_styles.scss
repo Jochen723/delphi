@@ -82,6 +82,30 @@ $color-average: #ff5bbd;
   &.four-rows {
     padding-top: calc(95px + 10px + 60px);
   }
+
+  .form-type-textfield {
+    width: 77px !important;
+    margin-top: 60px !important;
+  }
+
+  .form-type-checkbox {
+    width: 200px;
+    margin-top: 67px;
+
+    label {
+      vertical-align: text-bottom;
+    }
+  }
+}
+
+.question-content-wrapper .form-type-checkbox {
+  margin-top: -36px;
+  margin-left: 100px;
+
+  label {
+    vertical-align: text-bottom;
+    font-weight: normal;
+  }
 }
 
 #content {
@@ -213,7 +237,7 @@ $dimensions: 24;
           position: absolute;
           float: none;
           left: 0.9em;
-          width: 4rem;
+          width: 5rem;
           font-size: 1em;
           line-height: 1.1;
           transform: rotate(29deg);
@@ -222,6 +246,10 @@ $dimensions: 24;
       }
     }
   }
+}
+
+.evaluation-content-wrapper label.option {
+  transform-origin: 24px 2px !important;
 }
 
 @include radio_btn_x_dims;

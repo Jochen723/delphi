@@ -376,14 +376,26 @@ function survey_get_questions($current_question_id)
 
 /**
  * Überprüft, ob es sich bei der Benutzereingabe um eine nichtnegative Ganzzahl handelt.
+ * Wurde 'keine Angabe' ausgewählt wird dies als -99999 codiert gespeichert.
  *
  * @param $element
  *   Das zu überprüfende Form-Element
  */
-function survey_element_validate_nonnegative_integer($element) {
+function survey_element_validate_nonnegative_integer(&$element, &$form_state) {
   $value = $element['#value'];
-  if ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
+
+  // extract the ID of the textfield to be validated to check the associated 'k. A.' checkbox
+  $elementId = intval(preg_replace('/[^0-9]+/', '', $element['#name']), 10);
+
+  if ($form_state['values']['quantity_check' . $elementId] === 1) {
+    form_set_value($element, -99999, $form_state);
+    $element['#value'] = -99999;
+  } else if ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
     form_error($element, t('%name must be an non-negative integer.', array(
+      '%name' => $element['#title'],
+    )));
+  } else if ($value === '') {
+    form_error($element, t('Das Feld %name ist erforderlich.', array(
       '%name' => $element['#title'],
     )));
   }

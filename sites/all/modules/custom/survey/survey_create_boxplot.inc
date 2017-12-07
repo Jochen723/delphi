@@ -40,7 +40,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
                 array_push($testArrayOverall2, $question_user_answer);
 
                 // "keine Ahnung" nicht als Antwort für Boxplot Berechnungen nutzen
-                if ($question_user_answer->answer != $indexNoAnswer) {
+                if ($question_user_answer->answer != $indexNoAnswer && $question_user_answer->answer != '-99999') {
                     array_push($testArrayOverall, $question_user_answer->answer);
                 }
             }
