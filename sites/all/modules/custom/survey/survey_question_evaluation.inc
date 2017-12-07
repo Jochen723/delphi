@@ -249,6 +249,11 @@ function survey_question_evaluation_form()
         '#submit' => array('survey_get_next_question')
     );
 
+    // The survey progress bar
+    $form['progress_bar'] = array(
+      '#markup' => _survey_get_status_bar($user_id),
+    );
+
     return $form;
 }
 

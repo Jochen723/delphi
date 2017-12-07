@@ -854,4 +854,21 @@ input.form-radio {
 #edit-new-questiongroup {
   margin-right: 2em; }
 
+/**
+ * Style the survey progress bar.
+ */
+.progress-bar {
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  height: 20px;
+  width: 100%;
+  float: left;
+  margin-top: 1em; }
+
+.progress {
+  background-color: lightblue;
+  text-align: center;
+  border-radius: inherit;
+  min-width: 2em; }
+
 /*# sourceMappingURL=iheartred_styles.css.map */

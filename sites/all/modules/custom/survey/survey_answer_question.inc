@@ -175,6 +175,11 @@ function survey_form()
             '#value' => 'Weiter',
             '#submit' => array('survey_get_evaluation')
         );
+
+        // The survey progress bar
+        $form['progress_bar'] = array(
+          '#markup' => _survey_get_status_bar($user_pass),
+        );
     }
 
     return $form;

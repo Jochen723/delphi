@@ -473,3 +473,53 @@ function _survey_get_first_open_question($userToken) {
 
   return $questionID;
 }
+
+/**
+ * Returns all answered questions of a user.
+ *
+ * @param $userToken
+ *   The unique user token.
+ *
+ * @return array
+ *   Associative array of all answered quesstions.
+ */
+function _survey_get_answered_questions($userToken) {
+  $answeredQuestions = array();
+  try {
+    $result = db_query("
+      SELECT question_id FROM {question_user_answers}
+      WHERE user_pw = :userToken
+      GROUP BY question_id", array(
+        'userToken' => $userToken,
+    ));
+
+    $answeredQuestions = $result->fetchAllAssoc('question_id');
+
+  } catch (PDOException $e) {
+    $answeredQuestions = array();
+  }
+
+  return $answeredQuestions;
+}
+
+/**
+ * Builds a status bar indicating how many questions have already been answered.
+ *
+ * @param $userToken
+ *   The unique user token.
+ *
+ * @return string
+ *   HTML code of the user's survey progress bar.
+ */
+function _survey_get_status_bar($userToken) {
+  $questionsCount = count(survey_get_all_questions());
+  $answeredCount = count(_survey_get_answered_questions($userToken));
+
+  $progressPercent = $answeredCount / $questionsCount * 100;
+
+  $html = '';
+  $html .= '<div class="progress-bar">';
+  $html .= '<div class="progress" style="width: ' . $progressPercent . '%">' . round($progressPercent) . '%</div></div>';
+
+  return $html;
+}
