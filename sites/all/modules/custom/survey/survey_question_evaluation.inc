@@ -184,7 +184,7 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id);
+            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id);
 
         //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
         } else {
@@ -237,7 +237,7 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-        $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id);
+        $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id);
       }
 
     }
@@ -514,6 +514,7 @@ function survey_get_button_titles($button_title_result)
 
 /**
  * Returns all user comments for a given question.
+ * Does not display the user's own comment.
  *
  * @param $questionId
  *   ID of the question
@@ -521,10 +522,13 @@ function survey_get_button_titles($button_title_result)
  * @return array
  *   All comments associated with the question
  */
-function getComments($questionId, $answerId) {
-  $commentsResult = db_query("SELECT comment FROM {question_user_answers} WHERE question_id = :question_id and answer_id = :answer_id AND is_last_answer = 1", array(
+function getComments($questionId, $answerId, $userId) {
+  $commentsResult = db_query("SELECT comment FROM {question_user_answers} 
+        WHERE question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1
+        AND user_pw != :user_id", array(
     ':question_id' => $questionId,
-    ':answer_id' => $answerId
+    ':answer_id' => $answerId,
+    ':user_id' => $userId,
   ));
 
   $allComments = array();
@@ -552,8 +556,8 @@ function getComments($questionId, $answerId) {
  * @return array
  *    The extended form array.
  */
-function addUserComments($form, $i, $question_id, $answer_id) {
-  $userComments = getComments($question_id, $answer_id);
+function addUserComments($form, $i, $question_id, $answer_id, $user_id) {
+  $userComments = getComments($question_id, $answer_id, $user_id);
 
   if (count($userComments) > 0) {
     $form['fieldset' . $i]['toggleComments' . $i] = array(
