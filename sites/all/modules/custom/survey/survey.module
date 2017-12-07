@@ -75,7 +75,7 @@ function survey_start_form()
 {
   $survey = _survey_get_survey(1);
 
-  drupal_set_title($survey['title']);
+  drupal_set_title(check_plain($survey['title']));
 
   $form['welcome'] = array(
     '#markup' => $survey['welcome_msg'],

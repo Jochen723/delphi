@@ -52,15 +52,17 @@ function survey_question_evaluation_form()
 
 
     //DIe Überschrift wird erstellt
-    $headline = $questions[$question_index]->title . " - Überprüfung der eigenen Einschätzung";
+    $headline = $questions[$question_index]->title;
     $headline = "
         <h1>These " . ($question_index -$questionGroupIndex + 1) . "(b)</h1>
-        <h2>" . $headline . "</h2><br>";
+        <h2>" . $headline . "</h2>";
 
+    $stringSelfAssessment = t('Bitte überprüfen Sie Ihre Einschätzung!');
     $form['headline']['form_item'] = array(
         '#type' => 'markup',
         '#title' => t('Headline'),
         '#prefix' => $headline,
+        '#suffix' =>  '<div class="self-assessment">' . check_plain($stringSelfAssessment) . '</div></br>',
     );
 
 
