@@ -757,14 +757,24 @@ input.form-radio {
   padding-bottom: 4rem;
   margin-bottom: 0; }
 
-/* Ein-/ausblendbare Kommentare */
+/* Ein-/ausblendbare Kommentare als Buttons gestyled */
 .toggleComments .form-type-checkbox {
   margin-top: -1rem;
   margin-bottom: 0; }
 .toggleComments * {
   float: right; }
-.toggleComments label {
-  margin-right: 0.5rem; }
+.toggleComments input {
+  display: none; }
+.toggleComments input[type=checkbox] + label {
+  color: #777;
+  background-color: #F2F2F2;
+  cursor: pointer;
+  padding: 4px 1em 4px 1em;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+.toggleComments input[type=checkbox]:checked + label {
+  background-color: #DBDBDB; }
 
 #delphi-question-change-question-form *,
 #question-form * {

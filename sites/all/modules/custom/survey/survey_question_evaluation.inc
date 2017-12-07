@@ -498,6 +498,9 @@ function addUserComments($form, $i, $question_id, $answer_id) {
       '#title' => t('Alle Kommentare anzeigen'),
       '#prefix' => '<div class="toggleComments">',
       '#suffix' => '</div>',
+      '#attributes' => array(
+        'class' => array('button')
+      ),
     );
 
     $form['fieldset' . $i]['allComments' . $i] = array(
