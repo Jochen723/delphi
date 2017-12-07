@@ -26,6 +26,9 @@
   z-index: 200;
   padding-top: 10px; }
 
+.page-title {
+  padding-top: 10px; }
+
 .question-content-wrapper {
   z-index: 1; }
   .question-content-wrapper.one-row {

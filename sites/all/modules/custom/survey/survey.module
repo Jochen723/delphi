@@ -71,7 +71,7 @@ function survey_menu()
 }
 
 //Diese Funktion baut die Startseite der Umfrage
-function survey_start_form()
+function survey_start_form($form, &$form_state)
 {
   $survey = _survey_get_survey(1);
 
@@ -81,13 +81,38 @@ function survey_start_form()
     '#markup' => $survey['welcome_msg'],
   );
 
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => 'Umfrage starten',
-        '#submit' => array('survey_start_survey')
-    );
 
-    return $form;
+  // user token is null if an admin uses internal start survey
+  $userToken = arg(1);
+  if (!is_null($userToken)) {
+    // get the ID of first unanswered question
+    $questionId = _survey_get_first_open_question(arg(1));
+
+    // -1 = all questions have been answered
+    if ($questionId !== -1) {
+      $form['continue'] = array(
+        '#type' => 'submit',
+        '#value' => t('Umfrage fortführen'),
+        '#submit' => array('survey_continue_survey')
+      );
+
+      $form_state['#continue_qid'] = $questionId;
+      $form_state['#continue_uid'] = $userToken;
+      }
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Umfrage starten',
+    '#submit' => array('survey_start_survey')
+  );
+
+  return $form;
+}
+
+function survey_continue_survey($form, &$form_state) {
+  $path = "survey_question/" . $form_state['#continue_qid'] . "/" . $form_state['#continue_uid'];
+  $form_state['redirect'] = $path;
 }
 
 /*
@@ -409,4 +434,42 @@ function _survey_get_survey($surveyId) {
   }
 
   return $survey;
+}
+
+/**
+ * Returns the first question the user did not answer.
+ *
+ * @param $userToken
+ *  The unique user token.
+ *
+ * @return int
+ *  The ID of the user's first unanswered question or -1 if all questions have been answered or -2 if an error occured.
+ */
+function _survey_get_first_open_question($userToken) {
+  try {
+    $result = db_query("
+      SELECT q.question_id FROM {question} as q
+      LEFT OUTER JOIN 
+        (SELECT question_id FROM {question_user_answers}
+          WHERE user_pw = :userToken
+          GROUP BY question_id
+        ) as answer
+      ON q.question_id = answer.question_id
+      WHERE answer.question_id IS null
+      ORDER BY q.weight ASC
+      LIMIT 1", array(
+        'userToken' => $userToken,
+    ));
+
+    $questionID = $result->fetchField(0);
+
+    // false if all questions have been answered
+    if ($questionID === FALSE) {
+      $questionID = -1;
+    }
+  } catch (PDOException $e) {
+    $questionID = -2;
+  }
+
+  return $questionID;
 }
