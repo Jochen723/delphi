@@ -82,11 +82,27 @@ function survey_form()
         //Die Bezeichungen der Buttons werden geladen
         $button_title_array = survey_get_button_titles($result);
 
-        $form['question']['form_item'] = array(
+        $form['question']['title'] = array(
             '#type' => 'markup',
-            '#title' => t('My Form Item'),
-            '#prefix' => $headline,
+            '#title' => t('survey quesion title'),
+            '#markup' => $headline,
+            '#prefix' => '<div class="question-header">',
         );
+
+        // Da Titel immer fix im Vordergrund steht muss die Content-Region um die Höhe des Titels verschoben werden
+        $cssClassContent = 'question-content-wrapper';
+        $titleLength = drupal_strlen($text);
+
+        if ($titleLength > 300) {
+          $form['question']['title']['#suffix'] = '</div><div class="four-rows ' . $cssClassContent . '">';
+        } else if ($titleLength > 200) {
+          $form['question']['title']['#suffix'] = '</div><div class="three-rows ' . $cssClassContent . '">';
+        } else if ($titleLength > 100) {
+          $form['question']['title']['#suffix'] = '</div><div class="two-rows ' . $cssClassContent . '">';
+        } else {
+          $form['question']['title']['#suffix'] = '</div><div class="one-row ' . $cssClassContent . '">';
+        }
+
 
         //Es wird über jede Antwortmöglichkeit iteriert
         $countTextfield = 0;
@@ -137,6 +153,11 @@ function survey_form()
                 );
             }
         }
+
+        $form['content-wrapper-close'] = array(
+          '#type' => 'markup',
+          '#markup' => '</div>',
+        );
 
         //Sollte es sich nicht um die erste Frage handeln
         if ($question_index != 0) {

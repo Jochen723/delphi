@@ -53,17 +53,34 @@ function survey_question_evaluation_form()
 
     //DIe Überschrift wird erstellt
     $headline = $questions[$question_index]->title;
+    $titleLength = drupal_strlen($headline);
     $headline = "
         <h1>These " . ($question_index -$questionGroupIndex + 1) . "(b)</h1>
         <h2>" . $headline . "</h2>";
 
     $stringSelfAssessment = t('Bitte überprüfen Sie Ihre Einschätzung!');
-    $form['headline']['form_item'] = array(
+    $form['headline']['title'] = array(
         '#type' => 'markup',
         '#title' => t('Headline'),
-        '#prefix' => $headline,
-        '#suffix' =>  '<div class="self-assessment">' . check_plain($stringSelfAssessment) . '</div></br>',
+        '#markup' => $headline,
+        '#prefix' => '<div class="question-header">',
     );
+
+
+    $htmlSelfAssessment = '<div class="self-assessment">' . check_plain($stringSelfAssessment) . '</div>';
+
+    // Da Titel immer fix im Vordergrund steht muss die Content-Region um die Höhe des Titels verschoben werden
+    $cssClassContent = 'evaluation-content-wrapper';
+
+    if ($titleLength > 300) {
+      $form['headline']['title']['#suffix'] = $htmlSelfAssessment. '</div><div class="four-rows ' . $cssClassContent . '">';
+    } else if ($titleLength > 200) {
+      $form['headline']['title']['#suffix'] = $htmlSelfAssessment .'</div><div class="three-rows ' . $cssClassContent . '">';
+    } else if ($titleLength > 100) {
+      $form['headline']['title']['#suffix'] = $htmlSelfAssessment .'</div><div class="two-rows ' . $cssClassContent . '">';
+    } else {
+      $form['headline']['title']['#suffix'] = $htmlSelfAssessment .'</div><div class="one-row ' . $cssClassContent . '">';
+    }
 
 
     //In diese Variable werden alle Antwortmöglichkeiten der Frage eingespeichert
@@ -200,6 +217,11 @@ function survey_question_evaluation_form()
       }
 
     }
+
+    $form['content-wrapper-close'] = array(
+      '#type' => 'markup',
+      '#markup' => '</div>',
+    );
 
     //Sollte es sich nicht um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
     if ($question_id !== 0 && $question_index !== 0) {

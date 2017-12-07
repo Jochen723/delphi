@@ -16,15 +16,85 @@ $color-average: #ff5bbd;
   display:none;
 }
 
+/* Fixed header */
+/* Fixed site header*/
 #inner_header_wrapper {
     background: 0;
     background-color: #dedede;
+    position: fixed;
+    height: 62px;
+    width:100%;
+    z-index: 200;
 }
+
+#container {
+  padding-top: 62px;
+}
+
+/* Fixed survey headers */
+.question-header {
+  position: fixed;
+  width: 820px;
+  background: url(../images/body_bg.png) repeat-x #fff;
+  z-index: 200;
+  padding-top: 10px;
+}
+
+.question-content-wrapper {
+  z-index: 1;
+
+  &.one-row {
+    padding-top: calc(75px + 10px);
+  }
+
+  &.two-rows {
+    padding-top: calc(75px + 10px + 20px);
+  }
+
+  &.three-rows {
+    padding-top: calc(75px + 10px + 40px);
+  }
+
+  &.four-rows {
+    padding-top: calc(75px + 10px + 60px);
+  }
+}
+
+.evaluation-content-wrapper {
+  z-index: 1;
+
+  &.one-row {
+    padding-top: calc(95px + 10px);
+  }
+
+  &.two-rows {
+    padding-top: calc(95px + 10px + 20px);
+  }
+
+  &.three-rows {
+    padding-top: calc(95px + 10px + 40px);
+  }
+
+  &.four-rows {
+    padding-top: calc(95px + 10px + 60px);
+  }
+}
+
+#content {
+  margin-top: 0;
+}
+/*** End fixed header ***/
 
 
 #main-menu li,
 #main-menu li .expanded {
   border: 0;
+}
+
+/* Hide menu bar navigation and breadcrumbs */
+.menu_wrapper,
+#breadcrumbs {
+  display: none !important;
 }
 
 .menu_wrapper,
