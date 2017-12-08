@@ -523,9 +523,9 @@ function survey_get_button_titles($button_title_result)
  *   All comments associated with the question
  */
 function getComments($questionId, $answerId, $userId) {
-  $commentsResult = db_query("SELECT comment FROM {question_user_answers} 
+  $commentsResult = db_query("SELECT answer, comment FROM {question_user_answers} 
         WHERE question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1
-        AND user_pw != :user_id", array(
+        AND user_pw != :user_id AND comment != '' ORDER BY answer ASC", array(
     ':question_id' => $questionId,
     ':answer_id' => $answerId,
     ':user_id' => $userId,
@@ -534,7 +534,7 @@ function getComments($questionId, $answerId, $userId) {
   $allComments = array();
   foreach ($commentsResult as $comment) {
     if ($comment->comment) {
-      array_push($allComments, $comment->comment);
+      $allComments[$comment->answer][] = $comment->comment;
     }
   }
 
@@ -556,7 +556,7 @@ function getComments($questionId, $answerId, $userId) {
  * @return array
  *    The extended form array.
  */
-function addUserComments($form, $i, $question_id, $answer_id, $user_id) {
+function addUserComments($form, $i, $question_id, $answer_id, $user_id, $answerLabels) {
   $userComments = getComments($question_id, $answer_id, $user_id);
 
   if (count($userComments) > 0) {
@@ -581,10 +581,33 @@ function addUserComments($form, $i, $question_id, $answer_id, $user_id) {
         )),
     );
 
+    $orderedComments = array();
+    $answerLabel = '';
+
+
+    // convert associative array with answers and comments to strings
+    foreach ($userComments as $answer => $comments) {
+
+      if (empty($answerLabels)) {
+        // int textfield answer
+        if ($answer === -99999) {
+          $answerLabel = t('weiß nicht / keine Angabe');
+        } else {
+          $answerLabel = $answer;
+        }
+      } else {
+        $answerLabel = $answerLabels[$answer];
+      }
+
+      foreach ($comments as $comment) {
+        $orderedComments[] = '['.$answerLabel.'] ' . $comment;
+      }
+    }
+
     $form['fieldset' . $i]['allComments' . $i]['comments'] = array(
       '#theme' => 'item_list',
       '#list_type' => 'ul',
-      '#items' => $userComments,
+      '#items' => $orderedComments,
     );
   }
 
