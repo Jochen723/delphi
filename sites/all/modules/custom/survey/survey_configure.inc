@@ -15,9 +15,10 @@ function survey_configure_form($form, &$form_state) {
 
   if (!empty($survey)) {
     $form['title'] = array(
-      '#type' => 'textfield',
+      '#type' => 'textarea',
+      '#rows' => 1,
+      '#resizable' => FALSE,
       '#title' => "Umfragetitel",
-      '#size' => 200,
       '#maxlength' => 254,
       '#default_value' => $survey['title'],
     );
@@ -43,6 +44,9 @@ function survey_configure_form($form, &$form_state) {
       '#value' => t('Speichern'),
     );
   }
+
+  // automatically resize textareas to content
+  $form = delphi_question_add_autosize($form);
 
   return $form;
 }

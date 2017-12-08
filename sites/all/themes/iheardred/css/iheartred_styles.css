@@ -625,6 +625,14 @@ input.form-radio:checked .form-radio:after {
   .form-textarea-wrapper .form-textarea {
     width: 100%; }
 
+/* Style Textaerea wie Textfelder */
+textarea {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  padding: 1px;
+  font: -moz-field;
+  line-height: normal; }
+
 /* Format survey configuration form */
 #survey-configure-form * {
   max-width: 100% !important; }

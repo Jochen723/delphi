@@ -107,7 +107,9 @@ function delphi_question_change_question_form()
 
         //Für jede Antwortmöglichkeit muss eine Bezeichnung festgelegt werden.
         $form['content' . $i]['test' . $i] = array(
-            '#type' => 'textfield',
+            '#type' => 'textarea',
+            '#rows' => 1,
+            '#resizable' => FALSE,
             '#title' => "<b>Bezeichnung der Antwortmöglichkeit:</b>",
             '#default_value' => $answer_array[$i - 1],
             '#required' => TRUE,
@@ -316,6 +318,9 @@ function delphi_question_change_question_form()
       'type' => 'file',
       'data' => drupal_get_path('module', 'delphi_question') . '/js/selectsets.js',
     );
+
+    // automatically resize textareas to content
+    $form = delphi_question_add_autosize($form);
 
     $form['submit'] = array(
         '#type' => 'submit',

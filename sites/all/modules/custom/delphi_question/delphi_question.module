@@ -76,3 +76,26 @@ function delphi_question_get_answer_sets() {
 
   return $answerSets;
 }
+
+/**
+ * Add autosize capability to the form. Autosize resizes textareas to fit it's content.
+ */
+function delphi_question_add_autosize($form) {
+
+  // automatically resize textareas to content
+  $form['#attached']['js'][] = array(
+    'type' => 'file',
+    'data' => drupal_get_path('module', 'delphi_question') . '/js/autosize.min.js',
+  );
+
+  $form['#attached']['js'][] = array(
+    'type' => 'inline',
+    'scope' => 'footer',
+    'data' => "(function ($) {
+                   autosize($('textarea'));
+                 }(jQuery));",
+  );
+
+  return $form;
+
+}

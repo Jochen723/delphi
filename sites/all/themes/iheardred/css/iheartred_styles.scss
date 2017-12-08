@@ -347,6 +347,15 @@ input.form-radio:checked .form-radio:after {
   }
 }
 
+/* Style Textaerea wie Textfelder */
+textarea {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  padding: 1px;
+  font: -moz-field;
+  line-height: normal;
+}
+
 /* Format survey configuration form */
 #survey-configure-form {
   & * {
