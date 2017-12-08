@@ -85,20 +85,22 @@ function survey_start_form($form, &$form_state)
   // user token is null if an admin uses internal start survey
   $userToken = arg(1);
   if (!is_null($userToken)) {
-    // get the ID of first unanswered question
-    $questionId = _survey_get_first_open_question(arg(1));
+    if(count(_survey_get_answered_questions($userToken)) > 0) {
+      // get the ID of first unanswered question
+      $questionId = _survey_get_first_open_question(arg(1));
 
-    // -1 = all questions have been answered
-    if ($questionId !== -1) {
-      $form['continue'] = array(
-        '#type' => 'submit',
-        '#value' => t('Umfrage fortführen'),
-        '#submit' => array('survey_continue_survey')
-      );
+      // -1 = all questions have been answered
+      if ($questionId !== -1) {
+        $form['continue'] = array(
+          '#type' => 'submit',
+          '#value' => t('Umfrage fortführen'),
+          '#submit' => array('survey_continue_survey')
+        );
 
-      $form_state['#continue_qid'] = $questionId;
-      $form_state['#continue_uid'] = $userToken;
+        $form_state['#continue_qid'] = $questionId;
+        $form_state['#continue_uid'] = $userToken;
       }
+    }
   }
 
   $form['submit'] = array(

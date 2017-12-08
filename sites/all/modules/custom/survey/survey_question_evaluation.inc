@@ -184,7 +184,10 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id);
+            // show comments if enough (>5) answers were given
+            if (strpos($boxplot_graphic, 'boxplot-nodata') == FALSE) {
+              $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, $button_title_array[$i - $countTextfield]);
+            }
 
         //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
         } else {
@@ -237,7 +240,10 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-        $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id);
+            // show comments if enough (>5) answers were given
+            if (strpos($boxplot_graphic, 'boxplot-nodata') == FALSE) {
+              $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
+            }
       }
 
     }
