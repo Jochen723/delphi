@@ -35,7 +35,7 @@ function survey_menu()
 
     $items['finish_survey/%'] = array(
         'title' => 'Ende der Umfrage',
-        'access callback' => 'user_is_logged_in',
+        'access callback' => TRUE,
         'page callback' => 'survey_finish_survey',
     );
 
