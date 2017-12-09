@@ -182,6 +182,18 @@ function survey_form()
           '#markup' => '</div>',
         );
 
+        // Damit 'Enter' den Weiter-Button triggert, muss dieser zuerst angelegt werden. Sollten weitere Buttons
+        // eingefügt werden, werden diese per CSS nach links verschoben
+        $form['submit-wrapper-open'] = array(
+          '#type' => 'markup',
+          '#markup' => '<div class="buttons-submit">',
+        );
+        $form['submit'] = array(
+          '#type' => 'submit',
+          '#value' => 'Weiter',
+          '#submit' => array('survey_get_evaluation'),
+        );
+
         //Sollte es sich nicht um die erste Frage handeln
         if ($question_index != 0) {
             $form['back'] = array(
@@ -192,11 +204,9 @@ function survey_form()
                 '#limit_validation_errors' => array(),
             );
         }
-
-        $form['submit'] = array(
-            '#type' => 'submit',
-            '#value' => 'Weiter',
-            '#submit' => array('survey_get_evaluation')
+        $form['submit-wrapper-close'] = array(
+          '#type' => 'markup',
+          '#markup' => '</div>',
         );
 
         // The survey progress bar

@@ -908,4 +908,16 @@ input.form-radio {
   margin-top: 2em;
   margin-bottom: 0; }
 
+/* Always position the back button to the left */
+.buttons-submit,
+#survey-question-evaluation-form {
+  float: left;
+  clear: both; }
+  .buttons-submit #edit-back,
+  #survey-question-evaluation-form #edit-back {
+    float: left; }
+  .buttons-submit #edit-submit,
+  #survey-question-evaluation-form #edit-submit {
+    float: none; }
+
 /*# sourceMappingURL=iheartred_styles.css.map */

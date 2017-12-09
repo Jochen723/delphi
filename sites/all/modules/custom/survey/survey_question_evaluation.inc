@@ -251,6 +251,22 @@ function survey_question_evaluation_form()
       '#markup' => '</div>',
     );
 
+    $button_text = "Weiter zur nächsten These";
+
+    //Die ID der nächsten Frage wird ermittelt
+    $id = survey_question_evaluation_get_next_question(arg(1));
+
+    //Sollte es die letzte Frage sein, wird die Umfrage beendet
+    if ($id == -1) {
+      $button_text = "Umfrage abschließen";
+    }
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => $button_text,
+        '#submit' => array('survey_get_next_question')
+      );
+
     //Sollte es sich nicht um die erste Frage der Umfrage handeln, wird ein Zurück-Button erstellt
     if ($question_id !== 0 && $question_index !== 0) {
         $form['back'] = array(
@@ -260,23 +276,6 @@ function survey_question_evaluation_form()
             '#submit' => array('survey_question_evaluation_get_back_to_last_question')
         );
     }
-
-    //Der zweite Button führt zur zweiten Frage
-    $button_text = "Weiter zur nächsten These";
-
-    //Die ID der nächsten Frage wird ermittelt
-    $id = survey_question_evaluation_get_next_question(arg(1));
-
-    //Sollte es die letzte Frage sein, wird die Umfrage beendet
-    if ($id == -1) {
-        $button_text = "Umfrage abschließen";
-    }
-
-    $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => $button_text,
-        '#submit' => array('survey_get_next_question')
-    );
 
     // The survey progress bar
     $form['progress_bar'] = array(
