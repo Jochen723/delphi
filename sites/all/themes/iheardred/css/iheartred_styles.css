@@ -898,4 +898,9 @@ input.form-radio {
   border-radius: inherit;
   min-width: 2em; }
 
+/* Hide text on disabled textf*/
+.question-content-wrapper input[type="text"]:disabled,
+.evaluation-content-wrapper input[type="text"]:disabled {
+  color: transparent; }
+
 /*# sourceMappingURL=iheartred_styles.css.map */
