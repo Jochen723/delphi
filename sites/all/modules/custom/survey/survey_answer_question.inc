@@ -154,7 +154,7 @@ function survey_form()
                     '#prefix' => '<div id ="visualization' . $i . '" class = "answers">',
                     '#title' => $answers[$i]->description,
                     '#size' => 4,
-                    '#maxlength' => 6,
+                    '#maxlength' => 4,
                     '#default_value' => $default_value,
                     '#required' => FALSE,
                     '#states'        => array(
@@ -162,7 +162,7 @@ function survey_form()
                         ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
                       ),
                     ),
-                    '#element_validate' => array('survey_element_validate_nonnegative_integer'),
+                    '#element_validate' => array('survey_textfield_validate'),
                 );
                 $form['quantity_check' . $i] = array(
                   '#type' => 'checkbox',

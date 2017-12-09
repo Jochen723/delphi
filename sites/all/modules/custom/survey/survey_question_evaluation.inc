@@ -208,9 +208,10 @@ function survey_question_evaluation_form()
 
             $form['fieldset' . $i]['quantity' . $i] = array(
                 '#type' => 'textfield',
-                '#title' => '',
+                '#title' => $possible_answers_array[$i]->description,
+                '#title_display' => 'invisible',
                 '#size' => 4,
-                '#maxlength' => 6,
+                '#maxlength' => 4,
                 '#required' => FALSE,
                 '#default_value' => $answers[$i]->answer,
                 '#states'        => array(
@@ -218,7 +219,7 @@ function survey_question_evaluation_form()
                     ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
                   ),
                 ),
-                '#element_validate' => array('survey_element_validate_nonnegative_integer'),
+                '#element_validate' => array('survey_textfield_validate'),
             );
 
             $form['fieldset' . $i]['quantity_check' . $i] = array(

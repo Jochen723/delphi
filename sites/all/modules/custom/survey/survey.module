@@ -433,28 +433,56 @@ function survey_get_questions($current_question_id)
 }
 
 /**
- * Überprüft, ob es sich bei der Benutzereingabe um eine nichtnegative Ganzzahl handelt.
+ * Überprüft, ob es sich um eine gültige Benutzereingabe für das Jahre-Textfeldhandelt.
+ * - Eingabe ist eine nichtnegative Ganzzahl
+ * - Eingabe maximal 50 (Jahre)
+ * - Eingabe auch als Jahreszahl maximal 50 Jahre in die Zukunft möglich
+ *
  * Wurde 'keine Angabe' ausgewählt wird dies als -99999 codiert gespeichert.
  *
  * @param $element
  *   Das zu überprüfende Form-Element
  */
-function survey_element_validate_nonnegative_integer(&$element, &$form_state) {
+function survey_textfield_validate(&$element, &$form_state) {
   $value = $element['#value'];
 
   // extract the ID of the textfield to be validated to check the associated 'k. A.' checkbox
   $elementId = intval(preg_replace('/[^0-9]+/', '', $element['#name']), 10);
 
+  $currentYear = date('Y');
+  $yearRange = 50;
+
+  // don't validate the field if 'keine Angabe' has been selected
   if ($form_state['values']['quantity_check' . $elementId] === 1) {
     form_set_value($element, -99999, $form_state);
     $element['#value'] = -99999;
-  } else if ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
-    form_error($element, t('%name must be an non-negative integer.', array(
+
+  // reject no input if 'keine Angabe' has not been selected (-99999)
+  } elseif ($value === '') {
+    form_error($element, t('Das Feld „%name” ist erforderlich.', array(
       '%name' => $element['#title'],
     )));
-  } else if ($value === '') {
-    form_error($element, t('Das Feld %name ist erforderlich.', array(
+
+  // reject negative and non-integer input
+  } elseif ($value !== '' && (!is_numeric($value) || intval($value) != $value || $value < 0)) {
+    form_error($element, t('„%name” muss eine nichtnegative Ganzzahl sein.', array(
       '%name' => $element['#title'],
+    )));
+
+  // accept input up to the year range (e.g. 0-50) and continue
+  } elseif ($value >= 0 && $value <= $yearRange) {
+
+  // accept input up to the valid year range (e.g. 50 years into the future 2017-2067) and convert it to years
+  } elseif ($value >= $currentYear && $value <= $currentYear + $yearRange) {
+    $convertedYear = $value - $currentYear;
+    form_set_value($element, $convertedYear, $form_state);
+    $element['#value'] = $convertedYear;
+
+  // reject input outside the valid year range (e.g. 51-2016 and 2068+)
+  } elseif ($value > $yearRange || $value < $currentYear || $value > $currentYear + $yearRange) {
+    form_error($element, t('„%name” darf nicht in der Vergangenheit und maximal %yearRange Jahre in der Zukunft liegen.', array(
+      '%name' => $element['#title'],
+      '%yearRange' => $yearRange,
     )));
   }
 }
