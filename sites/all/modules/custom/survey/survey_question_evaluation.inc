@@ -184,10 +184,7 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            // show comments if enough (>5) answers were given
-            if (strpos($boxplot_graphic, 'boxplot-nodata') == FALSE) {
-              $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, $button_title_array[$i - $countTextfield]);
-            }
+            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, $button_title_array[$i - $countTextfield]);
 
         //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
         } else {
@@ -531,7 +528,7 @@ function survey_get_button_titles($button_title_result)
 function getComments($questionId, $answerId, $userId) {
   $commentsResult = db_query("SELECT answer, comment FROM {question_user_answers} 
         WHERE question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1
-        AND user_pw != :user_id AND comment != '' ORDER BY answer ASC", array(
+        AND user_pw != :user_id AND comment != '' ORDER BY answer DESC", array(
     ':question_id' => $questionId,
     ':answer_id' => $answerId,
     ':user_id' => $userId,

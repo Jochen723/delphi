@@ -150,7 +150,6 @@ function survey_finish_survey_form() {
     '#title' => t('Anmerkungen'),
     '#resizable' => FALSE,
     '#type' => 'textarea',
-    '#required' => TRUE,
     '#default_value' => $user['feedback'],
     '#attributes' => array(
       'id' => 'survey-feedback',
