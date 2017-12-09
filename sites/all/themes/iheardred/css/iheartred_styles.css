@@ -898,9 +898,14 @@ input.form-radio {
   border-radius: inherit;
   min-width: 2em; }
 
-/* Hide text on disabled textf*/
+/* Hide text on disabled textfields */
 .question-content-wrapper input[type="text"]:disabled,
 .evaluation-content-wrapper input[type="text"]:disabled {
   color: transparent; }
+
+/* Style end survey form */
+.form-item-feedback {
+  margin-top: 2em;
+  margin-bottom: 0; }
 
 /*# sourceMappingURL=iheartred_styles.css.map */

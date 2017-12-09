@@ -36,7 +36,8 @@ function survey_menu()
     $items['finish_survey/%'] = array(
         'title' => 'Ende der Umfrage',
         'access callback' => TRUE,
-        'page callback' => 'survey_finish_survey',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('survey_finish_survey_form'),
     );
 
     $items['survey/tokens'] = array(
@@ -50,7 +51,13 @@ function survey_menu()
       'access arguments' => array('administer users'),
       'page arguments' => array('survey_configure_form'),
       'file' => 'survey_configure.inc'
+    );
 
+    $items['survey/feedback'] = array(
+      'page callback' => 'drupal_get_form',
+      'access arguments' => array('administer users'),
+      'page arguments' => array('survey_show_feedback_form'),
+      'file' => 'survey_configure.inc',
     );
 
     $items['survey/tokens/download'] = array(
@@ -118,12 +125,62 @@ function survey_continue_survey($form, &$form_state) {
 }
 
 /*
- * Diese Funktion führt den Nutzer zurück ins Hauptmenü
+ * Diese Funktion führt den Nutzer auf die Abschlusseite der Umfrage.
  */
-function survey_finish_survey()
-{
+function survey_finish_survey_form() {
+  $userId = arg(1);
+
   $survey = _survey_get_survey(1);
-  return $survey['end_msg'];
+  $user = _survey_get_user($userId);
+
+  if (empty($user)) {
+    form_set_error('Survey', 'Invalid User');
+    return null;
+  }
+
+  $form = array();
+  $form['end_msg'] = array(
+    '#markup' => $survey['end_msg'],
+    '#attributes' => array(
+      'id' => 'survey-end',
+    ),
+  );
+
+  $form['feedback'] = array(
+    '#title' => t('Anmerkungen'),
+    '#resizable' => FALSE,
+    '#type' => 'textarea',
+    '#required' => TRUE,
+    '#default_value' => $user['feedback'],
+    '#attributes' => array(
+      'id' => 'survey-feedback',
+    ),
+  );
+
+  $form = delphi_question_add_autosize($form);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Anmerkungen speichern',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_submit().
+ */
+function survey_finish_survey_form_submit($form, &$form_state) {
+  $userId = arg(1);
+  $success = FALSE;
+
+  $userFeedback = $form_state['values']['feedback'];
+  $success = _survey_save_feedback($userId, $form_state['values']['feedback']);
+
+
+  if ($success) {
+    drupal_set_message('Ihre Anmerkungen wurden gespeichert. Herzlichen Dank.');
+  }
 }
 
 /*
@@ -448,6 +505,54 @@ function _survey_get_survey($surveyId) {
   }
 
   return $survey;
+}
+
+/**
+ * Returns the survey configuration data.
+ *
+ * @param $userId
+ *  The user ID to be looked up.
+ *
+ * @return array
+ *  Associative array of the user's data.
+ */
+function _survey_get_user($userId) {
+  try {
+    $result = db_query("SELECT * FROM {survey_users} WHERE user_pw = :userId", array(
+      ':userId' => $userId,
+    ));
+    $user = $result->fetchAssoc();
+
+  } catch (PDOException $e) {
+    $user = array();
+  }
+
+  return $user;
+}
+
+/**
+ * Saves the user's survey feedback.
+ *
+ * @param string $userId
+ *   The user token.
+ * @param string $feedback
+ *   The user feedback to be saved.
+ *
+ * @return bool
+ *   TRUE if the feedback has been saved, otherwise FALSE.
+ */
+function _survey_save_feedback($userId, $feedback) {
+  $success = TRUE;
+  try {
+    db_query("UPDATE {survey_users} SET feedback = :user_feedback WHERE user_pw = :userId", array(
+      ':userId' => $userId,
+      ':user_feedback' => $feedback,
+    ));
+  } catch (PDOException $e) {
+    $success = FALSE;
+  }
+
+  return $success;
 }
 
 /**

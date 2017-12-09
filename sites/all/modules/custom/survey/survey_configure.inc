@@ -23,6 +23,12 @@ function survey_configure_form($form, &$form_state) {
       '#default_value' => $survey['title'],
     );
 
+    $form['links']['user_feedback'] = array(
+      '#type' => 'link',
+      '#title' => t('Benutzer-Anmerkungen anzeigen'),
+      '#href' => 'survey/feedback',
+    );
+
     $form['welcome'] = array(
       '#type' => 'text_format',
       '#title' => t('Willkommensnachricht'),
@@ -70,4 +76,39 @@ function survey_configure_form_submit($form, &$form_state) {
   } else {
     drupal_set_message(t('Es wurden keine Änderungen vorgenommen.'));
   }
+}
+
+/**
+ * Displays all submitted user feedback.
+ */
+function survey_show_feedback_form($form, &$form_state) {
+
+  try {
+    $result = db_query("SELECT feedback, feedback_date FROM {survey_users} WHERE (feedback != null OR feedback != '')
+                              ORDER BY feedback_date");
+    $feedback = $result->fetchAllAssoc('feedback_date');
+
+  } catch (PDOException $e) {
+    $feedback = array();
+  }
+
+  $html = '';
+  if (!empty($feedback)) {
+    foreach ($feedback as $date => $remark) {
+      $html .= '<p>[' . $date . '] ' . check_plain($remark->feedback) . '</p>';
+    }
+  }
+
+  if (empty($html)) {
+    $html = t("Es wurden noch keine Anmerkungen übermittelt.");
+  }
+
+  $form['feedback']= array(
+    '#markup' => $html,
+    '#attributes' => array(
+      'class' => array('user-feedback'),
+    )
+  );
+
+  return $form;
 }
