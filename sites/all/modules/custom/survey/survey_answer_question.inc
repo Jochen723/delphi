@@ -215,12 +215,15 @@ function survey_form()
         );
     }
 
-    // Drupal error messages mess with the fixed quesstion headers. Unset fixed if error messages are visible.
+    // Drupal error messages mess with the fixed quesstion headers. Unset position:fixed if error messages are visible.
     $form['#attached']['js'][] = array(
       'type' => 'inline',
       'data' => "jQuery(document).ready(function () {if (jQuery('.messages.error').length) {
           jQuery('.question-header').css('position', 'unset');
           jQuery('.question-content-wrapper').css('padding-top', 0);
+          
+          // quick fix to highlight survey item on missing values
+          jQuery('.form-type-radios').has('.error').css('border-color', 'red');
         }
         });",
       'scope' => 'footer',
