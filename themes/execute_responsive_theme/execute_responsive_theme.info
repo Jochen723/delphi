@@ -36,7 +36,7 @@ features[] = main_menu
 features[] = secondary_menu
 
 settings[breadcrumbs]  = 1
-settings[social_links]  = 1
+settings[social_links]  = 0
 settings[twitter_url] = "https://twitter.com/zymphonies"
 settings[facebook_url] = "https://www.facebook.com/zymphonies"
 settings[gplus_profile_url] = "https://plus.google.com/u/1/+ZymphoniesTechnologies/"

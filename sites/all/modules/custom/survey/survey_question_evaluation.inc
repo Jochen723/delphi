@@ -59,6 +59,8 @@ function survey_question_evaluation_form()
         <h2>" . $headline . "</h2>";
 
     $stringSelfAssessment = t('Hier können Sie Ihre Einschätzungen mit den gemittelten Werten der anderen Teilnehmer/innen vergleichen und deren Kommentare einsehen. Sie können daraufhin bei Ihrer Einschätzung bleiben oder diese verändern. Wenn Sie möchten, können Sie Ihre Einschätzung in einem eigenen Kommentar begründen oder bedenkenswerte Hinweise geben.');
+
+    //$stringSelfAssessment = t('Hier können Sie Ihre Einschätzung bewerten');    
     $form['headline']['title'] = array(
         '#type' => 'markup',
         '#title' => t('Headline'),
