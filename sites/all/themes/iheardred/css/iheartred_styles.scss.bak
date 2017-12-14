@@ -68,19 +68,19 @@ $color-average: #ff5bbd;
   z-index: 1;
 
   &.one-row {
-    padding-top: calc(95px + 10px + 30px);
+    padding-top: calc(95px + 10px);
   }
 
   &.two-rows {
-    padding-top: calc(95px + 10px + 20px + 30px);
+    padding-top: calc(95px + 10px + 20px);
   }
 
   &.three-rows {
-    padding-top: calc(95px + 10px + 40px + 30px);
+    padding-top: calc(95px + 10px + 40px);
   }
 
   &.four-rows {
-    padding-top: calc(95px + 10px + 60px + 30px);
+    padding-top: calc(95px + 10px + 60px);
   }
 
   .form-type-textfield {

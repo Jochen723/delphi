@@ -43,13 +43,13 @@
 .evaluation-content-wrapper {
   z-index: 1; }
   .evaluation-content-wrapper.one-row {
-    padding-top: calc(95px + 10px + 30px); }
+    padding-top: calc(95px + 10px); }
   .evaluation-content-wrapper.two-rows {
-    padding-top: calc(95px + 10px + 20px + 30px); }
+    padding-top: calc(95px + 10px + 20px); }
   .evaluation-content-wrapper.three-rows {
-    padding-top: calc(95px + 10px + 40px + 30px); }
+    padding-top: calc(95px + 10px + 40px); }
   .evaluation-content-wrapper.four-rows {
-    padding-top: calc(95px + 10px + 60px + 30px); }
+    padding-top: calc(95px + 10px + 60px); }
   .evaluation-content-wrapper .form-type-textfield {
     width: 77px !important;
     margin-top: 60px !important; }
