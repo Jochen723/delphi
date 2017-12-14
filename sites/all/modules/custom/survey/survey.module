@@ -81,7 +81,8 @@ function survey_menu()
 function survey_start_form($form, &$form_state)
 {
   $survey = _survey_get_survey(1);
-
+  //log register
+  watchdog('survey', 'Teilnehmer %token hat sich eingeloggt',$variables=array('%token' => arg(1)), $severity = WATCHDOG_INFO,$link= NULL);
   drupal_set_title(check_plain($survey['title']));
 
   $form['welcome'] = array(
