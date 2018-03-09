@@ -1,0 +1,73 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: julien
+ * Date: 06.03.18
+ * Time: 20:55
+ */
+
+use Drupal\delphi_evaluation\Helper;
+/**
+ * Implements hook_menu().
+ */
+function delphi_evaluation_menu()
+{
+    $items['evaluation'] = array(
+        'title' => 'Auswertung',
+        'page callback' => 'delphi_evaluation_show_evaluation',
+        'access callback' => 'user_is_logged_in',
+
+    );
+
+
+
+    return $items;
+
+}
+
+/**
+ * Shows the data saved by the delphi suvey
+ * @return string
+ */
+function delphi_evaluation_show_evaluation() {
+     $delphiHelper = new Drupal\delphi_evaluation\Helper\Delphi_Evaluation_Helper();
+
+     $result = $delphiHelper->delphi_evaluation_get_survey_data();
+
+     $html = array(
+         $result, '<p> Hallo Welt</p>',
+     );
+     return $result;
+}
+
+
+/**
+ * Export data to a csv file
+ * @param $variables
+ */
+
+function delphi_evaluation_export($variables) {
+
+
+        drupal_add_http_header('Content-Type', 'text/csv; utf-8');
+        drupal_add_http_header('Content-Disposition', 'attachment; filename=export.csv');
+
+        $output = '';
+        $keys = array();
+        foreach ($variables['header'] as $key => $value) {
+            //dsm($value);
+            $keys[] = $value;
+        }
+        if ($keys) {
+            $output .= implode(";", $keys) . "\n";
+        }
+        foreach ($variables['rows'] as $value) {
+
+            $output .= implode(";", $value) . "\n";
+        }
+        print $output;
+        drupal_exit();
+    // send response headers to the browser
+
+
+}
