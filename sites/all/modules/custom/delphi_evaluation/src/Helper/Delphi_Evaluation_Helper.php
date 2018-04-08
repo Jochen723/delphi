@@ -14,17 +14,18 @@ class Delphi_Evaluation_Helper
 
     /**
      * Gets the survey data from the database
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function delphi_evaluation_get_survey_data() {
-        $sql = "SELECT user_pw, title, type, q.question_id, weight, answer_id, answer, comment, is_last_answer FROM {question} q
-        LEFT JOIN {question_user_answers} a ON q.question_id = a.question_id;";
+    public function delphi_evaluation_get_survey_data($sql, $flag) {
+        //$sql = "SELECT user_pw, title, type, q.question_id, weight, answer_id, answer, comment, is_last_answer FROM {question} q
+        //LEFT JOIN {question_user_answers} a ON q.question_id = a.question_id;";
 
         $result = db_query($sql);
 
         $result = $result->fetchAll();
-        $header = array('user_pw',
+        $header = array(
+            'user_pw',
             'title',
             'item',
             'answer',
@@ -32,19 +33,35 @@ class Delphi_Evaluation_Helper
             'is_last_answer',
         );
 
-        foreach ($result as $row) {
-            $rows[] = array(
-                $row->user_pw,
-                $row->title,
-                $this->delphi_evaluation_get_item($row->question_id, $row->answer_id + 1),
-                $row->answer,
-                $row->comment,
-                $row->is_last_answer,
+        if ($flag == 1) {
+            foreach ($result as $row) {
+                $rows[] = array(
+                    $row->user_pw,
+                    $row->title,
+                    $this->delphi_evaluation_get_item($row->question_id, $row->answer_id + 1),
+                    $row->answer,
+                    $row->comment,
+                    $row->is_last_answer,
 
-            );
+                );
+            }
+        } else {
+            foreach ($result as $row) {
+                $rows[] = array(
+                    $row->user_pw,
+                    $row->title,
+                    $row->item,
+                    $row->answer,
+                    $row->comment,
+                    $row->is_last_answer,
+
+                );
+            }
         }
+
+        $result = array('header' => $header, 'rows' => $rows);
         //return a HTML Table
-        return theme('table', array('header' => $header, 'rows' => $rows));
+        return $result;
     }
 
     /**
