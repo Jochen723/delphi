@@ -45,6 +45,21 @@ function delphi_evaluation_menu()
         'type' => MENU_CALLBACK, //so the item does not appear in the menu tree
     );
 
+    //routing to export data as csv
+    $items['evaluation/exportcsv'] = array(
+      'title' => 'Export der gesammelten Daten CSV',
+      'page callback' => 'delphi_evaluation_exportcsv',
+      'access callback' => 'user_is_logged_in',
+    );
+
+    //routing to show data in a HTML table
+    $items['evaluation/tablecsv'] = array(
+      'title' => 'Auswertung CSV Format',
+      'page callback' => 'delphi_evaluation_tablecsv',
+      'access callback' => 'user_is_logged_in',
+      'type' => MENU_CALLBACK,
+    );
+
     return $items;
 
 }
@@ -314,4 +329,120 @@ function form_delphi_evaluation_display($form, &$form_state) {
     );
 
     return $form;
+}
+
+/**
+ * Exports the collected data as a CSV file in the specified format
+ * Fall;Einschätzung1;These2.Item1.init;These2.Item1.rev;These2.Item1.comm...
+ *
+ * @throws \Exception
+ */
+function delphi_evaluation_exportcsv() {
+
+  $delphiHelper = new Drupal\delphi_evaluation\Helper\Delphi_Evaluation_Helper();
+
+  drupal_add_http_header('Content-Type', 'text/csv; utf-8');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename=export.csv');
+
+  $respondents = delphi_evaluation_get_all_respondent_identifieres();
+
+  $header = $delphiHelper->delphi_evaluation_get_header('csv');
+  $rows[] = $header;
+
+  // export one row with all answers for each respondent
+  foreach ($respondents as $respondent) {
+    $token = $respondent->user_pw;
+    $answers = $delphiHelper->delphi_evaluation_get_user_data($token);
+
+    $row[] = $token;
+
+    // restructure array for
+    $answersSurvey = array();
+    foreach ($answers as $answer) {
+      $answersItem = array ('answer' => $answer->answer, 'comment' =>$answer->comment, 'is_last_answer' =>$answer->is_last_answer, 'type' => $answer->type);
+      $answersSurvey[$answer->question_id][$answer->answer_id][] = $answersItem;
+    }
+
+    // populate row with user answers
+    foreach ($answersSurvey as $tId => $thesis) {
+      foreach ($thesis as $iId => $item) {
+
+        // self-evaluation (just track answer, no changes or comments possible)
+        if ($item[0]['type'] === 'group') {
+          $row[] = $item[0]['answer'];
+
+          // questionnaire items (track initial answer, revisited answer and comments)
+        } else {
+          // user changed his answer (several answers for one item)
+          if (count($item) === 2) {
+            // initial answer
+            $row[] = $item[0]['answer'];
+
+            // revisited answer
+            $row[] = $item[1]['answer'];
+
+            // comment
+            if($item[0]['comment'] || $item[1]['comment']) {
+              $row[] = "\"" . check_plain($item[0]['comment']) . check_plain($item[1]['comment']) . "\"";
+            } else {
+              $row[] = '';
+            }
+
+          } else if (count($item) > 2) {
+            $row[] = $item[0]['answer'];
+
+            $row[] = $item[count($item)-1]['answer'];
+
+            if($item[0]['comment'] || $item[1]['comment']) {
+              $row[] = "\"" . check_plain($item[0]['comment']) . check_plain($item[2]['comment']) . "\"";
+            } else {
+              $row[] = '';
+            }
+
+          } else {
+            // initial answer
+            $row[] = $item[0]['answer'];
+
+            // revisited answer
+            $row[] = '';
+
+            // comment
+            if($item[0]['comment']) {
+              $row[] = "\"" . check_plain($item[0]['comment']) . "\"";
+            } else {
+              $row[] = '';
+            }
+          }
+        }
+
+      }
+    }
+
+    $rows[] = $row;
+    $row = array();
+  }
+
+
+  $output = '';
+  foreach ($rows as $row) {
+
+    $output .= implode(";", $row) . "\n";
+  }
+  print $output;
+
+
+  drupal_exit();
+  // send response headers to the browser
+}
+
+
+/**
+ * @return array
+ * @throws \Exception
+ */
+function delphi_evaluation_tablecsv(){
+  $delphiHelper = new Drupal\delphi_evaluation\Helper\Delphi_Evaluation_Helper();
+
+
+  return $delphiHelper->delphi_evaluation_get_header('html');
 }

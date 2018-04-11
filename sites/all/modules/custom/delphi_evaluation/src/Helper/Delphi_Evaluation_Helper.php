@@ -80,4 +80,160 @@ class Delphi_Evaluation_Helper
 
         return $result;
     }
+
+
+  /**
+   * Joins all relevant survey data into a single array. One row for each answer.
+   * (user_pw | q.question_id | type | q.weight | title | answer_id | item.description | answer | comment | is_last_answer)
+   * Can be saved into a separate database @see delphi_evaluation_save_to_database()
+   *
+   * @return \DatabaseStatementInterface
+   * @throws \Exception
+   */
+  public function delphi_evaluation_join_survey_data() {
+
+    $sql_query = "SELECT user_pw, q.question_id, type, q.weight, title, answer_id, item.description, answer, comment, is_last_answer
+        FROM {question} q
+        LEFT JOIN {question_user_answers} a ON q.question_id = a.question_id
+        LEFT JOIN {question_possible_answers} item ON item.question_id = q.question_id AND item.weight = answer_id + 1 
+        ORDER BY user_pw, q.weight, answer_id";
+
+    $result = db_query($sql_query);
+
+    $result = $result->fetchAll();
+    return $result;
+  }
+
+
+  /**
+   * Returns all relevant survey data for a specific user.
+   * (user_pw | q.question_id | type | q.weight | title | answer_id | item.description | answer | comment | is_last_answer)
+   *
+   * @param string $token
+   *   The user token.
+   *
+   * @return \DatabaseStatementInterface
+   * @throws \Exception
+   */
+  public function delphi_evaluation_get_user_data($token) {
+
+    $sql_query = "SELECT u.user_pw, u.question_id, q.type, q.weight, q.title, u.answer_id, a.description, u.answer, u.comment, u.is_last_answer
+		FROM (SELECT * FROM {question_user_answers}
+		  WHERE user_pw = :token) AS u
+		LEFT JOIN {question} AS q ON q.question_id = u.question_id
+		LEFT JOIN {question_possible_answers} AS a ON a.question_id = u.question_id AND a.weight = u.answer_id + 1 
+    ORDER BY q.weight, u.answer_id, is_last_answer";
+
+    $result = db_query($sql_query, array(':token' => $token));
+
+    $result = $result->fetchAll();
+
+    return $result;
+  }
+
+  /**
+   * Returns the title of a thesis.
+   *
+   * @param integer $id
+   *   The thesis ID.
+   *
+   * @return string
+   *   The thesis title.
+   *
+   * @throws \Exception
+   */
+  public function delphi_evaluation_get_title($id) {
+
+    $sql_query = "SELECT title FROM {question}
+        WHERE question_id = :id";
+
+    $result = db_query($sql_query, array(':id' => $id));
+
+    $result = $result->fetchField();
+
+    return $result;
+  }
+
+
+  /**
+   * Returns the header for the CSV table.
+   *
+   * @param string $format
+   *   Export format 'csv' or 'html'.
+   *
+   * @return array
+   * @throws \Exception
+   */
+  public function delphi_evaluation_get_header($format) {
+
+    $sql_query = "SELECT q.weight AS thesis_id, q.question_id, q.type AS type, q.title AS thesis_title, i.weight AS item_id, i.description AS item_title 
+        FROM {question} AS q 
+        LEFT JOIN question_possible_answers AS i 
+        ON q.question_id = i.question_id 
+        ORDER BY q.weight, i.weight ";
+
+    $result = db_query($sql_query);
+
+    $result = $result->fetchAll();
+    $columns = array();
+    $html = '';
+
+    if ($format === 'html') {
+      $groupId = 0;
+      $tableArray = array();
+
+
+      foreach ($result as $col) {
+        if ($col->type === 'group') {
+          $groupId = $col->thesis_id;
+          $tableArray[$groupId]['group_title'] = $col->thesis_title;
+        }
+      }
+
+      // build manual html table as Drupal's table theme does not support multirow headers
+      $html = '<table><thead><tr>';
+      foreach ($tableArray as $gId => $group) {
+
+        $noCols = 0;
+
+
+        foreach ($group as $tId => $thesis) {
+          $noThesis = count($thesis) - 1;
+          $titleThesis = $this->delphi_evaluation_get_title($gId);
+          foreach ($thesis as $iId => $item) {
+            $noCols = $noCols + 1;
+
+          }
+        }
+
+
+        $noGroups = count($group) - 1;
+        $titleGroup = $this->delphi_evaluation_get_title($gId);
+
+
+        $html .= '<th colspan=' . $noCols . '>' . $titleGroup . '</th>';
+      }
+
+      $html .= '</tr></thead></tabble>';
+    }
+
+    $columns[] = 'Fall';
+    foreach ($result as $col) {
+      if ($col->type === 'group') {
+        $columns[] = 'Einschätzung' . $col->thesis_id;
+      } else {
+        $prefix = 'These' . $col->thesis_id . '.Item' . $col->item_id;
+        $columns[] = $prefix . '.init';
+        $columns[] = $prefix . '.rev';
+        $columns[] = $prefix . '.comm';
+      }
+    }
+
+    if ($format === 'html') {
+      return $html;
+    } else {
+      return $columns;
+    }
+  }
+
 }
