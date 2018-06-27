@@ -300,7 +300,7 @@ function delphi_evaluation_export($variables) {
 
 
 function delphi_evaluation_get_all_respondent_identifieres() {
-    $query = "SELECT user_pw FROM {survey_users} GROUP BY user_pw;";
+    $query = "SELECT user_pw FROM {survey_users} GROUP BY user_pw ORDER BY user_id ASC;";
     $result = db_query($query);
     $respondent_identifieres = $result->fetchAll();
 

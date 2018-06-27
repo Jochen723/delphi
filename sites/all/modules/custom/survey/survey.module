@@ -52,6 +52,13 @@ function survey_menu()
       'page arguments' => array('survey_tokens_delete_form'),
     );
 
+    $items['survey/tokens/%/delete'] = array(
+      'page callback' => 'drupal_get_form',
+      'access arguments' => array('administer users'),
+      'access callback' => TRUE,
+      'page arguments' => array('survey_token_delete_form', 2),
+    );
+
     $items['survey/configure'] = array(
       'page callback' => 'drupal_get_form',
       'access arguments' => array('administer users'),
@@ -304,7 +311,14 @@ function survey_get_survey_link($token) {
 function survey_token_form($form, &$form_state) {
   if (empty($form_state['values']['token_quantity'])) {
     // form to create new tokens
-    $form['token_quantity'] = array(
+    $form['token_create'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Zugangsschlüssel erstellen'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+
+    $form['token_create']['token_quantity'] = array(
       '#type' => 'textfield',
       '#title' => "Zugangsschlüssel",
       '#title_display' => 'invisible',
@@ -314,11 +328,43 @@ function survey_token_form($form, &$form_state) {
       '#field_suffix' => t('Zugangsschlüssel für Umfrageteilnehmer erstellen.'),
     );
 
-    $form['submit'] = array(
+    $form['token_create']['submit'] = array(
       '#type' => 'submit',
       '#value' => 'Zugangsschlüssel erstellen',
     );
 
+    $tokens = delphi_evaluation_get_all_respondent_identifieres();
+    if (count($tokens) > 0) {
+      $form['token_delete'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Erstellte Zugangsschlüssel'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+      );
+
+      $form['token_delete']['delete_all'] = array(
+        '#type' => 'link',
+        '#title' => t('Alle Zugangsschlüssel löschen'),
+        '#href' => 'survey/tokens/delete',
+        '#attributes' => array('class' => array('form-submit')),
+      );
+
+      // create table of all tokens with a delete link
+      $rows = array();
+      foreach ($tokens as $token) {
+        $rows[] = array(
+          'token' => $token->user_pw,
+          'link' => survey_get_token_delete_link($token->user_pw)
+        );
+      }
+
+      $form['token_delete']['tokensdel_table'] = array (
+        '#theme' => 'table',
+        '#header' => array('Zugangsschlüssel', ''),
+        '#rows' => $rows,
+        '#title' => t('Zugangsschlüssel löschen'),
+      );
+    }
   } else {
     // table with created tokens and full survey links.
     $noTokens = $form_state['values']['token_quantity'];
@@ -349,13 +395,6 @@ function survey_token_form($form, &$form_state) {
     );
   }
 
-  $form['tokens_delete'] = array(
-    '#type' => 'link',
-    '#title' => t('Alle Zugangsschlüssel löschen'),
-    '#href' => 'survey/tokens/delete',
-    '#attributes' => array('class' => array('form-submit')),
-  );
-
   return $form;
 }
 
@@ -377,6 +416,27 @@ function survey_tokens_delete_form($form, &$form_state) {
   );
 
   return $form;
+}
+
+/**
+ * Deletes a single survey token and the associated saved answers.
+ */
+function survey_token_delete_form($form, &$form_state, $token) {
+  $result = _survey_delete_token($token);
+  $noToken = $result[0];
+  $noAnswers = $result[1];
+
+  if ($noToken > 0) {
+    drupal_set_message(t('@noToken Zugangsschlüssel (@token) inklusive @noAnswers abgegebener Antworten gelöscht.',
+      array('@noToken' => $noToken, '@noAnswers' => $noAnswers, '@token' => $token)),
+      'status');
+  } else {
+    drupal_set_message(t('Zugangsschlüssel @token unbekannt!',
+      array('@token' => $token)),
+      'error');
+  }
+
+  drupal_goto($path = 'survey/tokens');
 }
 
 /**
@@ -716,4 +776,50 @@ function _survey_get_status_bar($userToken) {
   $html .= '<div class="progress" style="width: ' . $progressPercent . '%">' . round($progressPercent) . '%</div></div>';
 
   return $html;
+}
+
+/**
+ * @param string $token
+ *   Unique user token.
+ *
+ * @return string
+ *   Link to delete the token.
+ */
+function survey_get_token_delete_link($token) {
+  global $base_url;
+  $link = l(t('delete'), 'survey/tokens/' . $token . '/delete',
+    array('attributes' => array('class' => array('token-delete',)))
+  );
+
+  return $link;
+}
+
+/**
+ * Deletes the token and it's associated answers.
+ *
+ * @param string $token
+ *  The user token to delete.
+ *
+ * @return array
+ *   Returns the number of deleted tokens (0/1) and the number of deleted answers.
+ */
+function _survey_delete_token($token) {
+  $countToken = 0;
+  $countAnswers = 0;
+
+  try {
+    $countToken = db_delete('survey_users')
+      ->condition('user_pw', $token)
+      ->execute();
+
+    if ($countToken > 0) {
+      $countAnswers = db_delete('question_user_answers')
+        ->condition('user_pw', $token)
+        ->execute();
+    }
+
+  } catch (PDOException $e) {
+    return array($countToken, $countAnswers);
+  }
+  return array($countToken, $countAnswers);
 }
