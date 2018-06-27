@@ -46,6 +46,12 @@ function survey_menu()
       'page arguments' => array('survey_token_form'),
     );
 
+    $items['survey/tokens/delete'] = array(
+      'page callback' => 'drupal_get_form',
+      'access arguments' => array('administer users'),
+      'page arguments' => array('survey_tokens_delete_form'),
+    );
+
     $items['survey/configure'] = array(
       'page callback' => 'drupal_get_form',
       'access arguments' => array('administer users'),
@@ -343,11 +349,46 @@ function survey_token_form($form, &$form_state) {
     );
   }
 
+  $form['tokens_delete'] = array(
+    '#type' => 'link',
+    '#title' => t('Alle Zugangsschlüssel löschen'),
+    '#href' => 'survey/tokens/delete',
+    '#attributes' => array('class' => array('form-submit')),
+  );
+
   return $form;
 }
 
 function survey_token_form_submit($form, &$form_state) {
   $form_state['rebuild'] = true;
+}
+
+/**
+ * Confirmation form to delete all survey participants / tokens and their saved answers.
+ */
+function survey_tokens_delete_form($form, &$form_state) {
+
+  $form = confirm_form($form,
+    t('Alle Zugangsschlüssel inklusive abgegebener Antworten löschen?'),
+    'survey/tokens',
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
+  );
+
+  return $form;
+}
+
+/**
+ * Deletes all survey tokens and saved answers.
+ */
+function survey_tokens_delete_form_submit($form, &$form_state) {
+  db_truncate('question_user_answers')->execute();
+  db_truncate('survey_users')->execute();
+
+  $form_state['redirect'] = 'survey/tokens';
+
+  drupal_set_message(t('Alle Zugangsschlüssel inklusive abgegebener Antworten gelöscht.'), 'status');
 }
 
 /**
