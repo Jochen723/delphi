@@ -10,6 +10,10 @@
 function get_graphic($id, $isRadioButton, $indexNoAnswer)
 {
 
+    $boxplotNoData = '<div class = "boxplot-nodata">' .
+      t('Zu diesem Thema wurden noch nicht genügend Einschätzungen abgegeben.') .
+      '</div>';
+
     $question_id = arg(1);
     $user_pw = arg(2);
 
@@ -44,6 +48,11 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
                     array_push($testArrayOverall, $question_user_answer->answer);
                 }
             }
+        }
+
+        // corner case if ALL given answers are 'keine Angabe', thus no boxplot can be plotted.
+        if (empty($testArrayOverall)) {
+          return render($boxplotNoData);
         }
 
         //Die Antworten werden der Größe nach geordnet
@@ -166,10 +175,7 @@ function get_graphic($id, $isRadioButton, $indexNoAnswer)
         );
 
     } else {
-        $boxplot_string = "<div class = 'boxplot-nodata'>" .
-                          "Zu diesem Thema wurden noch nicht genügend Einschätzungen abgegeben." .
-                          "</div>";
-
+        $boxplot_string = $boxplotNoData;
     }
 
 
