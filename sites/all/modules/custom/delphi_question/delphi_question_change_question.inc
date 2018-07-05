@@ -159,7 +159,7 @@ function delphi_question_change_question_form()
             $button_counter_result = 4;
         }
 
-        $button_array = array(4 => "4", 5 => "5", 6 => "6");
+        $button_array = array(2 => "2", 4 => "4", 5 => "5", 6 => "6");
         $var = $i;
 
         //Sollte es sich bei der Antwortmöglichkeit um Radio-Buttons handeln, muss festgelegt werden, viele viele
@@ -210,6 +210,7 @@ function delphi_question_change_question_form()
             '#states' => array(
                 'visible' => array(
                     ':input[name="button_radios' . $var . '"]' => array(
+                        array('value' => t('2')),
                         array('value' => t('4')),
                         array('value' => t('5')),
                         array('value' => t('6')),
@@ -229,6 +230,7 @@ function delphi_question_change_question_form()
             '#states' => array(
                 'visible' => array(
                     ':input[name="button_radios' . $var . '"]' => array(
+                        array('value' => t('2')),
                         array('value' => t('4')),
                         array('value' => t('5')),
                         array('value' => t('6')),

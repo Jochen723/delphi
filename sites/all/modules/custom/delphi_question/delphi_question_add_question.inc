@@ -29,7 +29,7 @@ function delphi_question_add_question_form()
     //Daten für das Array, welches die Radio-Buttons benutzen
     $answer_choose_array = array("Radio-Buttons" => "Radio-Buttons", "Textfeld" => "Textfeld");
 
-    $button_array = array(4 => "4", 5 => "5", 6 => "6");
+    $button_array = array(2 => "2", 4 => "4", 5 => "5", 6 => "6");
 
 
     //Textfeld, in das der Titel der Frage eingesetzt wird
@@ -181,6 +181,7 @@ function delphi_question_add_question_form()
             '#states' => array(
                 'visible' => array(
                     ':input[name="button_radios' . $var . '"]' => array(
+                        array('value' => t('2')),
                         array('value' => t('4')),
                         array('value' => t('5')),
                         array('value' => t('6')),
@@ -200,6 +201,7 @@ function delphi_question_add_question_form()
             '#states' => array(
                 'visible' => array(
                     ':input[name="button_radios' . $var . '"]' => array(
+                        array('value' => t('2')),
                         array('value' => t('4')),
                         array('value' => t('5')),
                         array('value' => t('6')),
