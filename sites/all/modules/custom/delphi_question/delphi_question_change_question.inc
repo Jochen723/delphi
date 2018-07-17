@@ -12,12 +12,12 @@
 function delphi_question_change_question_form()
 {
 
-    //Die ID der entsprechenden Frage
+  //Die ID der entsprechenden Frage
     $question_id = arg(1);
 
     $number_of_answers = arg(2);
     $question_title = "";
-    $questionType = "";
+    $pageType = "";
 
     //Die entsprechende Frage wird aus der DB geladen
     $question_result = db_query("SELECT * FROM {question} WHERE question_id = :question_id", array(
@@ -27,11 +27,11 @@ function delphi_question_change_question_form()
     // Eigenschaften der Frage werden ermittelt
     foreach ($question_result as $question) {
         $question_title = $question->title;
-        $questionType = $question->type;
+        $pageType = $question->type;
     }
 
     $title = "Titel der These";
-    if ($questionType === 'group') {
+    if ($pageType === 'group') {
         $title = "Titel des Themenbereichs";
         $form['#attributes']['class'][] = 'question-group-form';
       }
@@ -72,6 +72,7 @@ function delphi_question_change_question_form()
     $answer_array = array();
     $check_array = array();
     $answer_id_array = array();
+    $allQuestionsOnPage = array();
     $answer_counter = 0;
 
     //Die Antwortmöglichkeiten der Frage werden ermittelt
@@ -83,6 +84,7 @@ function delphi_question_change_question_form()
         array_push($answer_array, $item->description);
         array_push($check_array, $item->isRadioButton);
         array_push($answer_id_array, $item->answers_id);
+        $allQuestionsOnPage[] = $item;
         $answer_counter++;
     }
 
@@ -96,7 +98,12 @@ function delphi_question_change_question_form()
     //Diese Schleife wird so oft durchgeführt, wie viele Antwortmöglichkeiten es geben soll
     for ($i = 1; $i <= $number_of_answers; $i++) {
 
-        $answer_choose_array = array(1 => "Radio-Buttons", 0 => "Textfeld");
+      // TODO these should be all available question types
+      $answer_choose_array = array('rating' => t('Radio-Buttons'),
+                                   'year' => "Year",
+                                   'text' => t('Text'),
+                                   'knowledgeMap' => t('Knowledge Map')
+      );
 
         //Für jede Antwortmöglichkeit wird ein Fieldset zur Übersichtlichkeit angelegt
         $form['content' . $i] = array(
@@ -124,7 +131,7 @@ function delphi_question_change_question_form()
         $form['content' . $i]['radios' . $i] = array(
             '#type' => 'radios',
             '#title' => 'Art der Antwortmöglichkeit:',
-            '#default_value' => $check_array[$i - 1],
+            '#default_value' => $allQuestionsOnPage[$i - 1]->question_type,
             '#options' => $answer_choose_array,
         );
 
@@ -171,7 +178,7 @@ function delphi_question_change_question_form()
             '#options' => $button_array,
             '#states' => array(
                 'visible' => array(
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
 
@@ -192,7 +199,7 @@ function delphi_question_change_question_form()
             '#empty_option' => t(''),
             '#states' => array(
               'visible' => array(
-                ':input[name="radios' . $var . '"]' => array('value' => 1),
+                ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
               ),
             ),
             '#attributes' => array(
@@ -215,7 +222,7 @@ function delphi_question_change_question_form()
                         array('value' => t('5')),
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
 
@@ -235,7 +242,7 @@ function delphi_question_change_question_form()
                         array('value' => t('5')),
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
         );
@@ -253,7 +260,7 @@ function delphi_question_change_question_form()
                         array('value' => t('5')),
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
         );
@@ -271,7 +278,7 @@ function delphi_question_change_question_form()
                         array('value' => t('5')),
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
         );
@@ -288,7 +295,7 @@ function delphi_question_change_question_form()
                         array('value' => t('5')),
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
         );
@@ -304,7 +311,7 @@ function delphi_question_change_question_form()
                     ':input[name="button_radios' . $var . '"]' => array(
                         array('value' => t('6')),
                     ),
-                    ':input[name="radios' . $var . '"]' => array('value' => 1),
+                    ':input[name="radios' . $var . '"]' => array('value' => 'rating'),
                 ),
             ),
 
@@ -374,26 +381,28 @@ function delphi_question_change_question_save_changes($form, &$form_state)
         $description = $form_state['values']['test' . $i];
 
         //Check, ob Antwort Radio-Buttons oder nicht
-        $var2 = $form_state['values']['radios' . $i];
-        $check = 1;
+        $questionType = $form_state['values']['radios' . $i];
+        $isRadioButton = 1;
 
+        // TODO function to check for the question type
         //Wenn es sich nicht um Radio-Buttons handelt...
-        if (strcmp($var2, 1)) {
-            $check = 0;
+        if ($questionType !== 'rating') {
+            $isRadioButton = 0;
         }
 
         //Antwort wird eingespeichert
         $answer_id = db_insert('question_possible_answers')
             ->fields(array(
                 'description' => $description,
-                'isRadioButton' => $check,
+                'question_type' => $questionType,
+                'isRadioButton' => $isRadioButton,
                 'question_id' => $question_id,
                 'weight' => $i,
             ))
             ->execute();
 
         //Wenn es sich um Radio-Buttons handelt
-        if ($check) {
+        if ($questionType === 'rating') {
 
             $var = $form_state['values']['button_radios' . $i];
 
@@ -453,6 +462,7 @@ function delphi_question_change_question_change_quantity($form, &$form_state)
                 ->fields(array(
                     'description' => "Neue Antwortmöglichkeit",
                     'isRadioButton' => 1,
+                    'question_type' => 'text',
                     'question_id' => $question_id,
                     'weight' => $quantity + 1,
                 ))

@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Add field 'question_type' to table {question_possible_answers}.
+ */
+function delphi_question_update_7100() {
+  $spec = array(
+    'type' => 'text',
+    'description' => "The type of the question.",
+    'not null' => FALSE,
+  );
+
+  db_add_field('question_possible_answers', 'question_type', $spec);
+}
