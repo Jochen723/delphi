@@ -610,7 +610,8 @@ input.form-radio:checked .form-radio:after {
   padding: 0;
   margin-bottom: 4rem; }
 
-#survey-form .form-type-textfield {
+#survey-form .form-type-textfield,
+#survey-form .form-type-textarea {
   max-width: 600px;
   margin-bottom: 0; }
 
@@ -658,6 +659,13 @@ textarea {
 /* Abstand bei fünf Radio-Buttons anpassen, damit Beschriftung noch in Fieldset passt. */
 #survey-question-evaluation-form .radios-5 .form-type-radio:last-of-type {
   right: 2em; }
+
+/* Display NA answer option directly below the textarea */
+#survey-question-evaluation-form .evaluation.text .form-type-checkbox {
+  margin-top: -1rem; }
+
+#survey-question-evaluation-form .evaluation.text .fieldset-wrapper {
+  margin-top: 0.5rem; }
 
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
@@ -830,11 +838,18 @@ input.form-radio {
 
 /* Rahmen als zur Strukturierung auf Umfrageseite */
 .answers > .form-type-textfield,
-.answers > .form-type-radios {
+.answers > .form-type-radios,
+#survey-form .answers > .form-type-textarea {
   border-style: solid;
   border-width: 2px;
   padding: 0.5rem 1rem;
   margin-top: 0.5rem; }
+
+#survey-form .answers.text > .form-type-textarea {
+  padding-bottom: 2rem; }
+#survey-form .answers.text .form-type-checkbox {
+  margin-top: -2rem;
+  margin-left: 1.2rem; }
 
 .answers > .form-type-radios {
   padding-bottom: 4rem;

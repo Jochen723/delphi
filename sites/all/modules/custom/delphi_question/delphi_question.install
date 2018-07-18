@@ -6,9 +6,18 @@
 function delphi_question_update_7100() {
   $spec = array(
     'type' => 'text',
-    'description' => "The type of the question.",
+    'description' => 'The type of the question.',
     'not null' => FALSE,
   );
 
   db_add_field('question_possible_answers', 'question_type', $spec);
+}
+
+/**
+ * Changes field 'answer' type to mediumtext to support answers for all possible question types.
+ */
+function delphi_question_update_7101() {
+  db_change_field('question_user_answers', 'answer', 'answer', array(
+    'type' => 'mediumtext',
+  ));
 }

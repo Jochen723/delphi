@@ -149,6 +149,8 @@ function survey_question_evaluation_form()
         );
 
         //Sollte die aktuelle Antwortmöglichkeit Radio-Buttons beinhalten:
+      // TODO duplicate code
+      $questionType = $possible_answers_array[$i]->question_type;
       if ($possible_answers_array[$i]->isRadioButton) {
 
             //Der Boxplot zur Antwort wird geladen
@@ -157,6 +159,8 @@ function survey_question_evaluation_form()
             $boxplot_graphic = get_graphic($i, 1, $indexNoAnswer); // TODO quick fix
 
             $answerDescription = $possible_answers_array[$i]->description;
+            $form['fieldset' . $i]['#attributes'] = array(
+              'class' => array('evaluation', $questionType));
             $form['fieldset' . $i]['#title'] = $answerDescription;
 
             // Fieldset legend vergrößern bei langen Titeln
@@ -186,13 +190,16 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, $button_title_array[$i - $countTextfield]);
+            $form = _survey_addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, $button_title_array[$i - $countTextfield]);
 
         //Sollte die aktuelle Antwortmöglichkeit eine freie Antwort beinhalten:
-        } else {
+        } else if ($questionType === 'year'){
             $countTextfield++;
             //Der Boxplot zur Antwort wird geladen
             $boxplot_graphic = get_graphic($i, 0, array('Min', 'Max'));
+
+            $form['fieldset' . $i]['#attributes'] = array(
+              'class' => array('evaluation', $possible_answer->question_type));
 
             $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 
@@ -200,15 +207,14 @@ function survey_question_evaluation_form()
                 '#markup' => $boxplot_graphic,
             );
 
-            // -99999 ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
-            // TODO Typ DB-Feld für Antworten ändern?!
+            // 'answer_NA' ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
             $isChecked = FALSE;
-            if ($answers[$i]->answer === '-99999') {
+            if ($answers[$i]->answer === 'answer_NA') {
               $answers[$i]->answer = '';
               $isChecked = TRUE;
             }
 
-            $form['fieldset' . $i]['quantity' . $i] = array(
+            $form['fieldset' . $i]['answer' . $i] = array(
                 '#type' => 'textfield',
                 '#title' => $possible_answers_array[$i]->description,
                 '#title_display' => 'invisible',
@@ -218,13 +224,14 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->answer,
                 '#states'        => array(
                   'disabled' => array(
-                    ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
+                    ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
                   ),
                 ),
                 '#element_validate' => array('survey_textfield_validate'),
+                '#attributes' => array('class' => array($questionType)),
             );
 
-            $form['fieldset' . $i]['quantity_check' . $i] = array(
+            $form['fieldset' . $i]['answer_check' . $i] = array(
               '#type' => 'checkbox',
               '#title' => 'weiß nicht / keine Angabe',
               '#attributes' => array(
@@ -240,10 +247,88 @@ function survey_question_evaluation_form()
                 '#default_value' => $answers[$i]->comment,
             );
 
-            // show comments if enough (>5) answers were given
-            if (strpos($boxplot_graphic, 'boxplot-nodata') == FALSE) {
-              $form = addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
-            }
+            $form = _survey_addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
+
+      } else if ($questionType === 'text') {
+        $countTextfield++;
+
+        $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
+        $form['fieldset' . $i]['#attributes'] = array('class' => array('evaluation', $questionType));
+
+        // evaluation data
+        $evalAnswers = db_query("SELECT answer FROM {question_user_answers} 
+              WHERE question_id = :question_id 
+              AND answer_id = :answer_id
+              AND user_pw != :user_pw
+              AND is_last_answer = 1", array(
+          ':question_id' => $question_id,
+          ':answer_id' => $answers[$i]->answer_id,
+          ':user_pw' => $user_id,
+          ))->fetchCol();
+
+        $noEvalAnswers = count($evalAnswers);
+        if ($noEvalAnswers >= 5) {
+          $labelNa = t('weiß nicht / keine Angabe');
+          $evalAnswers = str_replace('answer_NA', $labelNa, $evalAnswers);
+
+          $form['fieldset' . $i]['evaluation' . $i] = array(
+            '#theme' => 'item_list',
+            '#list_type' => 'ul',
+            '#items' => $evalAnswers,
+            '#attributes' => array('class' => array($questionType)),
+          );
+
+        } else {
+          $evalHtml = '<div class = "boxplot-nodata">' .
+            t('Zu diesem Thema wurden noch nicht genügend Einschätzungen abgegeben.') .
+            '</div>';
+
+          $form['fieldset' . $i]['insufficient_data' . $i] = array(
+            '#markup' => $evalHtml,
+          );
+        }
+
+        // user's answer TODO duplicate code => universal function for form elements skeleton
+        // 'answer_NA' ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
+        $isChecked = FALSE;
+        if ($answers[$i]->answer === 'answer_NA') {
+          $answers[$i]->answer = '';
+          $isChecked = TRUE;
+        }
+
+        $form['fieldset' . $i]['answer' . $i] = array(
+          '#type' => 'textarea',
+          '#title' => $possible_answer->description,
+          '#title_display' => 'invisible',
+          '#resizable' => FALSE,
+          '#rows' => 2,
+          '#default_value' => $answers[$i]->answer,
+          '#required' => FALSE,
+          '#states'        => array(
+            'disabled' => array(
+              ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
+            ),
+          ),
+          '#element_validate' => array('_survey_textarea_validate'),
+          '#attributes' => array('class' => array($questionType)),
+        );
+
+        $form['fieldset' . $i]['answer_check' . $i] = array(
+          '#type'          => 'checkbox',
+          '#title'         => 'weiß nicht / keine Angabe',
+          '#attributes'    => array('class' => array($possible_answer->question_type)),
+          '#default_value' => $isChecked,
+        );
+
+        // comments of others users
+        $form['fieldset' . $i]['comment_dim' . $i] = array(
+          '#title'         => t('Kommentar'),
+          '#resizable'     => FALSE,
+          '#type'          => 'textarea',
+          '#default_value' => $answers[$i]->comment,
+        );
+
+        $form = _survey_addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
       }
 
     }
@@ -377,7 +462,7 @@ function survey_get_next_question($form, &$form_state)
         if ($answers[$i]->isRadioButton) {
             $dim1 = $form_state['values']['dim' . $i];
         } else {
-            $dim1 = $form_state['values']['quantity' . $i];
+            $dim1 = $form_state['values']['answer' . $i];
         }
 
         $comment = $form_state['values']['comment_dim' . $i];
@@ -527,7 +612,7 @@ function survey_get_button_titles($button_title_result)
  * @return array
  *   All comments associated with the question
  */
-function getComments($questionId, $answerId, $userId) {
+function _survey_getComments($questionId, $answerId, $userId) {
   $commentsResult = db_query("SELECT answer, comment FROM {question_user_answers} 
         WHERE question_id = :question_id AND answer_id = :answer_id AND is_last_answer = 1
         AND user_pw != :user_id AND comment != '' ORDER BY answer DESC", array(
@@ -561,8 +646,8 @@ function getComments($questionId, $answerId, $userId) {
  * @return array
  *    The extended form array.
  */
-function addUserComments($form, $i, $question_id, $answer_id, $user_id, $answerLabels) {
-  $userComments = getComments($question_id, $answer_id, $user_id);
+function _survey_addUserComments($form, $i, $question_id, $answer_id, $user_id, $answerLabels) {
+  $userComments = _survey_getComments($question_id, $answer_id, $user_id);
 
   if (count($userComments) > 0) {
     $form['fieldset' . $i]['toggleComments' . $i] = array(
@@ -595,7 +680,7 @@ function addUserComments($form, $i, $question_id, $answer_id, $user_id, $answerL
 
       if (empty($answerLabels)) {
         // int textfield answer
-        if ($answer === -99999) {
+        if ($answer === 'answer_NA') {
           $answerLabel = t('weiß nicht / keine Angabe');
         } else {
           $answerLabel = $answer;

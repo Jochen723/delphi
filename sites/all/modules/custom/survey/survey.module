@@ -546,7 +546,7 @@ function survey_get_questions($current_question_id)
  * - Eingabe maximal 50 (Jahre)
  * - Eingabe auch als Jahreszahl maximal 50 Jahre in die Zukunft möglich
  *
- * Wurde 'keine Angabe' ausgewählt wird dies als -99999 codiert gespeichert.
+ * Wurde 'keine Angabe' ausgewählt wird dies als 'answer_NA' codiert gespeichert.
  *
  * @param $element
  *   Das zu überprüfende Form-Element
@@ -561,11 +561,11 @@ function survey_textfield_validate(&$element, &$form_state) {
   $yearRange = 50;
 
   // don't validate the field if 'keine Angabe' has been selected
-  if ($form_state['values']['quantity_check' . $elementId] === 1) {
-    form_set_value($element, -99999, $form_state);
-    $element['#value'] = -99999;
+  if ($form_state['values']['answer_check' . $elementId] === 1) {
+    form_set_value($element, 'answer_NA', $form_state);
+    $element['#value'] = 'answer_NA';
 
-  // reject no input if 'keine Angabe' has not been selected (-99999)
+  // reject no input if 'keine Angabe' has not been selected ('answer_NA')
   } elseif ($value === '') {
     form_error($element, t('Das Feld „%name” ist erforderlich.', array(
       '%name' => $element['#title'],
@@ -593,6 +593,35 @@ function survey_textfield_validate(&$element, &$form_state) {
       '%yearRange' => $yearRange,
     )));
   }
+}
+
+/**
+ * Validates that the textarea if not empty if NA is not selected.
+ * If NA is selected encode it as 'answer_NA'.
+ *
+ * @param array $element
+ *   The element to validate.
+ * @param array $form_state
+ *   The submitted form that contains the elements to validate.
+ *
+ */
+function _survey_textarea_validate(&$element, &$form_state) {
+
+  // extract the ID of the textarea to be validated
+  $elementId = intval(preg_replace('/[^0-9]+/', '', $element['#name']), 10);
+
+  // no validation necessary if NA is selected
+  if ($form_state['values']['answer_check' . $elementId] === 1) {
+    form_set_value($element, 'answer_NA', $form_state);
+    $element['#value'] = 'answer_NA';
+
+  } else if (empty($element['#value'])) {
+    form_error($element, t('Das Feld „%field” ist erforderlich.', array(
+        '%field' => $element['#title']
+      )
+    ));
+  }
+
 }
 
 /**

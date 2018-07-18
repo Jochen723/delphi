@@ -117,6 +117,7 @@ function survey_form()
             }
 
             //Sollte es sich bei der Antwortmöglichkeit um Radio-Buttons handeln
+            $questionType = $answers[$i]->question_type;
             if ($answers[$i]->isRadioButton) {
                 $form['dim' . $i] = array(
                     '#type' => 'radios',
@@ -138,18 +139,18 @@ function survey_form()
                 }
 
                 //Sollte es sich bei der Antwortmöglichkeit um ein Textfeld handeln
-            } else {
+            } else if ($questionType === 'year') {
                 $countTextfield++;
 
-                // -99999 ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
+                // 'answer_NA' ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
                 // TODO Typ DB-Feld für Antworten ändern?!
                 $isChecked = FALSE;
-                if ($default_value === '-99999') {
+                if ($default_value === 'answer_NA') {
                   $default_value = '';
                   $isChecked = TRUE;
                 }
 
-                $form['quantity' . $i] = array(
+                $form['answer' . $i] = array(
                     '#type' => 'textfield',
                     '#prefix' => '<div id ="visualization' . $i . '" class = "answers">',
                     '#title' => $answers[$i]->description,
@@ -159,12 +160,12 @@ function survey_form()
                     '#required' => FALSE,
                     '#states'        => array(
                       'disabled' => array(
-                        ':input[name="quantity_check' . $i . '"]' => array('checked' => TRUE),
+                        ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
                       ),
                     ),
                     '#element_validate' => array('survey_textfield_validate'),
                 );
-                $form['quantity_check' . $i] = array(
+                $form['answer_check' . $i] = array(
                   '#type' => 'checkbox',
                   '#title' => 'weiß nicht / keine Angabe',
                   '#attributes' => array(
@@ -174,6 +175,46 @@ function survey_form()
                   '#suffix' => '</div>',
                 );
 
+            } else if ($questionType === 'text') {
+              $countTextfield++;
+
+              // 'answer_NA' ist interne Codierung für 'keine Angabe' und soll nicht angezeigt werden.
+              $isChecked = FALSE;
+              if ($default_value === 'answer_NA') {
+                $default_value = '';
+                $isChecked = TRUE;
+              }
+
+              $divClasses = 'answers ' . $questionType;
+
+              $form['answer' . $i] = array(
+                '#type' => 'textarea',
+                '#prefix' => '<div id ="visualization' . $i . '" class = "' . $divClasses .'">',
+                '#title' => $answers[$i]->description,
+                '#resizable' => FALSE,
+                '#rows' => 2,
+                '#default_value' => $default_value,
+                '#required' => FALSE,
+                '#states'        => array(
+                  'disabled' => array(
+                    ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
+                  ),
+                ),
+                '#element_validate' => array('_survey_textarea_validate'),
+              );
+              $form['answer_check' . $i] = array(
+                '#type' => 'checkbox',
+                '#title' => 'weiß nicht / keine Angabe',
+                '#attributes' => array(
+                  'class' => array('text-checkbox')
+                ),
+                '#default_value' => $isChecked,
+                '#suffix' => '</div>',
+              );
+            } else if ($answers[$i]->question_type === 'knowledgeMap') {
+              $countTextfield++;
+
+              //TODO
             }
         }
 
@@ -267,12 +308,13 @@ function survey_get_evaluation($form, &$form_state)
     $answers = survey_get_answers_from_question($question);
 
     //Es wird über alle Antworten iteriert
-    for ($i = 0; $i < sizeof($answers); $i++) {
+    $noAnswers = count($answers);
+    for ($i = 0; $i < $noAnswers; $i++) {
 
         if ($answers[$i]->isRadioButton) {
-            $dim1 = $form_state['values']['dim' . $i];
+          $userAnswer = $form_state['values']['dim' . $i];
         } else {
-            $dim1 = $form_state['values']['quantity' . $i];
+          $userAnswer = $form_state['values']['answer' . $i];
         }
 
         //Sollten bereits Antworten vorliegen, werden sie aktualisiert. Sonst werden neue Einträge angelegt
@@ -286,7 +328,7 @@ function survey_get_evaluation($form, &$form_state)
           // Es gibt bereits Antworten vom Benutzer. Geänderte Antworten speichern und Änderungen in der DB behalten.
           foreach ($result as $item) {
             // Nur wenn Benutzer seine Antwort ändert, diese als neue Antwort speichern. Vorherige Antwort markieren (is_last_answer)
-            if (strcmp($dim1, $item->answer)) {
+            if (strcmp($userAnswer, $item->answer)) {
               db_query("UPDATE {question_user_answers} SET is_last_answer = 0 WHERE answer_id = :answer_id AND question_id = :question_id AND user_pw = :user_pw", array(
                 ':answer_id'   => $i,
                 ':question_id' => $question,
@@ -297,7 +339,7 @@ function survey_get_evaluation($form, &$form_state)
                 ->fields(array(
                   'question_id' => $question,
                   'answer_id' => $i,
-                  'answer' => $dim1,
+                  'answer' => $userAnswer,
                   'user_pw' => $user_passcode,
                   'comment' => $item->comment,
                   'is_last_answer' => 1,
@@ -312,7 +354,7 @@ function survey_get_evaluation($form, &$form_state)
                 ->fields(array(
                     'question_id' => $question,
                     'answer_id' => $i,
-                    'answer' => $dim1,
+                    'answer' => $userAnswer,
                     'user_pw' => $user_passcode,
                     'comment' => "",
                     'is_last_answer' => 1,
