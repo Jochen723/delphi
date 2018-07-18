@@ -199,7 +199,7 @@ function survey_question_evaluation_form()
             $boxplot_graphic = get_graphic($i, 0, array('Min', 'Max'));
 
             $form['fieldset' . $i]['#attributes'] = array(
-              'class' => array('evaluation', $possible_answer->question_type));
+              'class' => array('evaluation', $questionType));
 
             $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
 
@@ -316,7 +316,7 @@ function survey_question_evaluation_form()
         $form['fieldset' . $i]['answer_check' . $i] = array(
           '#type'          => 'checkbox',
           '#title'         => 'weiß nicht / keine Angabe',
-          '#attributes'    => array('class' => array($possible_answer->question_type)),
+          '#attributes'    => array('class' => array($questionType)),
           '#default_value' => $isChecked,
         );
 

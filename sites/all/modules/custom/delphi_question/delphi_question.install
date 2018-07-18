@@ -17,7 +17,5 @@ function delphi_question_update_7100() {
  * Changes field 'answer' type to mediumtext to support answers for all possible question types.
  */
 function delphi_question_update_7101() {
-  db_change_field('question_user_answers', 'answer', 'answer', array(
-    'type' => 'mediumtext',
-  ));
+  db_query('ALTER TABLE {question_user_answers} MODIFY answer MEDIUMTEXT NOT NULL')->execute();
 }

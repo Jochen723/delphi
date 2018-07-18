@@ -667,6 +667,9 @@ textarea {
 #survey-question-evaluation-form .evaluation.text .fieldset-wrapper {
   margin-top: 0.5rem; }
 
+#survey-question-evaluation-form .evaluation.text .boxplot-nodata {
+  margin-top: unset; }
+
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
   margin-top: 4rem;
