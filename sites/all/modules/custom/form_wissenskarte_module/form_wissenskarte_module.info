@@ -1,0 +1,11 @@
+name = form_wissenskarte_module
+description = Allows the creation of knowledge maps.
+core = 7.x
+package = Knowledge Map
+
+;dependencies[] = morphsearch
+;dependencies[] = morphsearch_searchresults
+dependencies[] = entityreference_view_widget
+dependencies[] = entityreference
+dependencies[] = fivestar
+dependencies[] = views
