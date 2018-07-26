@@ -102,7 +102,7 @@ function delphi_question_change_question_form()
       $answer_choose_array = array('rating' => t('Radio-Buttons'),
                                    'year' => "Year",
                                    'text' => t('Text'),
-                                   //'knowledgeMap' => t('Knowledge Map')
+                                   'knowledgeMap' => t('Knowledge Map')
       );
 
         //Für jede Antwortmöglichkeit wird ein Fieldset zur Übersichtlichkeit angelegt

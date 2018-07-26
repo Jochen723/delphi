@@ -9,3 +9,5 @@ dependencies[] = entityreference_view_widget
 dependencies[] = entityreference
 dependencies[] = fivestar
 dependencies[] = views
+dependencies[] = imagemap_resizer
+dependencies[] = jq_maphilight

@@ -31,7 +31,7 @@ function delphi_question_add_question_form()
     $answer_choose_array = array('rating' => t('Radio-Buttons'),
                                  'year' => "Year",
                                  'text' => t('Text'),
-                                 //'knowledgeMap' => t('Knowledge Map')
+                                 'knowledgeMap' => t('Knowledge Map')
     );
 
     $button_array = array(2 => "2", 4 => "4", 5 => "5", 6 => "6");

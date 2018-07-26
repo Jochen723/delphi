@@ -40,9 +40,7 @@ function imagemap_resizer_available() {
  */
 function imagemap_resizer_preprocess_page(&$vars) {
 	
-  if (imagemap_resizer_available() !== FALSE
-      && isset($vars['node'])
-      && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'wissenskarte')) {
+  if (imagemap_resizer_available() !== FALSE) {
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
     $isPathEdit = drupal_match_path(current_path(), $pathEdit);
