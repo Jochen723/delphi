@@ -412,6 +412,12 @@ textarea {
   margin-top: unset;
 }
 
+#survey-question-evaluation-form {
+  & .evaluation .knowledgeMap.form-textarea {
+    display: none;
+  }
+}
+
 /* Entfernt, um ausschweifende Freiflächen zu reduzieren */
 /*.fieldset-wrapper .form-type-textfield {
   margin-top: 4rem;
@@ -769,4 +775,60 @@ input.form-radio {
   #edit-submit {
     float: none;
   }
+}
+
+.answers.knowledgeMap {
+  & .form-textarea-wrapper {
+    display: none;
+  }
+
+  & .form-type-textarea {
+    height: 6rem
+  }
+
+  & .form-type-checkbox {
+    margin-top: -2rem;
+    margin-left: 1.2rem;
+  }
+
+  & .form-type-item {
+    margin-top: -3.5rem;
+    margin-left: 1.2rem;
+  }
+}
+
+#survey-form .image-style-none {
+  height: 300px;
+  width: auto;
+  max-width: 550px;
+}
+
+
+#edit-field-token,
+#edit-preview {
+  display: none;
+}
+
+#survey-form .answers.knowledgeMap {
+  & .form-type-textarea {
+
+  }
+}
+
+
+
+.knowledgemap-edit-link {
+  margin-top: -2.4rem;
+  margin-left: 30rem;
+}
+
+.evaluation.knowledgeMap {
+  & .fieldset-wrapper {
+    margin-top: 0 !important;
+  }
+
+  & .form-type-checkbox {
+    margin-top: 0 !important;
+  }
+
 }

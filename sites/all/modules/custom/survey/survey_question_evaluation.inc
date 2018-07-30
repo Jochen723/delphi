@@ -98,7 +98,7 @@ function survey_question_evaluation_form()
     $button_title_array = survey_get_button_titles($button_title_result);
 
     //Die gegebenen Antworten des Nutzers werden geladen
-    $answers_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id", array(
+    $answers_result = db_query("SELECT * FROM {question_user_answers} WHERE user_pw = :user_pw AND question_id = :question_id ORDER BY answer_id ASC", array(
         ':user_pw' => $user_id,
         ':question_id' => $question_id
     ));
@@ -329,7 +329,140 @@ function survey_question_evaluation_form()
         );
 
         $form = _survey_addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
+     } else if ($questionType === 'knowledgeMap') {
+        $countTextfield++;
+
+        $form['fieldset' . $i]['#title'] = $possible_answers_array[$i]->description;
+        $form['fieldset' . $i]['#attributes'] = array('class' => array('evaluation', $questionType));
+
+
+        $isChecked = FALSE;
+        if ($answers[$i]->answer === 'answer_NA') {
+          $answers[$i]->answer = '';
+          $isChecked = TRUE;
+        }
+
+        $form['fieldset' . $i]['evaluation' . $i] = array(
+          '#theme' => 'item_list',
+          '#list_type' => 'ul',
+          '#attributes' => array('class' => array($questionType)),
+        );
+
+        $form['fieldset' . $i]['answer' . $i] = array(
+          '#type' => 'textarea',
+          '#title' => $possible_answer->description,
+          '#title_display' => 'invisible',
+          '#resizable' => FALSE,
+          '#rows' => 1,
+          '#default_value' => $answers[$i]->answer,
+          '#required' => FALSE,
+          '#states'        => array(
+            'disabled' => array(
+              ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
+            ),
+          ),
+          '#attributes' => array('class' => array($questionType)),
+        );
+
+        $knowledgeMapHtml = '';
+
+        $answer = db_query("SELECT * FROM {question_user_answers}
+                  WHERE user_pw = :userToken 
+                  AND question_id = :questionId
+                  AND answer_id = :answerId
+                  AND is_last_answer = 1
+                  ORDER BY question_user_answers_id DESC", array(
+          ':userToken' => $user_id,
+          ':questionId' => $question_id,
+          ':answerId' => $i,
+        ))->fetchAssoc();
+
+        // display the user's saved knowledge map
+        $maps = array();
+        $hasKnowledgemap = FALSE;
+
+
+        $maps = survey_get_all_answers_of_question($question_id, $i);
+        $knowledgeMapHtml = survey_get_knowledgemap($maps);
+
+        if(!empty($knowledgeMapHtml)) {
+          $hasKnowledgemap = TRUE;
+        }
+
+        if (empty($answer['answer'])) {
+
+          // display link to create a knowledge map if no user has created any for this question
+          if (!$hasKnowledgemap) {
+            $knowledgeMapHtml .= l(t('Wissenskarte hinzufügen'),
+              'node/add/wissenskarte/' . $user_id . '/' . $question_id . '/' . $i,
+              array('attributes' => array('class' => array('knowledgemap-create-link')))
+            );
+
+            // if another user already created a knowledge map use it as a basis for you own
+          } else {
+
+            foreach ($maps as $key => $map) {
+
+              $node = node_load($key);
+
+              if ($node !== FALSE && empty($answer['answer'])) {
+                if ($node->type === 'wissenskarte') {
+                  unset($node->nid);
+                  unset($node->vid);
+                  unset($node->path);
+                  $node->field_markierte_bereiche['und']['0']['value'] = '<map><area></map>';
+                  $node->answerId = $i;
+
+                  node_save($node);
+                  $knowledgeMapHtml = survey_get_knowledgemap(array($node->nid));
+                  $answer['answer'] = $node->nid;
+                  $hasKnowledgemap = TRUE;
+                }
+
+              }
+
+
+            }
+
+          }
+
+        }
+
+        $form['fieldset' . $i]['answerkm' . $i] = array(
+          '#type' => 'item',
+          '#markup' => $knowledgeMapHtml,
+        );
+
+        // if a knowledgemap is present, add edit link
+        if ($hasKnowledgemap) {
+          $form['fieldset' . $i]['answer_edit_km' . $i] = array(
+            '#markup' => l(t('bearbeiten'),
+              'node/' . $answer['answer'] . '/edit/' . $user_id . '/eval',
+              array('attributes' => array('class' => array('knowledgemap-edit-link')))
+            )
+          );
+        }
+
+
+        $form['fieldset' . $i]['answer_check' . $i] = array(
+          '#type'          => 'checkbox',
+          '#title'         => 'weiß nicht / keine Angabe',
+          '#attributes'    => array('class' => array($questionType)),
+          '#default_value' => $isChecked,
+        );
+
+        // comments of others users
+        $form['fieldset' . $i]['comment_dim' . $i] = array(
+          '#title'         => t('Kommentar'),
+          '#resizable'     => FALSE,
+          '#type'          => 'textarea',
+          '#default_value' => $answers[$i]->comment,
+        );
+
+        $form = _survey_addUserComments($form, $i, $question_id, $answers[$i]->answer_id, $user_id, array());
+
       }
+
 
     }
 
@@ -452,7 +585,8 @@ function survey_get_next_question($form, &$form_state)
     }
 
     //Es werden alle Antwortmöglichkeiten aus der Datenbank geladen
-    $answers = survey_get_answers_from_question($questions[$question_index]->question_id);
+    //$answers = survey_get_answers_from_question($questions[$question_index]->question_id); //???
+    $answers = survey_get_answers_from_question($question);
 
 
     //Es wird über alle Antwortmöglichkeiten iteriert

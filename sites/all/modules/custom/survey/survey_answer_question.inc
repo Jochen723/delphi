@@ -25,11 +25,13 @@ function survey_form()
     //Die bisherigen Antworten des Nutzers auf die Frage werden aus der Datenbank geladen
     $user_answers = survey_get_answers($question_id, $user_pass);
 
+    $noQuestionsOnPage = count(survey_get_answers_from_question($question_id));
+
     // Weiter zur Überprüfungsseite, wenn der Nutzer die Fragen bereits beantwortet hat
 
     $questionType = _survey_get_question_type($question_id);
 
-    if (!empty($user_answers) && $questionType !== 'group') {
+    if (count($user_answers) === $noQuestionsOnPage && $questionType !== 'group') {
       drupal_goto("survey_question_evaluation/" . $question_id . "/" . $user_pass);
     }
 
@@ -214,7 +216,122 @@ function survey_form()
             } else if ($answers[$i]->question_type === 'knowledgeMap') {
               $countTextfield++;
 
-              //TODO
+              $isChecked = FALSE;
+              if ($default_value === 'answer_NA') {
+                $isChecked = TRUE;
+              }
+
+              $divClasses = 'answers ' . $questionType;
+
+              $knowledgeMapHtml = '';
+
+              $answer = db_query("SELECT * FROM {question_user_answers}
+                  WHERE user_pw = :userToken 
+                  AND question_id = :questionId
+                  AND answer_id = :answerId
+                  AND is_last_answer = 1", array(
+                ':userToken' => $user_pass,
+                ':questionId' => $question_id,
+                ':answerId' => $i,
+              ))->fetchAssoc();
+
+              // display the user's saved knowledge map
+              $maps = array();
+              $hasKnowledgemap = FALSE;
+              if (!empty($answer['answer'])) {
+                $knowledgeMapHtml = survey_get_knowledgemap(array($answer['answer']));
+                $hasKnowledgemap = TRUE;
+
+              } else {
+                $maps = survey_get_all_answers_of_question($question_id, $i);
+
+                // if another user already created a knowledge map use it as a basis for you own
+                if (count($maps) > 0) {
+
+                  foreach ($maps as $key => $map) {
+
+                    $node = node_load($key);
+
+                    if ($node !== FALSE && !$hasKnowledgemap) {
+                      if ($node->type === 'wissenskarte') {
+                        unset($node->nid);
+                        unset($node->vid);
+                        unset($node->path);
+                        $node->field_markierte_bereiche['und']['0']['value'] = '<map><area></map>';
+                        $node->answerId = $i;
+
+                        node_save($node);
+                        $knowledgeMapHtml = survey_get_knowledgemap(array($node->nid));
+                        $answer['answer'] = array($node->nid);
+                        $hasKnowledgemap = TRUE;
+                      }
+
+                    }
+
+
+                  }
+
+                  if (!$hasKnowledgemap) {
+                    $knowledgeMapHtml .= l(t('Wissenskarte hinzufügen'),
+                      'node/add/wissenskarte/' . $user_pass . '/' . $question_id . '/' . $i,
+                      array('attributes' => array('class' => array('knowledgemap-create-link'))));
+                  }
+
+
+
+                } else {
+                  // display link to create a knowledge map if no user has reated any for this question
+                  $knowledgeMapHtml .= l(t('Wissenskarte hinzufügen'),
+                    'node/add/wissenskarte/' . $user_pass . '/' . $question_id . '/' . $i,
+                    array('attributes' => array('class' => array('knowledgemap-create-link')))
+                  );
+
+                }
+              }
+
+
+              $form['answer' . $i] = array(
+                '#type' => 'textarea',
+                '#prefix' => '<div id ="visualization' . $i . '" class = "' . $divClasses .'">',
+                '#title' => $answers[$i]->description,
+                '#resizable' => FALSE,
+                '#rows' => 2,
+                '#default_value' => $default_value,
+                '#required' => FALSE,
+                '#states'        => array(
+                  'disabled' => array(
+                    ':input[name="answer_check' . $i . '"]' => array('checked' => TRUE),
+                  ),
+                ),
+                '#element_validate' => array('_survey_textarea_validate'),
+              );
+
+              $form['answerkm' . $i] = array(
+                '#type' => 'item',
+                '#markup' => $knowledgeMapHtml,
+              );
+
+              // if a knowledgemap is present, add edit link
+              if ($hasKnowledgemap) {
+                $form['answer_edit_km' . $i] = array(
+                  '#markup' => l(t('bearbeiten'),
+                    'node/' . $answer['answer'] . '/edit/' . $user_pass,
+                    array('attributes' => array('class' => array('knowledgemap-edit-link')))
+                  )
+                );
+              }
+
+              $form['answer_check' . $i] = array(
+                '#type' => 'checkbox',
+                '#title' => 'weiß nicht / keine Angabe',
+                '#attributes' => array(
+                  'class' => array('text-checkbox')
+                ),
+                '#default_value' => $isChecked,
+                '#suffix' => '</div>',
+              );
+
+
             }
         }
 

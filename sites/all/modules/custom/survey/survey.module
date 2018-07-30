@@ -114,7 +114,7 @@ function survey_start_form($form, &$form_state)
   if (!is_null($userToken)) {
     if(count(_survey_get_answered_questions($userToken)) > 0) {
       // get the ID of first unanswered question
-      $questionId = _survey_get_first_open_question(arg(1));
+      $questionId = _survey_get_first_open_question($userToken);
 
       // -1 = all questions have been answered
       if ($questionId !== -1) {
@@ -225,7 +225,7 @@ function survey_get_all_questions()
 function survey_get_answers_from_question($question_id)
 {
     $answers = array();
-    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY weight", array(
+    $answer_result = db_query("SELECT * FROM {question_possible_answers} WHERE question_id = :question_id ORDER BY weight ASC", array(
         'question_id' => $question_id
     ));
     foreach ($answer_result as $answer) {
@@ -499,6 +499,30 @@ function survey_get_answers($question_id, $user_passcode)
 
 }
 
+/**
+ * Returns the answer for a single question of a user.
+ *
+ * @param $surveyPage
+ * @param $questionOnPage
+ * @param $userToken
+ *
+ * @return array
+ */
+function survey_get_answer($surveyPage, $questionOnPage, $userToken) {
+
+  $answer = db_query("SELECT * FROM {question_user_answers}
+      WHERE user_pw = :userToken 
+      AND question_id = :questionId
+      AND answer_id = :answerId
+      AND is_last_answer = 1", array(
+    ':userToken' => $userToken,
+    ':questionId' => $surveyPage,
+    ':answerId' => $questionOnPage,
+  ))->fetchAssoc();
+
+  return $answer;
+}
+
 //Diese Funktion überprüft, ob die eingelesene Nutzer-ID aus der Taskleiste valide ist.
 function survey_check_valid_user_pw($user_pw)
 {
@@ -720,31 +744,40 @@ function _survey_save_feedback($userId, $feedback) {
 }
 
 /**
- * Returns the first question the user did not answer.
+ * Returns the first survey page the user did not fully answer.
  *
  * @param $userToken
  *  The unique user token.
+ * @param bool $eval
+ *  If TRUE the latest evaluation page is returned.
  *
  * @return int
  *  The ID of the user's first unanswered question or -1 if all questions have been answered or -2 if an error occured.
  */
-function _survey_get_first_open_question($userToken) {
+function _survey_get_first_open_question($userToken, $eval = FALSE) {
   try {
+    // query returns a combintaion of survey page and question for all unanswered questions
     $result = db_query("
-      SELECT q.question_id FROM {question} as q
-      LEFT OUTER JOIN 
-        (SELECT question_id FROM {question_user_answers}
-          WHERE user_pw = :userToken
-          GROUP BY question_id
-        ) as answer
-      ON q.question_id = answer.question_id
-      WHERE answer.question_id IS null
-      ORDER BY q.weight ASC
-      LIMIT 1", array(
-        'userToken' => $userToken,
+      SELECT q.question_id, qa.aid, answers.answer FROM {question} AS q
+      LEFT JOIN
+    	  (SELECT question_id, weight AS aid FROM {question_possible_answers}) AS qa
+      ON q.question_id = qa.question_id
+      LEFT JOIN
+    	  (SELECT question_id, answer_id, answer FROM {question_user_answers}
+          WHERE user_pw = :userToken) AS answers
+      ON q.question_id = answers.question_id
+      AND qa.aid = answers.answer_id +1
+      WHERE answers.answer is null
+      ORDER BY q.weight, qa.aid ASC
+      LIMIT 2", array(
+        ':userToken' => $userToken
     ));
 
-    $questionID = $result->fetchField(0);
+    if ($eval === TRUE) {
+      $questionID = $result->fetchField(1);
+    } else {
+      $questionID = $result->fetchField(0);
+    }
 
     // false if all questions have been answered
     if ($questionID === FALSE) {
@@ -773,7 +806,7 @@ function _survey_get_answered_questions($userToken) {
       SELECT question_id FROM {question_user_answers}
       WHERE user_pw = :userToken
       GROUP BY question_id", array(
-        'userToken' => $userToken,
+        ':userToken' => $userToken,
     ));
 
     $answeredQuestions = $result->fetchAllAssoc('question_id');
@@ -851,4 +884,204 @@ function _survey_delete_token($token) {
     return array($countToken, $countAnswers);
   }
   return array($countToken, $countAnswers);
+}
+
+
+/**
+ * Implements hook_form_alter().
+ * Adds submit handler to redirect user after knowledge map has been created / edited.
+ */
+function survey_form_alter(&$form, &$form_state, $form_id) {
+
+  if ($form_id === 'wissenskarte_node_form') {
+    drupal_add_css(drupal_get_path('module', 'survey') . "/css/knowledgemap_integration.css");
+
+    $form['actions']['submit']['#submit'][] = 'survey_delphi_knowledgemap_submit';
+  }
+}
+
+/**
+ * Redirects to the last answered question.
+ */
+function survey_delphi_knowledgemap_submit($form, &$form_state) {
+  $userToken = arg(3);
+  $eval = arg(4);
+
+
+  if ($eval === 'eval') {
+    $currentQuestion = _survey_get_first_open_question($userToken, TRUE);
+    $path = "survey_question_evaluation/" . $currentQuestion . "/" . $userToken;
+    $form_state['redirect'] = $path;
+  } else if ($userToken != null) {
+    $currentQuestion = _survey_get_first_open_question($userToken);
+    $path = "survey_question/" . $currentQuestion . "/" . $userToken;
+    $form_state['redirect'] = $path;
+  }
+}
+
+
+/**
+ * Implements hook_entity_insert().
+ * Saves the created knowledge map as the user's answer to the database.
+ * (after it has been saved, a node id has been assigned)
+ */
+function survey_entity_insert($entity, $type) {
+  if ($type === 'node') {
+    if ($entity->type === 'wissenskarte') {
+
+      $nodeId = $entity->nid;
+      $path = arg(0);
+      if ($path === 'survey_question' || $path === 'survey_question_evaluation') {
+        $userToken = arg(2);
+        $surveyPage = arg(1);
+        $questionNumber = $entity->answerId;
+      } else {
+        $userToken = arg(3);
+        $surveyPage = arg(4);
+        $questionNumber = arg(5);
+      }
+
+
+      // TODO insert answer for user
+      db_insert('question_user_answers')
+        ->fields(array(
+          'question_id' => $surveyPage,
+          'answer_id' => $questionNumber,
+          'answer' => $nodeId,
+          'user_pw' => $userToken,
+          'comment' => "",
+          'is_last_answer' => 1,
+        ))
+        ->execute();
+
+    }
+  }
+}
+
+/**
+ * Creates a Delphi knowledeg map from a given 'wissenskarte' node;
+ *
+ * @param array $nodeId
+ *   Array of node IDs to be combined into a single knowledge map.
+ *
+ * @return string
+ *   The HTML code of a knowledge map oo an empty string.
+ */
+function survey_get_knowledgemap($nodeIds) {
+  $knowledgemapHtml = '';
+
+  if (count($nodeIds) === 1) {
+    $node = node_load(reset($nodeIds));
+
+    if ($node->type === 'wissenskarte') {
+      $nodeView = node_view($node);
+
+      // the image html code
+      $imgHtml = render($nodeView['field_wk_bild']);
+
+      // the knowledge map '<map>...</map>' html code
+      $mapHtml = $nodeView['field_markierte_bereiche']['#items'][0]['value'];
+
+      if (!empty($mapHtml)) {
+
+        // extract the image map ID and add it to the image
+        $dom = new DOMDocument();
+        $dom->loadHTML($mapHtml);
+        $mapId = $dom->getElementsByTagName('map')->item(0)->getAttribute('id');
+
+        $imgHtml = str_replace('<img ', '<img ' . 'usemap="#' . $mapId. '" ', $imgHtml);
+
+        $knowledgemapHtml .= $mapHtml;
+      }
+
+      $knowledgemapHtml .= $imgHtml;
+    }
+  } else {
+
+    $mapAreas = '';
+    $imgHtml = '';
+
+    foreach ($nodeIds as $nid) {
+      $node = node_load($nid);
+
+      if ($node != FALSE) {
+        if ($node->type === 'wissenskarte') {
+          $nodeView = node_view($node);
+
+          // the image html code
+          if (empty($imgHtml)) {
+            $imgHtml = render($nodeView['field_wk_bild']);
+          }
+
+          // the knowledge map '<map>...</map>' html code
+          $mapHtml = $nodeView['field_markierte_bereiche']['#items'][0]['value'];
+
+
+
+          if (!empty($mapHtml)) {
+
+            // extract the image map ID and add it to the image
+            if (empty($mapAreas)) {
+              $dom = new DOMDocument();
+              $dom->loadHTML($mapHtml);
+              $mapId = $dom->getElementsByTagName('map')->item(0)->getAttribute('id');
+
+              $imgHtml = str_replace('<img ', '<img ' . 'usemap="#' . $mapId. '" ', $imgHtml);
+
+              $mapAreas .= '<map id="' . $mapId .'" name="' . $mapId . '">';
+            }
+
+            $matches = array();
+            preg_match_all('#<area(.*?)/>#', $mapHtml, $matches);
+
+            foreach ($matches[0] as $match) {
+              $mapAreas .= $match;
+            }
+          }
+
+        }
+      }
+
+
+    }
+
+    $knowledgemapHtml .= $imgHtml;
+    $knowledgemapHtml .= $mapAreas;
+  }
+
+
+  return $knowledgemapHtml;
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function survey_preprocess_page(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/jquery.qtip.min.js", array('scope' => 'footer'));
+  drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/jquery.qtip.css");
+  drupal_add_js(drupal_get_path('module', 'survey') . "/js/knowledgemap_integration.js", array('scope' => 'footer','weight' => '9999',));
+
+}
+
+
+/**
+ * Returns all answers for a given question and page.
+ */
+function survey_get_all_answers_of_question($page, $question) {
+  $query = db_query("SELECT answer FROM {question_user_answers} 
+          WHERE question_id = :page 
+          AND answer_id = :question
+          ORDER BY question_user_answers_id ASC", array(
+    ':page' => $page,
+    ':question' => $question,
+  ));
+
+  $answers = $query->fetchAllAssoc('answer');
+
+  $answersArray = array();
+  foreach ($answers as $key => $answer) {
+    $answersArray[$key] = $key;
+  }
+
+  return $answersArray;
 }
