@@ -973,29 +973,32 @@ function survey_get_knowledgemap($nodeIds) {
   if (count($nodeIds) === 1) {
     $node = node_load(reset($nodeIds));
 
-    if ($node->type === 'wissenskarte') {
-      $nodeView = node_view($node);
+    if ($node != FALSE) {
+      if ($node->type === 'wissenskarte') {
+        $nodeView = node_view($node);
 
-      // the image html code
-      $imgHtml = render($nodeView['field_wk_bild']);
+        // the image html code
+        $imgHtml = render($nodeView['field_wk_bild']);
 
-      // the knowledge map '<map>...</map>' html code
-      $mapHtml = $nodeView['field_markierte_bereiche']['#items'][0]['value'];
+        // the knowledge map '<map>...</map>' html code
+        $mapHtml = $nodeView['field_markierte_bereiche']['#items'][0]['value'];
 
-      if (!empty($mapHtml)) {
+        if (!empty($mapHtml)) {
 
-        // extract the image map ID and add it to the image
-        $dom = new DOMDocument();
-        $dom->loadHTML($mapHtml);
-        $mapId = $dom->getElementsByTagName('map')->item(0)->getAttribute('id');
+          // extract the image map ID and add it to the image
+          $dom = new DOMDocument();
+          $dom->loadHTML($mapHtml);
+          $mapId = $dom->getElementsByTagName('map')->item(0)->getAttribute('id');
 
-        $imgHtml = str_replace('<img ', '<img ' . 'usemap="#' . $mapId. '" ', $imgHtml);
+          $imgHtml = str_replace('<img ', '<img ' . 'usemap="#' . $mapId. '" ', $imgHtml);
 
-        $knowledgemapHtml .= $mapHtml;
+          $knowledgemapHtml .= $mapHtml;
+        }
+
+        $knowledgemapHtml .= $imgHtml;
       }
-
-      $knowledgemapHtml .= $imgHtml;
     }
+
   } else {
 
     $mapAreas = '';

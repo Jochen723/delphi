@@ -315,7 +315,7 @@ function survey_form()
               if ($hasKnowledgemap) {
                 $form['answer_edit_km' . $i] = array(
                   '#markup' => l(t('bearbeiten'),
-                    'node/' . $answer['answer'] . '/edit/' . $user_pass,
+                    'node/' . $answer['answer'][0] . '/edit/' . $user_pass,
                     array('attributes' => array('class' => array('knowledgemap-edit-link')))
                   )
                 );

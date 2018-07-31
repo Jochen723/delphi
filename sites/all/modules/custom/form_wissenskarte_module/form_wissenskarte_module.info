@@ -5,6 +5,7 @@ package = Knowledge Map
 
 ;dependencies[] = morphsearch
 ;dependencies[] = morphsearch_searchresults
+dependencies[] = jquery_update
 dependencies[] = entityreference_view_widget
 dependencies[] = entityreference
 dependencies[] = fivestar

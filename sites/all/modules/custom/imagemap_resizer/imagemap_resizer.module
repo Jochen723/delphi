@@ -40,7 +40,7 @@ function imagemap_resizer_available() {
  */
 function imagemap_resizer_preprocess_page(&$vars) {
 	
-  if (imagemap_resizer_available() !== FALSE) {
+  if (imagemap_resizer_available() !== FALSE && strpos(current_path(), 'survey_question') !== FALSE) {
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
     $isPathEdit = drupal_match_path(current_path(), $pathEdit);

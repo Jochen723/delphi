@@ -44,7 +44,7 @@ function jq_maphilight_library()
 function jq_maphilight_preprocess_page(&$vars)
 {
   // Check if maphilight library is available and processed node matches desired "content type" for highlighting.
-  if (_jq_maphilight_available() != FALSE) {
+  if (_jq_maphilight_available() != FALSE && strpos(current_path(), 'survey_question') !== FALSE) {
 
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
