@@ -39,8 +39,11 @@ function imagemap_resizer_available() {
  * Add the Image Map Resizer js library and code to all nodes of type "content type".
  */
 function imagemap_resizer_preprocess_page(&$vars) {
-	
-  if (imagemap_resizer_available() !== FALSE && strpos(current_path(), 'survey_question') !== FALSE) {
+
+  if (imagemap_resizer_available() !== FALSE
+    && isset($vars['node'])
+    && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'wissenskarte')) {
+
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
     $isPathEdit = drupal_match_path(current_path(), $pathEdit);
